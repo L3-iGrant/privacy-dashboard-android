@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fadedwhite"
+            android:orientation="vertical">
+
+        <include
+                layout="@layout/toolbar_home"/>
+
+        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:text="@string/txt_consent"
+                android:textAllCaps="true"
+                android:textColor="@color/txt_color"
+                android:textSize="@dimen/text_size_medium"/>
+
+        <LinearLayout
+                android:id="@+id/llAllow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:visibility="visible">
+
+            <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/txt_allow"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/text_size_normal"/>
+
+            <ImageView
+                    android:id="@+id/ivAllow"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/divider_color"/>
+
+        <LinearLayout
+                android:id="@+id/llDisallow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:visibility="visible">
+
+            <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/txt_disallow"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/text_size_normal"/>
+
+            <ImageView
+                    android:id="@+id/ivDisallow"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/divider_color"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="visible">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:paddingBottom="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/txt_ask_me"
+                        android:textColor="@color/txt_color"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                        android:id="@+id/tvDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="10dp"
+                        android:text="-- days"
+                        android:textColor="@color/txt_color_light"
+                        android:textSize="@dimen/text_size_normal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:text="30"
+                        android:textColor="@color/lightBlue"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                <SeekBar
+                        android:id="@+id/sbDays"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="90"
+                        android:min="30"
+                        android:progress="30"
+                        android:progressBackgroundTint="@color/txt_color"
+                        android:progressTint="@color/lightBlue"/>
+
+                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="5dp"
+                        android:text="90"
+                        android:textColor="@color/lightBlue"
+                        android:textSize="@dimen/text_size_normal"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                android:id="@+id/ctvStatusMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:text="@string/txt_attribute_allow_consent_rule"
+                android:textColor="@color/txt_color_light"
+                android:textSize="@dimen/text_size_medium"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/llProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>
+

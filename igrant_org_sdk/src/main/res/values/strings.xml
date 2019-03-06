@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">IGrant_Org_SDK</string>
+
+    <string name="txt_gen_cancel">Cancel</string>
+    <string name="txt_login_existing_user_login">Existing user login</string>
+    <string name="txt_login_email">Email</string>
+    <string name="txt_login_show_password">Show password</string>
+    <string name="txt_login_forgot_password">Forgot password ?</string>
+    <string name="txt_login">Log in</string>
+    <string name="err_internet">Network not available.</string>
+    <string name="txt_login_hide_password">Hide password</string>
+    <string name="txt_login_password">Password</string>
+    <string name="txt_org_disallow">Disallow</string>
+    <string name="txt_org_allow">Allow : %1$d of %2$d</string>
+    <string name="err_unexpected">Unexpected error, Please try again.</string>
+    <string name="txt_org_read_less">Read more</string>
+    <string name="txt_org_read_more">Read less</string>
+    <string name="txt_allow">Allow</string>
+    <string name="txt_disallow">Disallow</string>
+    <string name="txt_consent">Consent</string>
+    <string name="txt_ask_me">Ask Me</string>
+    <string name="txt_attribute_allow_consent_rule">If you choose \"Allow\", you are consenting to the use of your personal data permanently for any analytic or third party usage beyond the purposes you have signed up with.</string>
+    <string name="txt_attribute_disallow_consent_rule">If you choose \"Disallow\", you are disabling the use of your personal data for any analytic or third party usage beyond the purposes you have signed up with.</string>
+    <string name="txt_attribute_askme_consent_rule">If you choose \"Ask me\", you consent to the use of your data for the selected period. When time period expires, you get notified in real time requesting for consent when the data provider is using your data.</string>
+    <string name="txt_policy">Policy</string>
+    <string name="txt_org_my_data_consents">My Data Consents</string>
+    <string name="txt_org_read_policy">Read policy</string>
+    <string name="err_invalid_email">Invalid email id</string>
+    <string name="err_empty_password">Empty password</string>
+    <string name="err_invalid_email_or_password">Invalid username or password</string>
+    <string name="txt_org_overview">Overview</string>
+    <string name="txt_org_usage_purpose">Usage Purposes</string>
+    <string name="txt_more_download_data">Download Data</string>
+    <string name="txt_more_webpage">Webpage</string>
+    <string name="txt_more_forgot_me">Forgot me</string>
+    <string name="txt_more">More</string>
+    <string name="txt_profile_privacy_policy">Privacy Policy</string>
+    <string name="txt_org_detail_download_request_processing">A request to download data has been submitted. We will respond to you shortly.</string>
+    <string name="txt_org_detail_forgot_me_request_processing">A request for deleting your data has been submitted. We will process your request shortly.</string>
+    <string name="qr_code_positive_button_know">OK</string>
+</resources>

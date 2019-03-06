@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+
+        <!-- The floating error's text size. 12sp by default. -->
+        <attr name="cet_floatingErrorTextSize" format="dimension"/>
+        <!-- The floating error's text color. -1 by default. -->
+        <attr name="cet_floatingErrorTextColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_border_color" format="color"/>
+        <attr name="civ_border_overlay" format="boolean"/>
+        <attr format="color" name="civ_fill_color"/>
+        <attr name="civ_circle_background_color" format="color"/>
+    </declare-styleable>
+</resources>

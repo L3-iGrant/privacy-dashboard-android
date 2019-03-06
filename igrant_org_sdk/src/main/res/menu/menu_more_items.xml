@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_webpage"
+        android:title="@string/txt_profile_privacy_policy"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/action_download_data"
+        android:title="@string/txt_more_download_data"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/action_forgot_me"
+        android:title="@string/txt_more_forgot_me"
+        app:showAsAction="never|withText"/>
+</menu>
