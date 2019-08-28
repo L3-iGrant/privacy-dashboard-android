@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.suke.widget.SwitchButton;
-import io.igrant.igrant_org_sdk.CustomViews.CustomTextView;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.listener.UsagePurposeClickListener;
 import io.igrant.igrant_org_sdk.models.Organizations.PurposeConsent;

@@ -17,4 +17,6 @@
     <color name="divider_color">#bebebe</color>
     <color name="txt_red">#f00</color>
     <color name="green">#00a600</color>
+    <color name="uncompleted_color">#A3E0D9</color>
+    <color name="uncompleted_text_color">#F8F8F8</color>
 </resources>

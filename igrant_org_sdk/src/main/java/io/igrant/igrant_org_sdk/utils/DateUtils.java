@@ -11,6 +11,11 @@ public class DateUtils {
 
     public static final String DDMMYYYYTKKMMSS = "dd-MM-yyyy kk:mm";
 
+    public static final String DDMMYYYYHHMMA = "dd-MM-yyyy hh:mm a";
+
+    public static final String YYYYMMDDHHMMSS = "yyyy-MM-dd kk:mm:ss";
+
+
 
     public static String getRelativeTime(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat(API_FORMAT, Locale.ENGLISH);
@@ -33,6 +38,19 @@ public class DateUtils {
         }
 
         SimpleDateFormat sdf1 = new SimpleDateFormat(API_FORMAT, Locale.ENGLISH);
+        return sdf1.format(dDate);
+    }
+
+    public static String getApiFormatTime(String fromFormat,String toFormat,String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(fromFormat, Locale.ENGLISH);
+        Date dDate = null;
+        try {
+            dDate = UtcUtils.gmttoLocalDate(sdf.parse(date));
+        } catch (Exception e) {
+            return "";
+        }
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat(toFormat, Locale.ENGLISH);
         return sdf1.format(dDate);
     }
 

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import io.igrant.igrant_org_sdk.CustomViews.CustomTextView;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.listener.ConsentAttributeClickListener;
 import io.igrant.igrant_org_sdk.models.Consent.Consent;

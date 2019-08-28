@@ -15,4 +15,14 @@
         android:id="@+id/action_forgot_me"
         android:title="@string/txt_more_forgot_me"
         app:showAsAction="never|withText"/>
+
+    <item
+            android:id="@+id/action_request_history"
+            android:title="@string/txt_more_request_history"
+            app:showAsAction="never|withText"/>
+
+    <item
+            android:id="@+id/action_consent_history"
+            android:title="@string/txt_consent_history"
+            app:showAsAction="never|withText"/>
 </menu>

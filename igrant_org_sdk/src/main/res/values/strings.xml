@@ -38,4 +38,27 @@
     <string name="txt_org_detail_download_request_processing">A request to download data has been submitted. We will respond to you shortly.</string>
     <string name="txt_org_detail_forgot_me_request_processing">A request for deleting your data has been submitted. We will process your request shortly.</string>
     <string name="qr_code_positive_button_know">OK</string>
+    <string name="txt_empty_consent_history">No history available</string>
+
+    <string name="txt_data_request_initiated">Request Initiated</string>
+    <string name="txt_data_request_acknowledged">Request Acknowledged</string>
+    <string name="txt_data_request_processed_without_action">Request Processed without Action</string>
+    <!--<string name="txt_data_request_processed_with_action">Request Processed with Action</string>-->
+    <string name="txt_data_request_completed">Completed and closed</string>
+    <string name="txt_request_cancelled">Request cancelled successfully.</string>
+    <string name="err_invalid_qr_code">Invalid QR code</string>
+    <string name="txt_data_request_processed_with_action">Request Processed with Action</string>
+    <string name="txt_data_request_cancelled_by_user">Request Cancelled by User</string>
+    <string name="txt_gen_cancel_request">Cancel request</string>
+    <string name="txt_data_shared_succeddfully_with_porposeid">Data shared successfully for the purpose %1$s</string>
+    <string name="txt_qr_attributes_being_shared">%1$d attributes being shared</string>
+    <string name="txt_data_request_processed">Request processed</string>
+    <string name="txt_more_request_history">Request History</string>
+
+    <string name="txt_view_all">View All</string>
+    <string name="txt_choose">Date Range</string>
+    <string name="txt_sort_by_organization">By Organisation</string>
+    <string name="txt_sort_by_date">By Date</string>
+    <string name="txt_consent_history">Consent History</string>
+
 </resources>

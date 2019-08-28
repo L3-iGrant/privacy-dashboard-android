@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.CustomViews.CustomTextView;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.Events.Event;
 import io.igrant.igrant_org_sdk.Events.GlobalBus;
 import io.igrant.igrant_org_sdk.R;

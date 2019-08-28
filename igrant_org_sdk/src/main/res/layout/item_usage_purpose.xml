@@ -18,7 +18,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/ctvItemName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/ctvStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

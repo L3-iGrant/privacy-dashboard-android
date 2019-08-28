@@ -1,4 +1,4 @@
-package io.igrant.igrant_org_sdk.CustomViews;
+package io.igrant.igrant_org_sdk.customViews;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

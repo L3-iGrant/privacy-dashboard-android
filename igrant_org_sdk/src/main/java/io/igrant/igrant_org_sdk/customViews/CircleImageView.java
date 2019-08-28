@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.igrant.igrant_org_sdk.CustomViews;
+package io.igrant.igrant_org_sdk.customViews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,7 +26,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import io.igrant.igrant_org_sdk.R;
 
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {

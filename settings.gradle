@@ -1,1 +1,1 @@
-include ':app', ':igrant_org_sdk'
+include ':Sample', ':igrant_org_sdk'

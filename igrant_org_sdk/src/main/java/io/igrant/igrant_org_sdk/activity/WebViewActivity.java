@@ -10,7 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import io.igrant.igrant_org_sdk.CustomViews.CustomTextView;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.R;
 
 public class WebViewActivity extends AppCompatActivity {

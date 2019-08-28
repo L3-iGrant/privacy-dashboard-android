@@ -34,7 +34,7 @@
                     android:paddingEnd="20dp"
                     android:paddingBottom="20dp">
 
-                <io.igrant.igrant_org_sdk.CustomViews.CircleImageView
+                <io.igrant.igrant_org_sdk.customViews.CircleImageView
                         android:id="@+id/ivLogo"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -42,7 +42,7 @@
                         app:civ_border_width="3dp"
                         app:civ_fill_color="@color/xfadedwhite"/>
 
-                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                <io.igrant.igrant_org_sdk.customViews.CustomTextView
                         android:id="@+id/ctvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold"/>
 
-                <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                <io.igrant.igrant_org_sdk.customViews.CustomTextView
                         android:id="@+id/ctvLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                    <io.igrant.igrant_org_sdk.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
@@ -79,7 +79,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_normal"/>
 
-                    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                    <io.igrant.igrant_org_sdk.customViews.CustomTextView
                             android:id="@+id/ctvDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+                    <io.igrant.igrant_org_sdk.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"

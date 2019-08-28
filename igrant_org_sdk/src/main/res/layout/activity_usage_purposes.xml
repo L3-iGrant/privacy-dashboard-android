@@ -21,7 +21,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-            <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+            <io.igrant.igrant_org_sdk.customViews.CustomTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -31,7 +31,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"/>
 
-            <io.igrant.igrant_org_sdk.CustomViews.CustomButton
+            <io.igrant.igrant_org_sdk.customViews.CustomButton
                     android:id="@+id/btnPrivacyPolicy"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"

@@ -14,7 +14,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
 
-        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/ctvItemName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 android:textColor="@color/txt_color"
                 android:textSize="@dimen/text_size_normal"/>
 
-        <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/ctvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

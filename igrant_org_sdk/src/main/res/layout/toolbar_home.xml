@@ -10,7 +10,7 @@
                                    android:minHeight="?android:attr/actionBarSize"
                                    app:theme="@style/ToolBarStyle">
 
-    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+    <io.igrant.igrant_org_sdk.customViews.CustomTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

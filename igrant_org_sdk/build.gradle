@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 28
@@ -8,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 7
+        versionName "1.0.7"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,15 +32,145 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
-    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
-        exclude module: 'okhttp'
-    }
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    api 'com.android.support:design:28.0.0'
+    api 'com.github.zcweng:switch-button:0.0.3@aar'
+//    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
+//        exclude module: 'okhttp'
+//    }
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.okhttp3:okhttp:3.8.1'
+    api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'com.github.markomilos:paginate:0.5.1'
 
+}
+
+group = 'io.igrant.igrant_sdk'
+version = '1.0.7'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+
+            name 'iGantioSDK'
+            description ''
+            url 'https://github.com/L3-iGrant/mobileSDK-android'
+
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'https://opensource.org/licenses/mit-license.php'
+                }
+            }
+            developers {
+                developer {
+                    id 'josmilan1103'
+                    name 'Joseph Milan'
+                    email 'josmilan1103@gmail.com'
+                }
+            }
+            scm {
+                connection 'https://github.com/L3-iGrant/mobileSDK-android.git'
+                developerConnection 'https://github.com/L3-iGrant/mobileSDK-android'
+                url 'https://dl.bintray.com/josmilan1103/iGantioSDK'
+            }
+
+            dependencies {
+                dependency {
+                    groupId 'com.android.support'
+                    artifactId 'design'
+                    version '28.0.0'
+                }
+                dependency {
+                    groupId 'com.github.zcweng'
+                    artifactId 'switch-button'
+                    version '0.0.3'
+                    type 'aar'
+                }
+                dependency {
+                    groupId 'com.squareup.retrofit2'
+                    artifactId 'converter-gson'
+                    version '2.3.0'
+                }
+                dependency {
+                    groupId 'com.squareup.okhttp3'
+                    artifactId 'okhttp'
+                    version '3.8.1'
+                }
+                dependency {
+                    groupId 'com.squareup.okhttp3'
+                    artifactId 'logging-interceptor'
+                    version '3.8.0'
+                }
+                dependency {
+                    groupId 'com.github.bumptech.glide'
+                    artifactId 'glide'
+                    version '4.8.0'
+                }
+                dependency {
+                    groupId 'org.greenrobot'
+                    artifactId 'eventbus'
+                    version '3.1.1'
+                }
+                dependency {
+                    groupId 'com.github.markomilos'
+                    artifactId 'paginate'
+                    version '0.5.1'
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = "josmilan1103"
+    key = "7c3f58c0669315cec40057237d0fa3ddf152ec82"
+
+    configurations = ['archives']
+    pkg {
+        repo = 'iGantioSDK'
+        name = 'mobileSDK-android'
+        desc = ''
+        version {
+            name = '1.0.7'
+            desc = ''
+            released  = new Date()
+            vcsTag = '1.0.7'
+        }
+        websiteUrl = 'https://github.com/L3-iGrant/mobileSDK-android'
+        vcsUrl = 'https://github.com/L3-iGrant/mobileSDK-android.git'
+        licenses = ["MIT"]
+//        dryRun = false
+        publish = true
+//        override = false
+//        publicDownloadNumbers = true
+//        version {
+//            desc = libraryDescription
+//        }
+    }
 }

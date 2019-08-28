@@ -3,12 +3,19 @@ package io.igrant.igrant_org_sdk.Api;
 import io.igrant.igrant_org_sdk.models.Consent.ConsentListResponse;
 import io.igrant.igrant_org_sdk.models.Consent.ConsentStatusRequest;
 import io.igrant.igrant_org_sdk.models.Consent.UpdateConsentStatusResponse;
+import io.igrant.igrant_org_sdk.models.ConsentHistory.ConsentHistoryResponse;
 import io.igrant.igrant_org_sdk.models.Login.LoginRequest;
 import io.igrant.igrant_org_sdk.models.Login.LoginResponse;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequest;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequestGenResponse;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequestHistoryResponse;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequestStatus;
 import io.igrant.igrant_org_sdk.models.Organizations.OrganizationDetailResponse;
 import io.igrant.igrant_org_sdk.models.ResultResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
+
+import java.util.ArrayList;
 
 public interface APIService {
 
@@ -39,4 +46,39 @@ public interface APIService {
                                             @Path("attributeId") String attributeId,
                                             @Body ConsentStatusRequest body);
 
+    //data download and delete
+    @GET("v1/user/organizations/{orgId}/data-download/status")
+    Call<DataRequestStatus> getDataDownloadStatus(@Path("orgId") String orgId);
+
+    @POST("v1/user/organizations/{orgId}/data-download")
+    Call<Void> dataDownloadRequest(@Path("orgId") String orgId);
+
+    @GET("v1/user/organizations/{orgId}/data-download")
+    Call<ArrayList<DataRequest>> dataDownloadStatus(@Path("orgId") String orgId);
+
+    @POST("v1/user/organizations/{orgId}/data-download/{requestId}/cancel")
+    Call<DataRequestGenResponse> dataDownloadCancelRequest(@Path("orgId") String orgId,
+                                                           @Path("requestId") String requestId);
+
+    @GET("v1/user/organizations/{orgId}/data-delete/status")
+    Call<DataRequestStatus> getDataDeleteStatus(@Path("orgId") String orgId);
+
+    @POST("v1/user/organizations/{orgId}/data-delete")
+    Call<Void> dataDeleteRequest(@Path("orgId") String orgId);
+
+    @POST("v1/user/organizations/{orgId}/data-delete")
+    Call<ArrayList<DataRequest>> dataDeleteStatus(@Path("orgId") String orgId);
+
+    @POST("v1/user/organizations/{orgId}/data-delete/{requestId}/cancel")
+    Call<DataRequestGenResponse> dataDeleteCancelRequest(@Path("orgId") String orgId,
+                                                         @Path("requestId") String requestId);
+
+    @GET("v1/user/organizations/{orgId}/data-status")
+    Call<DataRequestHistoryResponse> getOrgRequestStatus(@Path("orgId") String orgId,
+                                                         @Query("startid") String startid);
+
+    @GET("v1/user/consenthistory")
+    Call<ConsentHistoryResponse> getConsentHistory(@Query("limit") int limit,
+                                                   @Query("orgid") String orgId,
+                                                   @Query("startid") String startid);
 }

@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height" android:background="@color/white">
 
-    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+    <io.igrant.igrant_org_sdk.customViews.CustomTextView
             android:id="@+id/tvAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:visibility="gone"
             android:padding="8dp"/>
 
-    <io.igrant.igrant_org_sdk.CustomViews.CustomTextView
+    <io.igrant.igrant_org_sdk.customViews.CustomTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

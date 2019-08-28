@@ -14,6 +14,11 @@
                   android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name="io.igrant.igrant_org_sdk.OrganizationDetailActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"/>
-
+        <activity android:name="io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="io.igrant.igrant_org_sdk.activity.RequestHistoryActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 </manifest>

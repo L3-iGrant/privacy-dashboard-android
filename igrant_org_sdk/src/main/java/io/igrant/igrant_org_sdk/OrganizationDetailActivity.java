@@ -19,22 +19,21 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.*;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.CustomViews.CustomTextView;
-import io.igrant.igrant_org_sdk.CustomViews.MySpannable;
 import io.igrant.igrant_org_sdk.Events.Event;
-import io.igrant.igrant_org_sdk.activity.UsagePurposesActivity;
-import io.igrant.igrant_org_sdk.activity.WebViewActivity;
+import io.igrant.igrant_org_sdk.activity.*;
 import io.igrant.igrant_org_sdk.adapter.UsagePurposesAdapter;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
+import io.igrant.igrant_org_sdk.customViews.MySpannable;
 import io.igrant.igrant_org_sdk.listener.UsagePurposeClickListener;
 import io.igrant.igrant_org_sdk.models.Consent.ConsentListResponse;
 import io.igrant.igrant_org_sdk.models.Consent.ConsentStatusRequest;
 import io.igrant.igrant_org_sdk.models.Consent.UpdateConsentStatusResponse;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequestStatus;
 import io.igrant.igrant_org_sdk.models.Organization;
 import io.igrant.igrant_org_sdk.models.Organizations.OrganizationDetailResponse;
 import io.igrant.igrant_org_sdk.models.Organizations.PurposeConsent;
 import io.igrant.igrant_org_sdk.utils.DataUtils;
 import io.igrant.igrant_org_sdk.utils.ImageUtils;
-import io.igrant.igrant_org_sdk.utils.MessageUtils;
 import io.igrant.igrant_org_sdk.utils.NetWorkUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +43,10 @@ import retrofit2.Response;
 
 import java.util.ArrayList;
 
+import static io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity.*;
+import static io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity.TAG_DAT_REQUEST_ORG_ID;
+import static io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity.TAG_DAT_REQUEST_TYPE;
+import static io.igrant.igrant_org_sdk.activity.RequestHistoryActivity.TAG_REQUEST_HISTORY_ORG_ID;
 import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_DESCRIPTION;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
@@ -123,7 +126,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
 
 
             //todo user id
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setOverallStatus(value,DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID(), body).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setOverallStatus(value, DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID(), body).enqueue(callback);
         } else {
             adapter.notifyDataSetChanged();
         }
@@ -160,7 +163,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
             String value = (String) ai.metaData.get("io.igrant.igrant_org_sdk.orgid");
 
             try {
-                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getConsentList(value,DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID()).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getConsentList(value, DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID()).enqueue(callback);
             } catch (Exception e) {
                 llProgressBar.setVisibility(View.GONE);
                 e.printStackTrace();
@@ -273,7 +276,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.action_download_data) {
-                        MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_download_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
+                        downloadDataRequestStatus();
                     } else if (item.getItemId() == R.id.action_webpage) {
                         Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
 //                                try {
@@ -285,7 +288,18 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     } else if (item.getItemId() == R.id.action_forgot_me) {
-                        MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_forgot_me_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
+                        deleteDataRequestStatus();
+                    } else if (item.getItemId() == R.id.action_request_history) {
+                        Intent orgHistory = new Intent(OrganizationDetailActivity.this, RequestHistoryActivity.class);
+                        orgHistory.putExtra(TAG_REQUEST_HISTORY_ORG_ID, organization.getID());
+                        startActivity(orgHistory);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    } else if (item.getItemId() == R.id.action_consent_history) {
+                        Intent consentHistory = new Intent(OrganizationDetailActivity.this, ConsentHistoryActivity.class);
+                        consentHistory.putExtra(TAG_CONSENT_HISTORY_CAME_FROM, FROM_ORG_DETAIL);
+                        consentHistory.putExtra(TAG_CONSENT_HISTORY_ORG_ID, organization.getID());
+                        startActivity(consentHistory);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     }
                     return true;
                 }
@@ -294,62 +308,120 @@ public class OrganizationDetailActivity extends AppCompatActivity {
             popup.show();
             return true;
         }
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                finish();
-//                return true;
-//            case R.id.menu_more:
-//
-//                PopupMenu popup = new PopupMenu(OrganizationDetailActivity.this, findViewById(R.id.menu_more));
-//                popup.getMenuInflater()
-//                        .inflate(R.menu.menu_more_items, popup.getMenu());
-//
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        if (item.getItemId() == R.id.action_download_data){
-//                            MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_download_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
-//                        }else if (item.getItemId() == R.id.action_webpage){
-//                            Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
-////                                try {
-//                            intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
-////                                } catch (Exception e) {
-////                                    e.printStackTrace();
-////                                }
-//                            intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
-//                            startActivity(intent);
-//                            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                        }else if (item.getItemId() ==){
-//                            MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_forgot_me_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
-//                        }
-////                        switch (item.getItemId()) {
-////                            case R.id.action_download_data:
-////                                MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_download_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
-////                                break;
-////                            case R.id.action_webpage:
-////                                Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
-//////                                try {
-////                                intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
-//////                                } catch (Exception e) {
-//////                                    e.printStackTrace();
-//////                                }
-////                                intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
-////                                startActivity(intent);
-////                                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-////                                break;
-////
-////                            case R.id.action_forgot_me:
-////                                MessageUtils.showAlert(OrganizationDetailActivity.this, getResources().getString(R.string.txt_org_detail_forgot_me_request_processing), getResources().getString(R.string.qr_code_positive_button_know));
-////                                break;
-////                        }
-//                        return true;
-//                    }
-//                });
-//
-//                popup.show();
-//
-//                return true;
-//        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void downloadDataRequestStatus() {
+        if (NetWorkUtil.isConnectedToInternet(OrganizationDetailActivity.this, true)) {
+            llProgressBar.setVisibility(View.VISIBLE);
+            Callback<DataRequestStatus> callback = new Callback<DataRequestStatus>() {
+                @Override
+                public void onResponse(Call<DataRequestStatus> call, Response<DataRequestStatus> response) {
+                    llProgressBar.setVisibility(View.GONE);
+                    if (response.code() == 200) {
+                        if (response.body().getRequestOngoing()) {
+                            gotToStatusPage(true);
+                        } else {
+                            dataDownloadRequest();
+                        }
+                    } else {
+                        Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DataRequestStatus> call, Throwable t) {
+                    llProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                }
+            };
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDownloadStatus(organization.getID()).enqueue(callback);
+        }
+    }
+
+    private void dataDownloadRequest() {
+        if (NetWorkUtil.isConnectedToInternet(OrganizationDetailActivity.this, true)) {
+            llProgressBar.setVisibility(View.VISIBLE);
+            Callback<Void> callback = new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    llProgressBar.setVisibility(View.GONE);
+                    if (response.code() == 200) {
+                        gotToStatusPage(true);
+                    } else {
+                        Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    llProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+
+                }
+            };
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDownloadRequest(organization.getID()).enqueue(callback);
+        }
+    }
+
+    private void deleteDataRequestStatus() {
+        if (NetWorkUtil.isConnectedToInternet(OrganizationDetailActivity.this, true)) {
+            llProgressBar.setVisibility(View.VISIBLE);
+            Callback<DataRequestStatus> callback = new Callback<DataRequestStatus>() {
+                @Override
+                public void onResponse(Call<DataRequestStatus> call, Response<DataRequestStatus> response) {
+                    llProgressBar.setVisibility(View.GONE);
+                    if (response.code() == 200) {
+                        if (response.body().getRequestOngoing()) {
+                            gotToStatusPage(false);
+                        } else {
+                            dataDeleteRequest();
+                        }
+                    } else {
+                        Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DataRequestStatus> call, Throwable t) {
+                    llProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                }
+            };
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDeleteStatus(organization.getID()).enqueue(callback);
+        }
+    }
+
+    private void dataDeleteRequest() {
+        if (NetWorkUtil.isConnectedToInternet(OrganizationDetailActivity.this, true)) {
+            llProgressBar.setVisibility(View.VISIBLE);
+            Callback<Void> callback = new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    llProgressBar.setVisibility(View.GONE);
+                    if (response.code() == 200) {
+                        gotToStatusPage(false);
+                    } else {
+                        Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    llProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
+                }
+            };
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDeleteRequest(organization.getID()).enqueue(callback);
+        }
+    }
+
+    private void gotToStatusPage(boolean isDownloadRequest) {
+        Intent intent = new Intent(OrganizationDetailActivity.this, DataRequestStatusActivity.class);
+        intent.putExtra(TAG_DAT_REQUEST_TYPE, isDownloadRequest);
+        intent.putExtra(TAG_DAT_REQUEST_ORG_ID, organization.getID());
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
