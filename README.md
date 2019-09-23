@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.0.7'
+    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.0.8'
 }
 ```
 
