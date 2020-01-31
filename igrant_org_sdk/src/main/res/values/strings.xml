@@ -53,12 +53,18 @@
     <string name="txt_data_shared_succeddfully_with_porposeid">Data shared successfully for the purpose %1$s</string>
     <string name="txt_qr_attributes_being_shared">%1$d attributes being shared</string>
     <string name="txt_data_request_processed">Request processed</string>
-    <string name="txt_more_request_history">Request History</string>
+    <string name="txt_more_request_history">Request Status</string>
 
     <string name="txt_view_all">View All</string>
     <string name="txt_choose">Date Range</string>
     <string name="txt_sort_by_organization">By Organisation</string>
     <string name="txt_sort_by_date">By Date</string>
     <string name="txt_consent_history">Consent History</string>
-
+    <string name="txt_register_confirm">Confirm</string>
+    <string name="txt_user_requests">User Requests</string>
+    <string name="txt_add_new_request">New Request</string>
+    <string name="txt_gen_confirmation">Confirmation</string>
+    <string name="txt_data_request_confirmation_message">A new request to %1$s will be sent to the %2$s</string>
+    <string name="txt_data_delete">data delete</string>
+    <string name="err_please_subscribe_to_the_organisation">Please subscribe the organisation.</string>
 </resources>

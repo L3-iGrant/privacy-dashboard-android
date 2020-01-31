@@ -1,5 +1,6 @@
 package io.igrant.igrant_org_sdk;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -17,10 +18,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cocosw.bottomsheet.BottomSheet;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+
 import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.Events.Event;
-import io.igrant.igrant_org_sdk.activity.*;
+import io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity;
+import io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity;
+import io.igrant.igrant_org_sdk.activity.UsagePurposesActivity;
+import io.igrant.igrant_org_sdk.activity.UserOrgRequestActivity;
+import io.igrant.igrant_org_sdk.activity.WebViewActivity;
 import io.igrant.igrant_org_sdk.adapter.UsagePurposesAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.customViews.MySpannable;
@@ -35,18 +51,17 @@ import io.igrant.igrant_org_sdk.models.Organizations.PurposeConsent;
 import io.igrant.igrant_org_sdk.utils.DataUtils;
 import io.igrant.igrant_org_sdk.utils.ImageUtils;
 import io.igrant.igrant_org_sdk.utils.NetWorkUtil;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.ArrayList;
-
-import static io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity.*;
+import static io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity.FROM_ORG_DETAIL;
+import static io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity.TAG_CONSENT_HISTORY_CAME_FROM;
+import static io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity.TAG_CONSENT_HISTORY_ORG_ID;
 import static io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity.TAG_DAT_REQUEST_ORG_ID;
 import static io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity.TAG_DAT_REQUEST_TYPE;
 import static io.igrant.igrant_org_sdk.activity.RequestHistoryActivity.TAG_REQUEST_HISTORY_ORG_ID;
+import static io.igrant.igrant_org_sdk.activity.RequestHistoryActivity.TAG_REQUEST_HISTORY_ORG_NAME;
 import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_DESCRIPTION;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
@@ -269,46 +284,75 @@ public class OrganizationDetailActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.menu_more) {
-            PopupMenu popup = new PopupMenu(OrganizationDetailActivity.this, findViewById(R.id.menu_more));
-            popup.getMenuInflater()
-                    .inflate(R.menu.menu_more_items, popup.getMenu());
 
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.action_download_data) {
-                        downloadDataRequestStatus();
-                    } else if (item.getItemId() == R.id.action_webpage) {
-                        Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
-//                                try {
-                        intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-                        intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                    } else if (item.getItemId() == R.id.action_forgot_me) {
-                        deleteDataRequestStatus();
-                    } else if (item.getItemId() == R.id.action_request_history) {
-                        Intent orgHistory = new Intent(OrganizationDetailActivity.this, RequestHistoryActivity.class);
-                        orgHistory.putExtra(TAG_REQUEST_HISTORY_ORG_ID, organization.getID());
-                        startActivity(orgHistory);
-                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                    } else if (item.getItemId() == R.id.action_consent_history) {
-                        Intent consentHistory = new Intent(OrganizationDetailActivity.this, ConsentHistoryActivity.class);
-                        consentHistory.putExtra(TAG_CONSENT_HISTORY_CAME_FROM, FROM_ORG_DETAIL);
-                        consentHistory.putExtra(TAG_CONSENT_HISTORY_ORG_ID, organization.getID());
-                        startActivity(consentHistory);
-                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                    }
-                    return true;
-                }
-            });
+            new BottomSheet.Builder(this, R.style.BottomSheet_Dialog)
+                    .sheet(R.menu.menu_more_items)
+                    .listener(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO
+                            if (which == R.id.action_webpage) {
+                                Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
+                                intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
+                                intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
+                                startActivity(intent);
+                            } else if (which == R.id.action_consent_history) {
+                                Intent consentHistory = new Intent(OrganizationDetailActivity.this, ConsentHistoryActivity.class);
+                                consentHistory.putExtra(TAG_CONSENT_HISTORY_CAME_FROM, FROM_ORG_DETAIL);
+                                consentHistory.putExtra(TAG_CONSENT_HISTORY_ORG_ID, organization.getID());
+                                startActivity(consentHistory);
+                            } else if (which == R.id.action_request) {
+                                Intent userOrgRequestIntent = new Intent(OrganizationDetailActivity.this, UserOrgRequestActivity.class);
+                                userOrgRequestIntent.putExtra(TAG_REQUEST_HISTORY_ORG_ID, organization.getID());
+                                userOrgRequestIntent.putExtra(TAG_REQUEST_HISTORY_ORG_NAME, organization.getName());
+                                startActivity(userOrgRequestIntent);
+                            }
 
-            popup.show();
+                        }
+                    }).show();
+//            PopupMenu popup = new PopupMenu(OrganizationDetailActivity.this, findViewById(R.id.menu_more));
+//            popup.getMenuInflater()
+//                    .inflate(R.menu.menu_more_items, popup.getMenu());
+//
+//            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    if (item.getItemId() == R.id.action_download_data) {
+//                        downloadDataRequestStatus();
+//                    } else if (item.getItemId() == R.id.action_webpage) {
+//                        Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
+////                                try {
+//                        intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
+////                                } catch (Exception e) {
+////                                    e.printStackTrace();
+////                                }
+//                        intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
+//                        startActivity(intent);
+//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//                    } else if (item.getItemId() == R.id.action_forgot_me) {
+//                        deleteDataRequestStatus();
+//                    } else if (item.getItemId() == R.id.action_request_history) {
+//                        Intent orgHistory = new Intent(OrganizationDetailActivity.this, RequestHistoryActivity.class);
+//                        orgHistory.putExtra(TAG_REQUEST_HISTORY_ORG_ID, organization.getID());
+//                        startActivity(orgHistory);
+//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//                    } else if (item.getItemId() == R.id.action_consent_history) {
+//                        Intent consentHistory = new Intent(OrganizationDetailActivity.this, ConsentHistoryActivity.class);
+//                        consentHistory.putExtra(TAG_CONSENT_HISTORY_CAME_FROM, FROM_ORG_DETAIL);
+//                        consentHistory.putExtra(TAG_CONSENT_HISTORY_ORG_ID, organization.getID());
+//                        startActivity(consentHistory);
+//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//                    }
+//                    return true;
+//                }
+//            });
+//
+//            popup.show();
             return true;
         }
-        return super.onOptionsItemSelected(item);
+        return super.
+
+                onOptionsItemSelected(item);
+
     }
 
     private void downloadDataRequestStatus() {

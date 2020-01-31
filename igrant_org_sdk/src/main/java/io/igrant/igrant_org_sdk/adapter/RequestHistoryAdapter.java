@@ -7,19 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import io.igrant.igrant_org_sdk.R;
-import io.igrant.igrant_org_sdk.customViews.CustomTextView;
-import io.igrant.igrant_org_sdk.models.OrgData.DataRequest;
-import io.igrant.igrant_org_sdk.utils.DateUtils;
 
 import java.util.ArrayList;
+
+import io.igrant.igrant_org_sdk.R;
+import io.igrant.igrant_org_sdk.customViews.CustomTextView;
+import io.igrant.igrant_org_sdk.listener.OnUserRequestClickListener;
+import io.igrant.igrant_org_sdk.models.OrgData.DataRequest;
+import io.igrant.igrant_org_sdk.utils.DateUtils;
 
 public class RequestHistoryAdapter extends RecyclerView.Adapter<RequestHistoryAdapter.ViewHolder> {
 
     ArrayList<DataRequest> mList;
+    OnUserRequestClickListener mListener;
 
-    public RequestHistoryAdapter(ArrayList<DataRequest> requestHistories) {
+    public RequestHistoryAdapter(ArrayList<DataRequest> requestHistories, OnUserRequestClickListener onUserRequestClickListener) {
         mList = requestHistories;
+        mListener = onUserRequestClickListener;
     }
 
     @NonNull
@@ -31,12 +35,30 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<RequestHistoryAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DataRequest dataRequest = mList.get(position);
+        final DataRequest dataRequest = mList.get(position);
 
         holder.llItem.setBackgroundColor(position % 2 == 0 ? Color.parseColor("#ffffff") : holder.llItem.getContext().getResources().getColor(R.color.xfadedwhite));
         holder.tvRequestType.setText(dataRequest.getTypeStr());
-        holder.tvRequestDate.setText(DateUtils.getApiFormatTime(DateUtils.YYYYMMDDHHMMSS, DateUtils.DDMMYYYYHHMMA, dataRequest.getRequestedDate().replace(" +0000 UTC","")));
+        holder.tvRequestDate.setText(DateUtils.getApiFormatTime(DateUtils.YYYYMMDDHHMMSS, DateUtils.DDMMYYYYHHMMA, dataRequest.getRequestedDate().replace(" +0000 UTC", "")));
         holder.tvRequestStatus.setText(dataRequest.getStateStr());
+
+        holder.tvCancel.setVisibility(dataRequest.getOnGoing() ? View.VISIBLE : View.GONE);
+
+        holder.tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onRequestCancel(dataRequest);
+            }
+        });
+
+        holder.llItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dataRequest.getOnGoing())
+                    mListener.onRequestClick(dataRequest);
+            }
+        });
+
     }
 
     @Override
@@ -50,6 +72,7 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<RequestHistoryAd
         private CustomTextView tvRequestType;
         private CustomTextView tvRequestDate;
         private CustomTextView tvRequestStatus;
+        private CustomTextView tvCancel;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +81,7 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<RequestHistoryAd
             tvRequestType = itemView.findViewById(R.id.tvRequestType);
             tvRequestDate = itemView.findViewById(R.id.tvRequestDate);
             tvRequestStatus = itemView.findViewById(R.id.tvRequestStatus);
+            tvCancel = itemView.findViewById(R.id.tvCancel);
         }
     }
 }

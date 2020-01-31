@@ -101,4 +101,14 @@ public class DataRequest {
     public void setComment(String comment) {
         Comment = comment;
     }
+
+    private Boolean isOnGoing = false;
+
+    public Boolean getOnGoing() {
+        return isOnGoing;
+    }
+
+    public void setOnGoing(Boolean onGoing) {
+        isOnGoing = onGoing;
+    }
 }

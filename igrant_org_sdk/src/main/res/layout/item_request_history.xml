@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/llItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_normal"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/tvRequestDate"
@@ -28,20 +28,38 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/txt_color"
                 android:textSize="@dimen/text_size_medium"
-                android:textStyle="normal"/>
+                android:textStyle="normal" />
     </LinearLayout>
 
-    <io.igrant.igrant_org_sdk.customViews.CustomTextView
-            android:id="@+id/tvRequestStatus"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textColor="@color/txt_color"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="normal"/>
+            android:orientation="horizontal">
+
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
+                android:id="@+id/tvRequestStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textColor="@color/txt_color"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="normal" />
+
+        <io.igrant.igrant_org_sdk.customViews.CustomTextView
+                android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/txt_gen_cancel"
+                android:textColor="@color/lightBlue"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="normal" />
+    </LinearLayout>
 
     <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
 </LinearLayout>

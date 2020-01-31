@@ -9,11 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.paginate.Paginate;
+
+import java.util.ArrayList;
+
 import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.adapter.RequestHistoryAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
+import io.igrant.igrant_org_sdk.listener.OnUserRequestClickListener;
 import io.igrant.igrant_org_sdk.models.OrgData.DataRequest;
 import io.igrant.igrant_org_sdk.models.OrgData.DataRequestHistoryResponse;
 import io.igrant.igrant_org_sdk.utils.DataUtils;
@@ -22,11 +27,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.ArrayList;
-
 public class RequestHistoryActivity extends AppCompatActivity {
 
     public static final String TAG_REQUEST_HISTORY_ORG_ID = "ConsentHistoryActivity.orgId";
+    public static final String TAG_REQUEST_HISTORY_ORG_NAME = "io.igrant.mobileapp.activity.RequestHistoryActivity.orgName";
 
     private RequestHistoryAdapter adapter;
     private boolean isLoading = false;
@@ -125,7 +129,17 @@ public class RequestHistoryActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        adapter = new RequestHistoryAdapter(requestHistories);
+        adapter = new RequestHistoryAdapter(requestHistories, new OnUserRequestClickListener() {
+            @Override
+            public void onRequestClick(DataRequest request) {
+
+            }
+
+            @Override
+            public void onRequestCancel(DataRequest request) {
+
+            }
+        });
         rvRequestHistory.setLayoutManager(new LinearLayoutManager(RequestHistoryActivity.this));
         rvRequestHistory.setAdapter(adapter);
 

@@ -20,5 +20,7 @@
                   android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name="io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="io.igrant.igrant_org_sdk.activity.UserOrgRequestActivity"
+                android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 </manifest>
