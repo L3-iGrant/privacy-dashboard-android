@@ -99,7 +99,7 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ConsentStatusRequest body = new ConsentStatusRequest();
-                body.setConsented("DisAllow");
+                body.setConsented("Disallow");
                 AllowConsentService(body);
             }
         });
@@ -121,6 +121,7 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
                 tvDays.setText(seekBar.getProgress() + " Days");
                 ctvStatusMessage.setText(getResources().getString(R.string.txt_attribute_askme_consent_rule));
                 body.setDays(seekBar.getProgress());
+                body.setConsented("Askme");
                 AllowConsentService(body);
             }
         });
@@ -201,7 +202,7 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
                 ivAllow.setVisibility(View.VISIBLE);
                 ivDisallow.setVisibility(View.GONE);
                 ctvStatusMessage.setText(getResources().getString(R.string.txt_attribute_allow_consent_rule));
-            } else if (consent.getStatus().getConsented().equalsIgnoreCase("disAllow")) {
+            } else if (consent.getStatus().getConsented().equalsIgnoreCase("Disallow")) {
                 ivDisallow.setVisibility(View.VISIBLE);
                 ivAllow.setVisibility(View.GONE);
                 ctvStatusMessage.setText(getResources().getString(R.string.txt_attribute_disallow_consent_rule));

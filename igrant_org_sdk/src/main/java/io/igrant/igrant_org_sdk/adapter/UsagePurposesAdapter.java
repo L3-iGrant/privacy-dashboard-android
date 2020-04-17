@@ -35,7 +35,7 @@ public class UsagePurposesAdapter extends RecyclerView.Adapter<UsagePurposesAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final PurposeConsent purposeConsent = mList.get(position);
 
-        holder.ctvItemName.setText(purposeConsent.getPurpose().getDescription());
+        holder.ctvItemName.setText(purposeConsent.getPurpose().getName());
         holder.ctvStatus.setText(purposeConsent.getCount().getConsented() == 0 ?
                 holder.ctvStatus.getContext().getResources().getString(R.string.txt_org_disallow) :
                 holder.ctvStatus.getContext().getResources().getString(R.string.txt_org_allow,

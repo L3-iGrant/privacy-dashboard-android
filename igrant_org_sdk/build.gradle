@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.10"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -45,13 +45,13 @@ dependencies {
     api 'com.github.bumptech.glide:glide:4.8.0'
     api 'org.greenrobot:eventbus:3.1.1'
     api 'com.github.markomilos:paginate:0.5.1'
-
+    implementation 'com.github.devendroid:ReadMoreOption:1.0.2'
     api 'com.cocosw:bottomsheet:1.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 group = 'io.igrant.igrant_sdk'
-version = '1.0.8'
+version = '1.0.10'
 
 install {
     repositories.mavenInstaller {
@@ -128,6 +128,11 @@ install {
                     artifactId 'bottomsheet'
                     version '1.4.0'
                 }
+                dependency {
+                    groupId 'com.github.devendroid'
+                    artifactId 'ReadMoreOption'
+                    version '1.0.2'
+                }
             }
         }
     }
@@ -166,10 +171,10 @@ bintray {
         name = 'mobileSDK-android'
         desc = ''
         version {
-            name = '1.0.8'
+            name = '1.0.10'
             desc = ''
             released  = new Date()
-            vcsTag = '1.0.8'
+            vcsTag = '1.0.10'
         }
         websiteUrl = 'https://github.com/L3-iGrant/mobileSDK-android'
         vcsUrl = 'https://github.com/L3-iGrant/mobileSDK-android.git'

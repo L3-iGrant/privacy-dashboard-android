@@ -3,6 +3,7 @@ package io.igrant.igrant_org_sdk.models.Organizations;
 public class Purpose {
 
     private String ID;
+    private String Name;
     private String Description;
     private Boolean LawfulUsage;
     private String PolicyURL;
@@ -15,12 +16,12 @@ public class Purpose {
         this.ID = ID;
     }
 
-    public String getDescription() {
-        return Description;
+    public String getName() {
+        return Name;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setName(String Description) {
+        this.Name = Description;
     }
 
     public Boolean getLawfulUsage() {
@@ -39,5 +40,11 @@ public class Purpose {
         this.PolicyURL = PolicyURL;
     }
 
+    public String getDescription() {
+        return Description;
+    }
 
+    public void setDescription(String description) {
+        Description = description;
+    }
 }

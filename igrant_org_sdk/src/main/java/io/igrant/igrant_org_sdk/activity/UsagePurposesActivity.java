@@ -1,6 +1,7 @@
 package io.igrant.igrant_org_sdk.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.devs.readmoreoption.ReadMoreOption;
+
 import io.igrant.igrant_org_sdk.customViews.CustomButton;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.R;
@@ -25,16 +29,19 @@ import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_UR
 
 public class UsagePurposesActivity extends AppCompatActivity {
 
+    public static final String TAG_EXTRA_NAME = "io.igrant.mobileapp.Activity.UsagePurposesActivity.name";
     public static final String TAG_EXTRA_DESCRIPTION = "io.igrant.mobileapp.Activity.UsagePurposesActivity.description";
 
     private RecyclerView rvUsagePurposes;
     private CustomButton btnPrivacyPolicy;
     private Toolbar toolBarCommon;
     private CustomTextView tvTitle;
+    private CustomTextView tvDesc;
 
     public static ConsentListResponse consentList;
     private UsageItemAdapter adapter;
     private String mTitle = "";
+    private String mDescription = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,21 +49,41 @@ public class UsagePurposesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_usage_purposes);
 
         if (getIntent().getExtras() != null) {
-            mTitle = getIntent().getStringExtra(TAG_EXTRA_DESCRIPTION);
+            mTitle = getIntent().getStringExtra(TAG_EXTRA_NAME);
+            mDescription = getIntent().getStringExtra(TAG_EXTRA_DESCRIPTION);
         }
 
         initViews();
         setUpToolBar();
-
+        setUpTextView();
         initListener();
         setUpRecyclerView();
     }
+
+    private void setUpTextView() {
+
+
+        ReadMoreOption readMoreOption = new ReadMoreOption.Builder(this)
+                .textLength(3, ReadMoreOption.TYPE_LINE) // OR
+                //.textLength(300, ReadMoreOption.TYPE_CHARACTER)
+                .moreLabel(getResources().getString(R.string.txt_org_read_more))
+                .lessLabel(getResources().getString(R.string.txt_org_read_less))
+                .moreLabelColor(Color.RED)
+                .lessLabelColor(Color.BLUE)
+                .labelUnderLine(false)
+                .expandAnimation(true)
+                .build();
+
+        readMoreOption.addReadMoreTo(tvDesc, mDescription);
+    }
+
 
     private void initViews() {
         rvUsagePurposes = findViewById(R.id.rvUsagePurposes);
         btnPrivacyPolicy = findViewById(R.id.btnPrivacyPolicy);
         toolBarCommon = findViewById(R.id.toolBarCommon);
         tvTitle = findViewById(R.id.tvTitle);
+        tvDesc = findViewById(R.id.tvDesc);
     }
 
     private void setUpRecyclerView() {

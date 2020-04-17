@@ -63,6 +63,7 @@ import static io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity.TAG_DA
 import static io.igrant.igrant_org_sdk.activity.RequestHistoryActivity.TAG_REQUEST_HISTORY_ORG_ID;
 import static io.igrant.igrant_org_sdk.activity.RequestHistoryActivity.TAG_REQUEST_HISTORY_ORG_NAME;
 import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_DESCRIPTION;
+import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_NAME;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
 
@@ -157,6 +158,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     if (response.code() == 200) {
                         Intent intent = new Intent(OrganizationDetailActivity.this, UsagePurposesActivity.class);
                         UsagePurposesActivity.consentList = response.body();
+                        intent.putExtra(TAG_EXTRA_NAME, consent.getPurpose().getName());
                         intent.putExtra(TAG_EXTRA_DESCRIPTION, consent.getPurpose().getDescription());
                         startActivity(intent);
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
