@@ -7,11 +7,12 @@ Gradle:
 
 ```groovy
 repositories {
+    maven { url "https://jitpack.io" }
     jcenter()
 }
 
 dependencies {
-    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.0.8'
+    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.0.10'
 }
 ```
 
