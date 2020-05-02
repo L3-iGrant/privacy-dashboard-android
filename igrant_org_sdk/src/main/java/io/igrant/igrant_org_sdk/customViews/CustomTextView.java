@@ -7,7 +7,7 @@ import android.util.AttributeSet;
  * Created by JMAM on 8/15/18.
  */
 
-public class CustomTextView extends android.support.v7.widget.AppCompatTextView {
+public class CustomTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     public CustomTextView(Context context) {
         super(context);

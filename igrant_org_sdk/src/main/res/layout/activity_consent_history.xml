@@ -97,11 +97,11 @@
                 android:layout_marginBottom="5dp"
                 android:background="@color/txt_color"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvConsentHistory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"></android.support.v7.widget.RecyclerView>
+                android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
 
         <io.igrant.igrant_org_sdk.customViews.CustomTextView
                 android:id="@+id/tvEmptyMessage"

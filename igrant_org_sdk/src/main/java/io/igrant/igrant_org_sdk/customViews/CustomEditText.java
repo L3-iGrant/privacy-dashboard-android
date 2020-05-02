@@ -16,7 +16,7 @@ import io.igrant.igrant_org_sdk.R;
  * Created by JMAM on 8/15/18.
  */
 
-public class CustomEditText extends android.support.v7.widget.AppCompatEditText {
+public class CustomEditText extends androidx.appcompat.widget.AppCompatEditText {
 
     /**
      * the spacing between the main text and the inner top padding.

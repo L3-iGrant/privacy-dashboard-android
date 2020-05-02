@@ -30,11 +30,11 @@
                 android:layout_height="0.5dp"
                 android:background="@color/divider_color" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvRequestHistory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"></android.support.v7.widget.RecyclerView>
+                android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
