@@ -34,6 +34,7 @@ import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.Events.Event;
 import io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity;
 import io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity;
+import io.igrant.igrant_org_sdk.activity.LoginActivity;
 import io.igrant.igrant_org_sdk.activity.UsagePurposesActivity;
 import io.igrant.igrant_org_sdk.activity.UserOrgRequestActivity;
 import io.igrant.igrant_org_sdk.activity.WebViewActivity;
@@ -66,6 +67,8 @@ import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_
 import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_NAME;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
+import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_API_KEY;
+import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_USER_ID;
 
 public class OrganizationDetailActivity extends AppCompatActivity {
 
@@ -88,11 +91,20 @@ public class OrganizationDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization_detail);
+        getIntentData();
         initViews();
         setUpToolBar();
         setUprecyclerView();
         initView(organization);
         getOrganizationDetail();
+    }
+
+    private void getIntentData() {
+        String userId = getIntent().getStringExtra(EXTRA_USER_ID);
+        String apiKey = getIntent().getStringExtra(EXTRA_API_KEY);
+
+        DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID, userId);
+        DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN, apiKey);
     }
 
     private void initViews() {
@@ -312,43 +324,6 @@ public class OrganizationDetailActivity extends AppCompatActivity {
 
                         }
                     }).show();
-//            PopupMenu popup = new PopupMenu(OrganizationDetailActivity.this, findViewById(R.id.menu_more));
-//            popup.getMenuInflater()
-//                    .inflate(R.menu.menu_more_items, popup.getMenu());
-//
-//            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    if (item.getItemId() == R.id.action_download_data) {
-//                        downloadDataRequestStatus();
-//                    } else if (item.getItemId() == R.id.action_webpage) {
-//                        Intent intent = new Intent(OrganizationDetailActivity.this, WebViewActivity.class);
-////                                try {
-//                        intent.putExtra(TAG_EXTRA_WEB_URL, organization.getPolicyURL());
-////                                } catch (Exception e) {
-////                                    e.printStackTrace();
-////                                }
-//                        intent.putExtra(TAG_EXTRA_WEB_MTITLE, getResources().getString(R.string.txt_profile_privacy_policy));
-//                        startActivity(intent);
-//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                    } else if (item.getItemId() == R.id.action_forgot_me) {
-//                        deleteDataRequestStatus();
-//                    } else if (item.getItemId() == R.id.action_request_history) {
-//                        Intent orgHistory = new Intent(OrganizationDetailActivity.this, RequestHistoryActivity.class);
-//                        orgHistory.putExtra(TAG_REQUEST_HISTORY_ORG_ID, organization.getID());
-//                        startActivity(orgHistory);
-//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                    } else if (item.getItemId() == R.id.action_consent_history) {
-//                        Intent consentHistory = new Intent(OrganizationDetailActivity.this, ConsentHistoryActivity.class);
-//                        consentHistory.putExtra(TAG_CONSENT_HISTORY_CAME_FROM, FROM_ORG_DETAIL);
-//                        consentHistory.putExtra(TAG_CONSENT_HISTORY_ORG_ID, organization.getID());
-//                        startActivity(consentHistory);
-//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                    }
-//                    return true;
-//                }
-//            });
-//
-//            popup.show();
             return true;
         }
         return super.

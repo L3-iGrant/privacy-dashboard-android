@@ -116,7 +116,7 @@ public class ApiManager {
 
         private void setAuthHeader(Request.Builder builder, String token) {
             if (token != null) //Add Auth token to each request if authorized
-                builder.header("Authorization", "Bearer " + token);
+                builder.header("Authorization", "ApiKey " + token);
         }
 
         private static Request.Builder requestBuild(Request request) {
