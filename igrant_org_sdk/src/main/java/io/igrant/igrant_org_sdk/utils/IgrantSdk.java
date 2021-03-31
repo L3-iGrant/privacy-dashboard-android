@@ -19,6 +19,7 @@ public class IgrantSdk {
 
     public static final String EXTRA_USER_ID = EXTRA_PREFIX + ".UserId";
     public static final String EXTRA_API_KEY = EXTRA_PREFIX + ".ApiKey";
+    public static final String EXTRA_ORG_ID = EXTRA_PREFIX + ".OrgId";
     private static final int REQUEST_IGRANT_SDK = 101;
 
     private Intent mIgrantSdkIntent;
@@ -32,7 +33,6 @@ public class IgrantSdk {
 
     /**
      * Set user id for igrant sdk.
-     *
      * @param userId
      */
     public IgrantSdk withUserId(String userId) {
@@ -41,8 +41,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Set an aspect ratio for crop bounds that is evaluated from source image width and height.
-     * User won't see the menu with other ratios options.
+     * Set Api key for the iGrant Sdk.
      */
     public IgrantSdk withApiKey(String apiKey) {
         mIgrantSdkOptionsBundle.putString(EXTRA_API_KEY, apiKey);
@@ -50,7 +49,15 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from an Activity
+     * Set Api key for the iGrant Sdk.
+     */
+    public IgrantSdk withOrgId(String orgId) {
+        mIgrantSdkOptionsBundle.putString(EXTRA_ORG_ID, orgId);
+        return this;
+    }
+
+    /**
+     * Send the Intent from an Activity
      *
      * @param activity Activity to receive result
      */
@@ -59,7 +66,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from an Activity with a custom request code
+     * Send the Intent from an Activity with a custom request code
      *
      * @param activity    Activity to receive result
      * @param requestCode requestCode for result
@@ -69,7 +76,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from a Fragment
+     * Send the Intent from a Fragment
      *
      * @param fragment Fragment to receive result
      */
@@ -78,7 +85,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent with a custom request code
+     * Send the Intent with a custom request code
      *
      * @param fragment    Fragment to receive result
      * @param requestCode requestCode for result

@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ApiManager {
     //        public static final String BASE_URL = "https://api.igrant.io/";//production
-    public static final String BASE_URL = "https://demo-api.igrant.io/"; //demo
-//    public static final String BASE_URL = "https://staging-api.igrant.io/";
+//    public static final String BASE_URL = "https://demo-api.igrant.io/"; //demo
+    public static final String BASE_URL = "https://staging-api.igrant.io/";
 
     private static OkHttpClient okClient;
     private static APIService service;

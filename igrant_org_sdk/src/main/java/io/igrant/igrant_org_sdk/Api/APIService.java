@@ -47,38 +47,50 @@ public interface APIService {
                                             @Body ConsentStatusRequest body);
 
     //data download and delete
-    @GET("v1/user/organizations/{orgId}/data-download/status")
-    Call<DataRequestStatus> getDataDownloadStatus(@Path("orgId") String orgId);
+    @GET("v1/users/{userID}/organizations/{orgId}/data-download/status")
+    Call<DataRequestStatus> getDataDownloadStatus(@Path("userID") String userID,
+                                                  @Path("orgId") String orgId);
 
-    @POST("v1/user/organizations/{orgId}/data-download")
-    Call<Void> dataDownloadRequest(@Path("orgId") String orgId);
+    @POST("v1/users/{userID}/organizations/{orgId}/data-download")
+    Call<Void> dataDownloadRequest(@Path("userID") String userID,
+                                   @Path("orgId") String orgId);
 
-    @GET("v1/user/organizations/{orgId}/data-download")
-    Call<ArrayList<DataRequest>> dataDownloadStatus(@Path("orgId") String orgId);
+    @GET("v1/users/{userID}/organizations/{orgId}/data-download")
+    Call<ArrayList<DataRequest>> dataDownloadStatus(@Path("userID") String userID,
+                                                    @Path("orgId") String orgId);
 
-    @POST("v1/user/organizations/{orgId}/data-download/{requestId}/cancel")
-    Call<DataRequestGenResponse> dataDownloadCancelRequest(@Path("orgId") String orgId,
+    @POST("v1/users/{userID}/organizations/{orgId}/data-download/{requestId}/cancel")
+    Call<DataRequestGenResponse> dataDownloadCancelRequest(@Path("userID") String userID,
+                                                           @Path("orgId") String orgId,
                                                            @Path("requestId") String requestId);
 
-    @GET("v1/user/organizations/{orgId}/data-delete/status")
-    Call<DataRequestStatus> getDataDeleteStatus(@Path("orgId") String orgId);
+    @GET("v1/users/{userID}/organizations/{orgId}/data-delete/status")
+    Call<DataRequestStatus> getDataDeleteStatus(
+            @Path("userID") String userID,
+            @Path("orgId") String orgId);
 
-    @POST("v1/user/organizations/{orgId}/data-delete")
-    Call<Void> dataDeleteRequest(@Path("orgId") String orgId);
+    @POST("v1/users/{userID}/organizations/{orgId}/data-delete")
+    Call<Void> dataDeleteRequest(@Path("userID") String userID,
+                                 @Path("orgId") String orgId);
 
-    @POST("v1/user/organizations/{orgId}/data-delete")
-    Call<ArrayList<DataRequest>> dataDeleteStatus(@Path("orgId") String orgId);
+    @POST("v1/users/{userID}/organizations/{orgId}/data-delete")
+    Call<ArrayList<DataRequest>> dataDeleteStatus(
+            @Path("userID") String userID,
+            @Path("orgId") String orgId);
 
-    @POST("v1/user/organizations/{orgId}/data-delete/{requestId}/cancel")
-    Call<DataRequestGenResponse> dataDeleteCancelRequest(@Path("orgId") String orgId,
+    @POST("v1/users/{userID}/organizations/{orgId}/data-delete/{requestId}/cancel")
+    Call<DataRequestGenResponse> dataDeleteCancelRequest(@Path("userID") String userID,
+                                                         @Path("orgId") String orgId,
                                                          @Path("requestId") String requestId);
 
-    @GET("v1/user/organizations/{orgId}/data-status")
-    Call<DataRequestHistoryResponse> getOrgRequestStatus(@Path("orgId") String orgId,
+    @GET("v1/users/{userID}/organizations/{orgId}/data-status")
+    Call<DataRequestHistoryResponse> getOrgRequestStatus(@Path("userID") String userID,
+                                                         @Path("orgId") String orgId,
                                                          @Query("startid") String startid);
 
-    @GET("v1/user/consenthistory")
-    Call<ConsentHistoryResponse> getConsentHistory(@Query("limit") int limit,
+    @GET("v1/users/{userID}/consenthistory")
+    Call<ConsentHistoryResponse> getConsentHistory(@Path("userID") String userID,
+                                                   @Query("limit") int limit,
                                                    @Query("orgid") String orgId,
                                                    @Query("startid") String startid);
 }

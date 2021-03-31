@@ -19,8 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <meta-data android:value="5c1504a25430460001af61ed" android:name="io.igrant.igrant_org_sdk.orgid"></meta-data>
     </application>
 
 </manifest>
