@@ -267,7 +267,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrganizationDetail(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID)).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrganizationDetail(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID)).enqueue(callback);
         }
     }
 

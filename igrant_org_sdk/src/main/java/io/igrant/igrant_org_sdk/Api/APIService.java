@@ -22,8 +22,9 @@ public interface APIService {
     @POST("v1.1/users/login")
     Call<LoginResponse> loginService(@Body LoginRequest request);
 
-    @GET("v1/GetUserOrgsAndConsents")
-    Call<OrganizationDetailResponse> getOrganizationDetail(@Query("orgID") String orgID);
+    @GET("v1/users/{userId}/GetUserOrgsAndConsents")
+    Call<OrganizationDetailResponse> getOrganizationDetail(@Path("userId") String userId,
+                                                           @Query("orgID") String orgID);
 
     @GET("v1/organizations/{orgID}/users/{userId}/consents/{consentId}/purposes/{purposeId}")
     Call<ConsentListResponse> getConsentList(@Path("orgID") String orgID,
