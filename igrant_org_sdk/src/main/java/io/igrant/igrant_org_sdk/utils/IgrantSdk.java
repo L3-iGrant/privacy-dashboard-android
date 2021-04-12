@@ -10,8 +10,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.BuildConfig;
 import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
+import io.igrant.igrant_org_sdk.models.anonymous.AnonymousUser;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IgrantSdk {
 
@@ -33,6 +38,7 @@ public class IgrantSdk {
 
     /**
      * Set user id for igrant sdk.
+     *
      * @param userId
      */
     public IgrantSdk withUserId(String userId) {
@@ -104,5 +110,29 @@ public class IgrantSdk {
         mIgrantSdkIntent.setClass(context, OrganizationDetailActivity.class);
         mIgrantSdkIntent.putExtras(mIgrantSdkOptionsBundle);
         return mIgrantSdkIntent;
+    }
+
+    public static void createIGrantUser(String orgID, String apiKey, final IgrantUserResponseHandler handler) {
+        Callback<AnonymousUser> callback = new Callback<AnonymousUser>() {
+            @Override
+            public void onResponse(Call<AnonymousUser> call, Response<AnonymousUser> response) {
+                try {
+                    if (response.body() != null) {
+                        handler.onSuccess(response.body());
+                    } else {
+                        handler.onCreationFailed();
+                    }
+                } catch (Exception e) {
+                    handler.onCreationFailed();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnonymousUser> call, Throwable t) {
+                handler.onCreationFailed();
+            }
+        };
+        ApiManager.getApi(apiKey).getService().createIgrantUser(orgID).enqueue(callback);
     }
 }

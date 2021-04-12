@@ -39,7 +39,8 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.okhttp3:okhttp:3.8.1'
     api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     api 'org.greenrobot:eventbus:3.1.1'
     api 'com.github.markomilos:paginate:0.5.1'
     api 'com.github.devendroid:ReadMoreOption:1.0.2'
@@ -86,7 +87,7 @@ install {
                 dependency {
                     groupId 'com.github.bumptech.glide'
                     artifactId 'glide'
-                    version '4.8.0'
+                    version '4.11.0'
                 }
                 dependency {
                     groupId 'org.greenrobot'

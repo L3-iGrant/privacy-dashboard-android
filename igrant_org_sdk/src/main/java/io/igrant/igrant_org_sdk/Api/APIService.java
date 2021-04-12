@@ -12,6 +12,7 @@ import io.igrant.igrant_org_sdk.models.OrgData.DataRequestHistoryResponse;
 import io.igrant.igrant_org_sdk.models.OrgData.DataRequestStatus;
 import io.igrant.igrant_org_sdk.models.Organizations.OrganizationDetailResponse;
 import io.igrant.igrant_org_sdk.models.ResultResponse;
+import io.igrant.igrant_org_sdk.models.anonymous.AnonymousUser;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -94,4 +95,7 @@ public interface APIService {
                                                    @Query("limit") int limit,
                                                    @Query("orgid") String orgId,
                                                    @Query("startid") String startid);
+
+    @POST("/v1/organizations/{orgID}/users/anonymous")
+    Call<AnonymousUser> createIgrantUser(@Path("orgID") String orgID);
 }

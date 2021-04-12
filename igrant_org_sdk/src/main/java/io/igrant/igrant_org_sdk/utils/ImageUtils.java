@@ -15,7 +15,7 @@ public class ImageUtils {
     public static void setImage(ImageView imageView, String url) {
         if (url != null && !url.isEmpty()) {
             LazyHeaders.Builder builder = new LazyHeaders.Builder()
-                    .addHeader("Authorization", "Bearer " + DataUtils.getStringValue(imageView.getContext(),DataUtils.EXTRA_TAG_TOKEN));
+                    .addHeader("Authorization", "ApiKey " + DataUtils.getStringValue(imageView.getContext(),DataUtils.EXTRA_TAG_TOKEN));
             GlideUrl glideUrl = new GlideUrl(url, builder.build());
 //
             Glide.with(imageView.getContext()).load(glideUrl).into(imageView);
@@ -25,7 +25,7 @@ public class ImageUtils {
     public static void setImage(ImageView imageView, String url, int placeHolder) {
         if (url != null && !url.isEmpty()) {
             LazyHeaders.Builder builder = new LazyHeaders.Builder()
-                    .addHeader("Authorization", "Bearer " + DataUtils.getStringValue(imageView.getContext(),DataUtils.EXTRA_TAG_TOKEN));
+                    .addHeader("Authorization", "ApiKey " + DataUtils.getStringValue(imageView.getContext(),DataUtils.EXTRA_TAG_TOKEN));
             GlideUrl glideUrl = new GlideUrl(url, builder.build());
 
             RequestOptions requestOptions = new RequestOptions();
