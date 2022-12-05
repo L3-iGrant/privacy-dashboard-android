@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 15
-        versionName "1.12.2"
+        versionCode 16
+        versionName "1.12.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -38,7 +38,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    api 'com.google.android.material:material:1.7.0'
+    api 'com.google.android.material:material:1.6.0'
     api 'com.github.zcweng:switch-button:0.0.3@aar'
 //    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
 //        exclude module: 'okhttp'
@@ -56,7 +56,7 @@ dependencies {
 }
 
 group = 'io.igrant.igrant_sdk'
-version = '1.12.2'
+version = '1.12.3'
 
 install {
     repositories.mavenInstaller {
@@ -68,7 +68,7 @@ install {
                 dependency {
                     groupId 'com.google.android.material'
                     artifactId 'material'
-                    version '1.7.0'
+                    version '1.6.0'
                 }
                 dependency {
                     groupId 'com.github.zcweng'
