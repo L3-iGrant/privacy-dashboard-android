@@ -4,12 +4,13 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 32
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 17
-        versionName "1.12.4"
+        versionCode 18
+        versionName "1.12.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -34,11 +35,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    api 'com.google.android.material:material:1.6.0'
+    api 'com.google.android.material:material:1.3.0'
     api 'com.github.zcweng:switch-button:0.0.3@aar'
 //    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
 //        exclude module: 'okhttp'
@@ -52,17 +53,16 @@ dependencies {
     api 'com.github.markomilos:paginate:0.5.1'
     api 'com.github.devendroid:ReadMoreOption:1.0.2'
     api 'com.cocosw:bottomsheet:1.4.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-group = 'io.igrant.igrant_sdk'
-version = '1.12.4'
+group = 'com.github.L3-iGrant'
+version = '1.12.5'
 
 install {
     repositories.mavenInstaller {
         pom.project {
 
-            name 'iGantioSDK'
+            name 'mobileSDK-android'
 
             dependencies {
                 dependency {
