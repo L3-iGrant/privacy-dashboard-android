@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class IgrantSdk {
 
-    private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
+    private static final String EXTRA_PREFIX = "io.igrant.igrant_sdk";
 
     public static final String EXTRA_USER_ID = EXTRA_PREFIX + ".UserId";
     public static final String EXTRA_API_KEY = EXTRA_PREFIX + ".ApiKey";
