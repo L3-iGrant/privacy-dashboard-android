@@ -15,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         var myBtn: Button = findViewById<Button>(R.id.btnSdk) as Button
 
         myBtn.setOnClickListener {
-            IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI1ZjVhOTRkYmM2NzAwMTAwMDEwMGZhMmYiLCJleHAiOjE2MzA5MDg4NTN9.7yzf-iSB2ju7Rs-tJQPwcv7N2IK9Yp-qXsVfjbYpqQ4")
-                .withUserId("605cb3508f373f00016b65f9").start(this)
+            IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MDNlNjdkYjY5ZGQ3MjAwMDFjNzRmOTAiLCJleHAiOjE2NDU4ODI0NjN9.9GxRitStk3eaggQL-lCAfY1z2cRMZlq3TPqwdTq0aSQ")
+                .withUserId("605cb3508f373f00016b65f9")
+                .withOrgId("603e683c69dd720001c74f93").start(this)
         }
     }
 }

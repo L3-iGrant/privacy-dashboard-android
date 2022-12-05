@@ -128,7 +128,7 @@ public class ApiManager {
         private static Request.Builder requestBuild(Request request, String auth) {
             return request.newBuilder()
                     .header("Accept", "application/json")
-                    .header("Authorization", "Bearer " + auth)
+                    .header("Authorization", "ApiKey " + auth)
                     .method(request.method(), request.body());
         }
     }

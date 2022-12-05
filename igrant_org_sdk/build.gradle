@@ -1,19 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 12
-        versionName "1.0.12"
+        targetSdkVersion 32
+        versionCode 15
+        versionName "1.12.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -25,6 +21,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -34,7 +38,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    api 'com.google.android.material:material:1.0.0'
+    api 'com.google.android.material:material:1.7.0'
     api 'com.github.zcweng:switch-button:0.0.3@aar'
 //    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
 //        exclude module: 'okhttp'
@@ -42,7 +46,8 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.okhttp3:okhttp:3.8.1'
     api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     api 'org.greenrobot:eventbus:3.1.1'
     api 'com.github.markomilos:paginate:0.5.1'
     api 'com.github.devendroid:ReadMoreOption:1.0.2'
@@ -51,41 +56,19 @@ dependencies {
 }
 
 group = 'io.igrant.igrant_sdk'
-version = '1.0.12'
+version = '1.12.2'
 
 install {
     repositories.mavenInstaller {
         pom.project {
-            packaging 'aar'
 
             name 'iGantioSDK'
-            description ''
-            url 'https://github.com/L3-iGrant/mobileSDK-android'
-
-            licenses {
-                license {
-                    name 'MIT'
-                    url 'https://opensource.org/licenses/mit-license.php'
-                }
-            }
-            developers {
-                developer {
-                    id 'josmilan1103'
-                    name 'Joseph Milan'
-                    email 'josmilan1103@gmail.com'
-                }
-            }
-            scm {
-                connection 'https://github.com/L3-iGrant/mobileSDK-android.git'
-                developerConnection 'https://github.com/L3-iGrant/mobileSDK-android'
-                url 'https://dl.bintray.com/josmilan1103/iGantioSDK'
-            }
 
             dependencies {
                 dependency {
-                    groupId 'com.android.support'
-                    artifactId 'design'
-                    version '28.0.0'
+                    groupId 'com.google.android.material'
+                    artifactId 'material'
+                    version '1.7.0'
                 }
                 dependency {
                     groupId 'com.github.zcweng'
@@ -111,7 +94,7 @@ install {
                 dependency {
                     groupId 'com.github.bumptech.glide'
                     artifactId 'glide'
-                    version '4.8.0'
+                    version '4.11.0'
                 }
                 dependency {
                     groupId 'org.greenrobot'
@@ -133,58 +116,12 @@ install {
                     artifactId 'ReadMoreOption'
                     version '1.0.2'
                 }
+                dependency {
+                    groupId 'org.jetbrains.kotlin'
+                    artifactId 'kotlin-stdlib-jdk7'
+                    version '1.5.20'
+                }
             }
         }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = "josmilan1103"
-    key = "7c3f58c0669315cec40057237d0fa3ddf152ec82"
-
-    configurations = ['archives']
-    pkg {
-        repo = 'iGantioSDK'
-        name = 'mobileSDK-android'
-        desc = ''
-        version {
-            name = '1.0.12'
-            desc = ''
-            released  = new Date()
-            vcsTag = '1.0.12'
-        }
-        websiteUrl = 'https://github.com/L3-iGrant/mobileSDK-android'
-        vcsUrl = 'https://github.com/L3-iGrant/mobileSDK-android.git'
-        licenses = ["MIT"]
-//        dryRun = false
-        publish = true
-//        override = false
-//        publicDownloadNumbers = true
-//        version {
-//            desc = libraryDescription
-//        }
     }
 }

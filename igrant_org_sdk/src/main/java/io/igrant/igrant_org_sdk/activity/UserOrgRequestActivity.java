@@ -145,7 +145,7 @@ public class UserOrgRequestActivity extends AppCompatActivity {
             ApiManager.getApi(DataUtils.getStringValue(
                     this,
                     DataUtils.EXTRA_TAG_TOKEN
-            )).getService().getDataDownloadStatus(OrganizationDetailActivity.organization.getID()).enqueue(callback);
+            )).getService().getDataDownloadStatus(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),OrganizationDetailActivity.organization.getID()).enqueue(callback);
         }
     }
 
@@ -207,7 +207,7 @@ public class UserOrgRequestActivity extends AppCompatActivity {
             ApiManager.getApi(DataUtils.getStringValue(
                     this,
                     DataUtils.EXTRA_TAG_TOKEN
-            )).getService().dataDownloadRequest(OrganizationDetailActivity.organization.getID())
+            )).getService().dataDownloadRequest(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),OrganizationDetailActivity.organization.getID())
                     .enqueue(callback);
         }
     }
@@ -248,7 +248,7 @@ public class UserOrgRequestActivity extends AppCompatActivity {
             ApiManager.getApi(DataUtils.getStringValue(
                     this,
                     DataUtils.EXTRA_TAG_TOKEN
-            )).getService().getDataDeleteStatus(OrganizationDetailActivity.organization.getID())
+            )).getService().getDataDeleteStatus(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),OrganizationDetailActivity.organization.getID())
                     .enqueue(callback);
         }
     }
@@ -281,7 +281,7 @@ public class UserOrgRequestActivity extends AppCompatActivity {
                             this,
                             DataUtils.EXTRA_TAG_TOKEN
                     )
-            ).getService().dataDeleteRequest(OrganizationDetailActivity.organization.getID())
+            ).getService().dataDeleteRequest(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),OrganizationDetailActivity.organization.getID())
                     .enqueue(callback);
         }
     }
@@ -358,12 +358,12 @@ public class UserOrgRequestActivity extends AppCompatActivity {
                 ApiManager.getApi(DataUtils.getStringValue(
                         this,
                         DataUtils.EXTRA_TAG_TOKEN
-                )).getService().dataDownloadCancelRequest(mOrgId, request.getID()).enqueue(callback);
+                )).getService().dataDownloadCancelRequest(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, request.getID()).enqueue(callback);
             else
                 ApiManager.getApi(DataUtils.getStringValue(
                         this,
                         DataUtils.EXTRA_TAG_TOKEN
-                )).getService().dataDeleteCancelRequest(mOrgId, request.getID()).enqueue(callback);
+                )).getService().dataDeleteCancelRequest(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, request.getID()).enqueue(callback);
         }
     }
 
@@ -416,7 +416,7 @@ public class UserOrgRequestActivity extends AppCompatActivity {
             ApiManager.getApi(DataUtils.getStringValue(
                     this,
                     DataUtils.EXTRA_TAG_TOKEN
-            )).getService().getOrgRequestStatus(mOrgId, startId).enqueue(callback);
+            )).getService().getOrgRequestStatus(DataUtils.getStringValue(UserOrgRequestActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, startId).enqueue(callback);
         }
     }
 

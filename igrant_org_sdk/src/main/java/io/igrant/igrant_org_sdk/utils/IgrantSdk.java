@@ -10,15 +10,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.BuildConfig;
 import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
+import io.igrant.igrant_org_sdk.models.anonymous.AnonymousUser;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IgrantSdk {
 
-    private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
+    private static final String EXTRA_PREFIX = "io.igrant.igrant_sdk";
 
     public static final String EXTRA_USER_ID = EXTRA_PREFIX + ".UserId";
     public static final String EXTRA_API_KEY = EXTRA_PREFIX + ".ApiKey";
+    public static final String EXTRA_ORG_ID = EXTRA_PREFIX + ".OrgId";
     private static final int REQUEST_IGRANT_SDK = 101;
 
     private Intent mIgrantSdkIntent;
@@ -41,8 +47,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Set an aspect ratio for crop bounds that is evaluated from source image width and height.
-     * User won't see the menu with other ratios options.
+     * Set Api key for the iGrant Sdk.
      */
     public IgrantSdk withApiKey(String apiKey) {
         mIgrantSdkOptionsBundle.putString(EXTRA_API_KEY, apiKey);
@@ -50,7 +55,15 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from an Activity
+     * Set Api key for the iGrant Sdk.
+     */
+    public IgrantSdk withOrgId(String orgId) {
+        mIgrantSdkOptionsBundle.putString(EXTRA_ORG_ID, orgId);
+        return this;
+    }
+
+    /**
+     * Send the Intent from an Activity
      *
      * @param activity Activity to receive result
      */
@@ -59,7 +72,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from an Activity with a custom request code
+     * Send the Intent from an Activity with a custom request code
      *
      * @param activity    Activity to receive result
      * @param requestCode requestCode for result
@@ -69,7 +82,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent from a Fragment
+     * Send the Intent from a Fragment
      *
      * @param fragment Fragment to receive result
      */
@@ -78,7 +91,7 @@ public class IgrantSdk {
     }
 
     /**
-     * Send the crop Intent with a custom request code
+     * Send the Intent with a custom request code
      *
      * @param fragment    Fragment to receive result
      * @param requestCode requestCode for result
@@ -97,5 +110,29 @@ public class IgrantSdk {
         mIgrantSdkIntent.setClass(context, OrganizationDetailActivity.class);
         mIgrantSdkIntent.putExtras(mIgrantSdkOptionsBundle);
         return mIgrantSdkIntent;
+    }
+
+    public static void createIGrantUser(String orgID, String apiKey, final IgrantUserResponseHandler handler) {
+        Callback<AnonymousUser> callback = new Callback<AnonymousUser>() {
+            @Override
+            public void onResponse(Call<AnonymousUser> call, Response<AnonymousUser> response) {
+                try {
+                    if (response.body() != null) {
+                        handler.onSuccess(response.body());
+                    } else {
+                        handler.onCreationFailed();
+                    }
+                } catch (Exception e) {
+                    handler.onCreationFailed();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnonymousUser> call, Throwable t) {
+                handler.onCreationFailed();
+            }
+        };
+        ApiManager.getApi(apiKey).getService().createIgrantUser(orgID).enqueue(callback);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
+import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.Events.Event;
 import io.igrant.igrant_org_sdk.Events.GlobalBus;
@@ -157,17 +158,9 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApplicationInfo ai = null;
-            try {
-                ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String value = (String) ai.metaData.get("io.igrant.igrant_org_sdk.orgid");
-
             //todo user id
             ApiManager.getApi(DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setAttributeStatus(
-                    value,
+                    DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
                     DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_USERID),
                     mConsentId,
                     mPurposeId,

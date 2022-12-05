@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,6 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cocosw.bottomsheet.BottomSheet;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +35,6 @@ import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.Events.Event;
 import io.igrant.igrant_org_sdk.activity.ConsentHistoryActivity;
 import io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity;
-import io.igrant.igrant_org_sdk.activity.LoginActivity;
 import io.igrant.igrant_org_sdk.activity.UsagePurposesActivity;
 import io.igrant.igrant_org_sdk.activity.UserOrgRequestActivity;
 import io.igrant.igrant_org_sdk.activity.WebViewActivity;
@@ -68,6 +68,7 @@ import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
 import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_API_KEY;
+import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_ORG_ID;
 import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_USER_ID;
 
 public class OrganizationDetailActivity extends AppCompatActivity {
@@ -102,9 +103,11 @@ public class OrganizationDetailActivity extends AppCompatActivity {
     private void getIntentData() {
         String userId = getIntent().getStringExtra(EXTRA_USER_ID);
         String apiKey = getIntent().getStringExtra(EXTRA_API_KEY);
+        String orgId = getIntent().getStringExtra(EXTRA_ORG_ID);
 
         DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID, userId);
         DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN, apiKey);
+        DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID, orgId);
     }
 
     private void initViews() {
@@ -144,17 +147,15 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApplicationInfo ai = null;
-            try {
-                ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String value = (String) ai.metaData.get("io.igrant.igrant_org_sdk.orgid");
-
-
-            //todo user id
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setOverallStatus(value, DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID(), body).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN))
+                    .getService()
+                    .setOverallStatus(
+                            DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
+                            DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),
+                            consentId,
+                            consent.getPurpose().getID(),
+                            body)
+                    .enqueue(callback);
         } else {
             adapter.notifyDataSetChanged();
         }
@@ -183,16 +184,16 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApplicationInfo ai = null;
-            try {
-                ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String value = (String) ai.metaData.get("io.igrant.igrant_org_sdk.orgid");
 
             try {
-                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getConsentList(value, DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), consentId, consent.getPurpose().getID()).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN))
+                        .getService()
+                        .getConsentList(
+                                DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
+                                DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),
+                                consentId,
+                                consent.getPurpose().getID())
+                        .enqueue(callback);
             } catch (Exception e) {
                 llProgressBar.setVisibility(View.GONE);
                 e.printStackTrace();
@@ -266,15 +267,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApplicationInfo ai = null;
-            try {
-                ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String value = (String) ai.metaData.get("io.igrant.igrant_org_sdk.orgid");
-
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrganizationDetail(value).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrganizationDetail(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID)).enqueue(callback);
         }
     }
 
@@ -356,7 +349,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDownloadStatus(organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDownloadStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -381,7 +374,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
 
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDownloadRequest(organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDownloadRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -409,7 +402,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDeleteStatus(organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDeleteStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -433,7 +426,7 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDeleteRequest(organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDeleteRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
