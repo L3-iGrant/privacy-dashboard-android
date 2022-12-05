@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 16
-        versionName "1.12.3"
+        versionCode 17
+        versionName "1.12.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -56,7 +56,7 @@ dependencies {
 }
 
 group = 'io.igrant.igrant_sdk'
-version = '1.12.3'
+version = '1.12.4'
 
 install {
     repositories.mavenInstaller {
