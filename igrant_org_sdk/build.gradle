@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 32
@@ -9,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 14
-        versionName "1.12.1"
+        versionCode 15
+        versionName "1.12.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -39,7 +38,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    api 'com.google.android.material:material:1.0.0'
+    api 'com.google.android.material:material:1.7.0'
     api 'com.github.zcweng:switch-button:0.0.3@aar'
 //    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
 //        exclude module: 'okhttp'
@@ -57,7 +56,7 @@ dependencies {
 }
 
 group = 'io.igrant.igrant_sdk'
-version = '1.1.2'
+version = '1.12.2'
 
 install {
     repositories.mavenInstaller {
@@ -67,9 +66,9 @@ install {
 
             dependencies {
                 dependency {
-                    groupId 'com.android.support'
-                    artifactId 'design'
-                    version '28.0.0'
+                    groupId 'com.google.android.material'
+                    artifactId 'material'
+                    version '1.7.0'
                 }
                 dependency {
                     groupId 'com.github.zcweng'
@@ -116,6 +115,11 @@ install {
                     groupId 'com.github.devendroid'
                     artifactId 'ReadMoreOption'
                     version '1.0.2'
+                }
+                dependency {
+                    groupId 'org.jetbrains.kotlin'
+                    artifactId 'kotlin-stdlib-jdk7'
+                    version '1.5.20'
                 }
             }
         }
