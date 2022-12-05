@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.0.10'
+    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.1.2'
 }
 ```
 
@@ -25,14 +25,8 @@ dependencies {
 
 ## How to use
 
-Add the following meta data to the manifest inside the application tag
 ```groovy
-<meta-data android:value=<ORG ID> 
-           android:name="io.igrant.igrant_org_sdk.orgid"></meta-data>
-```
- And start the LoginActivity.java activity whereever needed.
- 
-```groovy
-Intent intent = new Intent(this, LoginActivity.class);
-startActivity(intent);
+IgrantSdk().withApiKey(API_KEY)
+        .withUserId(USER_ID)
+        .withOrgId(ORG_ID).start(this)
 ```
