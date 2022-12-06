@@ -64,7 +64,8 @@ public class UsagePurposesActivity extends AppCompatActivity {
 
 
         ReadMoreOption readMoreOption = new ReadMoreOption.Builder(this)
-                .textLength(3, ReadMoreOption.TYPE_LINE) // OR
+                .textLength(3) // OR
+                .textLengthType(ReadMoreOption.TYPE_LINE)
                 //.textLength(300, ReadMoreOption.TYPE_CHARACTER)
                 .moreLabel(getResources().getString(R.string.txt_org_read_more))
                 .lessLabel(getResources().getString(R.string.txt_org_read_less))
