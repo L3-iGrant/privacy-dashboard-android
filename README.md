@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.igrant.igrant_sdk:igrant_org_sdk:1.1.2'
+    implementation 'com.github.L3-iGrant:mobileSDK-android:1.12.11'
 }
 ```
 
