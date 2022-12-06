@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.customViews.stepView.VerticalStepView;

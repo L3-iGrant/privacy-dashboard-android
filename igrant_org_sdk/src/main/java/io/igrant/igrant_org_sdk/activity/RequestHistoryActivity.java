@@ -15,7 +15,6 @@ import com.paginate.Paginate;
 import java.util.ArrayList;
 
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.adapter.RequestHistoryAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;

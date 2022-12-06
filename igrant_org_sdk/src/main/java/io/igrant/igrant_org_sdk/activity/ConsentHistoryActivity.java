@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.paginate.Paginate;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.adapter.ConsentHistoryAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
