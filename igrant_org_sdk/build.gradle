@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 20
-        versionName "1.12.7"
+        versionCode 21
+        versionName "1.12.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -58,14 +58,14 @@ dependencies {
     implementation 'com.cocosw:bottomsheet:1.4.0'
 }
 
-group = 'com.github.L3-iGrant'
-version = '1.12.7'
+group = 'io.igrant.igrant_sdk'
+version = '1.12.8'
 
 install {
     repositories.mavenInstaller {
         pom.project {
 
-            name 'mobileSDK-android'
+            name 'igrant_org_sdk'
 
             dependencies {
                 dependency {
