@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 21
-        versionName "1.12.8"
+        versionCode 22
+        versionName "1.12.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -58,14 +58,14 @@ dependencies {
     implementation 'com.cocosw:bottomsheet:1.4.0'
 }
 
-group = 'io.igrant.igrant_sdk'
-version = '1.12.8'
+group = 'com.github.L3-iGrant'
+version = '1.12.9'
 
 install {
     repositories.mavenInstaller {
         pom.project {
 
-            name 'igrant_org_sdk'
+            name 'mobileSDK-android'
 
             dependencies {
                 dependency {
@@ -123,11 +123,6 @@ install {
                     groupId 'com.github.devendroid'
                     artifactId 'ReadMoreOption'
                     version '1.0.2'
-                }
-                dependency {
-                    groupId 'org.jetbrains.kotlin'
-                    artifactId 'kotlin-stdlib-jdk7'
-                    version '1.5.20'
                 }
             }
         }
