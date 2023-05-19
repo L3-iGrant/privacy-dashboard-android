@@ -237,7 +237,8 @@ public class ConsentHistoryActivity extends AppCompatActivity {
                     llProgressBar.setVisibility(View.GONE);
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getConsentHistory(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),8, orgId, startId).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getConsentHistory(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),8, orgId, startId).enqueue(callback);
         }
     }
 

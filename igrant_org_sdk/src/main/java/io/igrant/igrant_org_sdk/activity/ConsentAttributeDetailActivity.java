@@ -156,7 +156,8 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
             };
 
             //todo user id
-            ApiManager.getApi(DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setAttributeStatus(
+            ApiManager.getApi(DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().setAttributeStatus(
                     DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
                     DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_USERID),
                     mConsentId,

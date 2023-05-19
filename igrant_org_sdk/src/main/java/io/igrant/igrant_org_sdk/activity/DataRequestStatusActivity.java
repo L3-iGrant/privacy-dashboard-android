@@ -87,9 +87,11 @@ public class DataRequestStatusActivity extends AppCompatActivity {
                 }
             };
             if (isDownloadData)
-                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDownloadStatus(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                        DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getDataDownloadStatus(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId).enqueue(callback);
             else
-                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDeleteStatus(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                        DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getDataDeleteStatus(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId).enqueue(callback);
         }
     }
 
@@ -124,9 +126,11 @@ public class DataRequestStatusActivity extends AppCompatActivity {
                 }
             };
             if (isDownloadData)
-                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDownloadCancelRequest(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, status.getID()).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                        DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().dataDownloadCancelRequest(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, status.getID()).enqueue(callback);
             else
-                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDeleteCancelRequest(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, status.getID()).enqueue(callback);
+                ApiManager.getApi(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                        DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().dataDeleteCancelRequest(DataUtils.getStringValue(DataRequestStatusActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, status.getID()).enqueue(callback);
         }
     }
 

@@ -29,7 +29,7 @@ public class ApiManager {
 
     }
 
-    public static ApiManager getApi(String token) {
+    public static ApiManager getApi(String token,String baseUrl) {
         if (apiManager == null) {
             apiManager = new ApiManager();
 
@@ -41,7 +41,7 @@ public class ApiManager {
             httpClient.interceptors().add(new HttpInterceptor(token));
             okClient = httpClient.build();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(baseUrl)
                     .client(okClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

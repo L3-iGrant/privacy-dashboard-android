@@ -104,7 +104,8 @@ public class RequestHistoryActivity extends AppCompatActivity {
                     llProgressBar.setVisibility(View.GONE);
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrgRequestStatus(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, startId).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getOrgRequestStatus(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, startId).enqueue(callback);
         }
     }
 

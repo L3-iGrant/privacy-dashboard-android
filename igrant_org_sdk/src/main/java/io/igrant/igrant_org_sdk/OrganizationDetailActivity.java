@@ -68,6 +68,7 @@ import static io.igrant.igrant_org_sdk.activity.UsagePurposesActivity.TAG_EXTRA_
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_MTITLE;
 import static io.igrant.igrant_org_sdk.activity.WebViewActivity.TAG_EXTRA_WEB_URL;
 import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_API_KEY;
+import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_IS_STAGING;
 import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_ORG_ID;
 import static io.igrant.igrant_org_sdk.utils.IgrantSdk.EXTRA_USER_ID;
 
@@ -104,8 +105,10 @@ public class OrganizationDetailActivity extends AppCompatActivity {
         String userId = getIntent().getStringExtra(EXTRA_USER_ID);
         String apiKey = getIntent().getStringExtra(EXTRA_API_KEY);
         String orgId = getIntent().getStringExtra(EXTRA_ORG_ID);
+        Boolean isStaging = getIntent().getBooleanExtra(EXTRA_IS_STAGING, false);
 
         DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID, userId);
+        DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL, isStaging? "https://staging-api.igrant.io/":"https://demo-api.igrant.io/");
         DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN, apiKey);
         DataUtils.saveStringValues(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID, orgId);
     }
@@ -147,7 +150,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN))
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                            DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL))
                     .getService()
                     .setOverallStatus(
                             DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
@@ -186,7 +190,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
             };
 
             try {
-                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN))
+                ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                                DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL))
                         .getService()
                         .getConsentList(
                                 DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
@@ -267,7 +272,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                 }
             };
 
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrganizationDetail(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID)).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getOrganizationDetail(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID),DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID)).enqueue(callback);
         }
     }
 
@@ -349,7 +355,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDownloadStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getDataDownloadStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -374,7 +381,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
 
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDownloadRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().dataDownloadRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -402,7 +410,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getDataDeleteStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getDataDeleteStatus(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
@@ -426,7 +435,8 @@ public class OrganizationDetailActivity extends AppCompatActivity {
                     Toast.makeText(OrganizationDetailActivity.this, getResources().getString(R.string.err_unexpected), Toast.LENGTH_SHORT).show();
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().dataDeleteRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().dataDeleteRequest(DataUtils.getStringValue(OrganizationDetailActivity.this, DataUtils.EXTRA_TAG_USERID), organization.getID()).enqueue(callback);
         }
     }
 
