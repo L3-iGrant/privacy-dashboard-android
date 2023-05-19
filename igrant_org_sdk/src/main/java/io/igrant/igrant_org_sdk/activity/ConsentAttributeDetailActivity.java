@@ -1,7 +1,5 @@
 package io.igrant.igrant_org_sdk.activity;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
 import io.igrant.igrant_org_sdk.Events.Event;
 import io.igrant.igrant_org_sdk.Events.GlobalBus;
@@ -159,7 +156,8 @@ public class ConsentAttributeDetailActivity extends AppCompatActivity {
             };
 
             //todo user id
-            ApiManager.getApi(DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().setAttributeStatus(
+            ApiManager.getApi(DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().setAttributeStatus(
                     DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_ORG_ID),
                     DataUtils.getStringValue(ConsentAttributeDetailActivity.this, DataUtils.EXTRA_TAG_USERID),
                     mConsentId,

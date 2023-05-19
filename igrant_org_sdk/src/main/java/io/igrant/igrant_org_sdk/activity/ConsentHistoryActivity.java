@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.paginate.Paginate;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.adapter.ConsentHistoryAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
@@ -238,7 +237,8 @@ public class ConsentHistoryActivity extends AppCompatActivity {
                     llProgressBar.setVisibility(View.GONE);
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getConsentHistory(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),8, orgId, startId).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getConsentHistory(DataUtils.getStringValue(ConsentHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),8, orgId, startId).enqueue(callback);
         }
     }
 

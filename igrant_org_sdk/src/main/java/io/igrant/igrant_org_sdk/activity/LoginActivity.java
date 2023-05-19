@@ -201,7 +201,8 @@ public class LoginActivity extends AppCompatActivity {
                         llProgressBar.setVisibility(View.GONE);
                     }
                 };
-                ApiManager.getApi("").getService().loginService(request).enqueue(callback);
+                ApiManager.getApi("",
+                        DataUtils.getStringValue(LoginActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().loginService(request).enqueue(callback);
             }
         } else {
             //todo internet error

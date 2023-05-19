@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import io.igrant.igrant_org_sdk.Api.ApiManager;
 import io.igrant.igrant_org_sdk.BuildConfig;
 import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
+import io.igrant.igrant_org_sdk.activity.DataRequestStatusActivity;
 import io.igrant.igrant_org_sdk.models.anonymous.AnonymousUser;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +25,7 @@ public class IgrantSdk {
 
     public static final String EXTRA_USER_ID = EXTRA_PREFIX + ".UserId";
     public static final String EXTRA_API_KEY = EXTRA_PREFIX + ".ApiKey";
+    public static final String EXTRA_IS_STAGING = EXTRA_PREFIX + ".isStaging";
     public static final String EXTRA_ORG_ID = EXTRA_PREFIX + ".OrgId";
     private static final int REQUEST_IGRANT_SDK = 101;
 
@@ -59,6 +61,14 @@ public class IgrantSdk {
      */
     public IgrantSdk withOrgId(String orgId) {
         mIgrantSdkOptionsBundle.putString(EXTRA_ORG_ID, orgId);
+        return this;
+    }
+
+    /**
+     * Set Api key for the iGrant Sdk.
+     */
+    public IgrantSdk inStaging() {
+        mIgrantSdkOptionsBundle.putBoolean(EXTRA_IS_STAGING, true);
         return this;
     }
 
@@ -112,7 +122,7 @@ public class IgrantSdk {
         return mIgrantSdkIntent;
     }
 
-    public static void createIGrantUser(String orgID, String apiKey, final IgrantUserResponseHandler handler) {
+    public static void createIGrantUser(String orgID, String apiKey, String baseUrl, final IgrantUserResponseHandler handler) {
         Callback<AnonymousUser> callback = new Callback<AnonymousUser>() {
             @Override
             public void onResponse(Call<AnonymousUser> call, Response<AnonymousUser> response) {
@@ -133,6 +143,6 @@ public class IgrantSdk {
                 handler.onCreationFailed();
             }
         };
-        ApiManager.getApi(apiKey).getService().createIgrantUser(orgID).enqueue(callback);
+        ApiManager.getApi(apiKey, baseUrl).getService().createIgrantUser(orgID).enqueue(callback);
     }
 }

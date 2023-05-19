@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ApiManager {
     //        public static final String BASE_URL = "https://api.igrant.io/";//production
-    public static final String BASE_URL = "https://demo-api.igrant.io/"; //demo
-//    public static final String BASE_URL = "https://staging-api.igrant.io/";
+//    public static final String BASE_URL = "https://demo-api.igrant.io/"; //demo
+    public static final String BASE_URL = "https://staging-api.igrant.io/";
 
     private static OkHttpClient okClient;
     private static APIService service;
@@ -29,7 +29,7 @@ public class ApiManager {
 
     }
 
-    public static ApiManager getApi(String token) {
+    public static ApiManager getApi(String token,String baseUrl) {
         if (apiManager == null) {
             apiManager = new ApiManager();
 
@@ -41,7 +41,7 @@ public class ApiManager {
             httpClient.interceptors().add(new HttpInterceptor(token));
             okClient = httpClient.build();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(baseUrl)
                     .client(okClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

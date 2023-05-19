@@ -15,7 +15,6 @@ import com.paginate.Paginate;
 import java.util.ArrayList;
 
 import io.igrant.igrant_org_sdk.Api.ApiManager;
-import io.igrant.igrant_org_sdk.OrganizationDetailActivity;
 import io.igrant.igrant_org_sdk.R;
 import io.igrant.igrant_org_sdk.adapter.RequestHistoryAdapter;
 import io.igrant.igrant_org_sdk.customViews.CustomTextView;
@@ -105,7 +104,8 @@ public class RequestHistoryActivity extends AppCompatActivity {
                     llProgressBar.setVisibility(View.GONE);
                 }
             };
-            ApiManager.getApi(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN)).getService().getOrgRequestStatus(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, startId).enqueue(callback);
+            ApiManager.getApi(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_TOKEN),
+                    DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_BASE_URL)).getService().getOrgRequestStatus(DataUtils.getStringValue(RequestHistoryActivity.this, DataUtils.EXTRA_TAG_USERID),mOrgId, startId).enqueue(callback);
         }
     }
 
