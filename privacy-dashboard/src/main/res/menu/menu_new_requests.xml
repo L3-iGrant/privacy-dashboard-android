@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_download_data"
+        android:title="@string/privacy_dashboard_user_request_download_data"
+        app:showAsAction="never|withText" />
+
+    <item
+        android:id="@+id/action_forgot_me"
+        android:title="@string/privacy_dashboard_user_request_delete_data"
+        app:showAsAction="never|withText" />
+</menu>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="privacyDashboardWhite">#ffffff</color>
+    <color name="privacyDashboardBGColor">#f2f2f6</color>
+    <color name="privacyDashboardTransWhite">#6fff</color>
+
+    <color name="privacyDashboardPrimaryTitleTextColor">#000000</color>
+    <color name="privacyDashboardTextColor">#414141</color>
+    <color name="privacyDashboardTextColorLight">#9b9b9b</color>
+
+    <color name="privacyDashboard_divider_color">#bebebe</color>
+    <color name="privacyDashboard_read_more_color">#9b9b9b</color>
+
+    <color name="privacyDashboard_accent_blue">#006aa7</color>
+
+    <color name="privacyDashboard_button_bg">#f9f9f9</color>
+
+    <color name="privacyDashboard_stepview_uncompleted">#A3E0D9</color>
+    <color name="privacyDashboard_stepview_uncompleted_text_color">#F8F8F8</color>
+    <color name="privacyDashboard_error_red">#B80202</color>
+
+    <color name="privacyDashboard_faded_white">#ecf8ff</color>
+    <color name="privacyDashboardBlack">#000000</color>
+</resources>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.github.privacydashboard.modules.home.PrivacyDashboardDashboardViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/privacyDashboardBGColor">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivCoverUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/privacy_dashboard_default_cover"
+                    app:layout_collapseMode="parallax"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-40dp"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvLogo"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:cardBackgroundColor="@color/privacyDashboardWhite"
+                        app:cardCornerRadius="60dp">
+
+                        <ImageView
+                            android:id="@+id/ivLogo"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/privacy_dashboard_default_logo" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:text="@{viewModel.orgName}"
+                        android:textColor="@color/privacyDashboardPrimaryTitleTextColor"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="5dp"
+                        android:text="@{viewModel.orgLocation}"
+                        android:textColor="@color/privacyDashboardTextColor"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <LinearLayout
+                        android:id="@+id/llDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/privacy_dashboard_overview"
+                            android:textAllCaps="true"
+                            android:textColor="@color/privacyDashboardTextColorLight"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="5dp"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/privacyDashboardTextColor"
+                            android:textSize="@dimen/text_size_medium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llUsagePurposes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/privacy_dashboard_data_agreements"
+                            android:textAllCaps="true"
+                            android:textColor="@color/privacyDashboardTextColorLight"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvDataAgreements"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:nestedScrollingEnabled="false"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llListProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:minHeight="200dp"
+                        android:visibility="@{viewModel.isListLoading ? View.VISIBLE : View.GONE}"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/toolBarCommon">
+
+                        <ProgressBar
+                            android:id="@+id/listProgressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvEmptyMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="200dp"
+                        android:text="@string/privacy_dashboard_empty_message"
+                        android:textColor="@color/privacyDashboardTextColor"
+                        android:textSize="@dimen/text_size_medium"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBarCommon"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="#00000000"
+            android:minHeight="?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/ToolBarStyle" />
+
+        <LinearLayout
+            android:id="@+id/llProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolBarCommon">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/privacyDashboardBGColor">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBarCommon"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="#00000000"
+            android:minHeight="?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/ToolBarStyle"
+            app:titleTextColor="@color/privacyDashboardPrimaryTitleTextColor" />
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/privacyDashboardBGColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBarCommon" />
+
+        <LinearLayout
+            android:id="@+id/llProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
+            android:background="@color/privacyDashboardBGColor"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBarCommon"
+            android:focusable="true">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
