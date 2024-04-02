@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_more"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_nav_more_bg"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/privacy_dashboard_general_more"
+        android:title="@string/privacy_dashboard_general_more" />
+
+</menu>

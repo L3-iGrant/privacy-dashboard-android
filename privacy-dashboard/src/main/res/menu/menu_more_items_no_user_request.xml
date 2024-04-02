@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_webpage"
+        android:title="@string/privacy_dashboard_web_view_privacy_policy"
+        app:showAsAction="never|withText" />
+
+    <item
+        android:id="@+id/action_consent_history"
+        android:title="@string/privacy_dashboard_history_consent_history"
+        app:showAsAction="never|withText" />
+
+</menu>

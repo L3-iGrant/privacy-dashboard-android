@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Privacy Dashboard Android</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+
+    <string name="hello_first_fragment">Hello</string>
+    <string name="title_activity_main2">MainActivity2</string>
+</resources>

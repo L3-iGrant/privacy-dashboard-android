@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.github.privacydashboard"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+        <activity android:name="com.github.privacydashboard.modules.home.PrivacyDashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.dataAttribute.PrivacyDashboardDataAttributeListingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.webView.PrivacyDashboardWebViewActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.attributeDetail.PrivacyDashboardDataAttributeDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.logging.PrivacyDashboardLoggingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.userRequest.PrivacyDashboardUserRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.userRequestStatus.PrivacyDashboardUserRequestStatusActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.dataSharing.PrivacyDashboardDataSharingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name="com.github.privacydashboard.modules.dataAgreementPolicy.PrivacyDashboardDataAgreementPolicyActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+    </application>
+</manifest>

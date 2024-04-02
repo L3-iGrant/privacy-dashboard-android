@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="privacy_dashboard_general_cancel">Cancel</string>
+    <string name="privacy_dashboard_general_more">More</string>
+
+    <string name="privacy_dashboard_overview">Overview</string>
+    <string name="privacy_dashboard_usage_purpose">Usage Purposes</string>
+    <string name="privacy_dashboard_data_agreements">DATA AGREEMENTS</string>
+    <string name="privacy_dashboard_disallow">Disallow</string>
+    <string name="privacy_dashboard_allow">Allow : %1$d of %2$d</string>
+    <string name="privacy_dashboard_read_less">Read less</string>
+    <string name="privacy_dashboard_read_more">Read more</string>
+
+    <string name="privacy_dashboard_data_attribute_allow">Allow</string>
+    <string name="privacy_dashboard_data_attribute_my_data_consents">My data consents</string>
+    <string name="privacy_dashboard_data_attribute_data_attributes">DATA ATTRIBUTES</string>
+    <string name="privacy_dashboard_data_attribute_read_policy">Read policy</string>
+
+    <string name="privacy_dashboard_web_view_privacy_policy">Privacy Policy</string>
+    <string name="privacy_dashboard_web_view_policy">Policy</string>
+
+    <string name="privacy_dashboard_history_consent_history">Consent History</string>
+    <string name="privacy_dashboard_history_empty_consent_history">No history available</string>
+
+    <string name="privacy_dashboard_data_attribute_detail_ask_me">Ask Me</string>
+    <string name="privacy_dashboard_data_attribute_detail_allow_consent_rule">If you choose \"Allow\", you are consenting to the use of your personal data permanently for any analytic or third party usage beyond the purposes you have signed up with.</string>
+    <string name="privacy_dashboard_data_attribute_detail_disallow_consent_rule">If you choose \"Disallow\", you are disabling the use of your personal data for any analytic or third party usage beyond the purposes you have signed up with.</string>
+    <string name="privacy_dashboard_data_attribute_detail_askme_consent_rule">If you choose \"Ask me\", you consent to the use of your data for the selected period. When time period expires, you get notified in real time requesting for consent when the data provider is using your data.</string>
+    <string name="privacy_dashboard_data_attribute_detail_consent">Consent</string>
+    <string name="privacy_dashboard_data_attribute_detail_days_with_count">%1$d Days</string>
+
+    <string name="privacy_dashboard_user_request_new_request">New Request</string>
+    <string name="privacy_dashboard_user_request_user_request">User Requests</string>
+    <string name="privacy_dashboard_user_request_download_data">Download Data</string>
+    <string name="privacy_dashboard_user_request_delete_data">Delete Data</string>
+    <string name="privacy_dashboard_user_request_download_data_status">Download Data Request Status</string>
+    <string name="privacy_dashboard_user_request_delete_data_status">Delete Data Request Status</string>
+    <string name="privacy_dashboard_user_request_forget_me">Forgot me</string>
+    <string name="privacy_dashboard_user_request_cancel_request">Cancel request</string>
+    <string name="privacy_dashboard_user_request_request_initiated">Request Initiated</string>
+    <string name="privacy_dashboard_user_request_request_acknowledged">Request Acknowledged</string>
+    <string name="privacy_dashboard_user_request_request_processed">Request processed</string>
+    <string name="privacy_dashboard_user_request_confirmation">Confirmation</string>
+    <string name="privacy_dashboard_user_request_confirmation_message">A new request to %1$s will be sent to the %2$s</string>
+    <string name="privacy_dashboard_user_request_data_delete">data delete</string>
+    <string name="privacy_dashboard_user_request_confirm">Confirm</string>
+    <string name="privacy_dashboard_user_request_request_cancelled">Request cancelled successfully.</string>
+
+    <string name="privacy_dashboard_error_internet">Network not available.</string>
+    <string name="privacy_dashboard_error_unexpected">Unexpected error, Please try again.</string>
+    <string name="privacy_dashboard_data_attribute_disallow_all">Disallow All</string>
+    <string name="privacy_dashboard_empty_message">No active data agreements available.</string>
+    <string name="privacy_dashboard_data_sharing_main_desc"><![CDATA[<b>%1$s</b> wants to access the following data from <b>%2$s</b> for %3$s]]></string>
+    <string name="privacy_dashboard_data_sharing_sensitive_info_see_data_agreement_details_and_terms_of_services">You may be sharing sensitive info with this site or app. See the Data Agreement details and Terms of Services</string>
+    <string-array name="privacy_dashboard_data_sharing_links">
+        <item>Data Agreement details</item>
+        <item>Terms of Services</item>
+    </string-array>
+    <string name="privacy_dashboard_data_sharing_make_sure_that_you_trust">Make sure that you trust %1$s</string>
+    <string name="privacy_dashboard_data_sharing_by_authrizing_text">By clicking authorize, %1$s App will be able to read the following data attributes</string>
+
+    <string name="privacy_dashboard_data_agreement_policy_data_agreement">Data Agreement</string>
+    <string name="privacy_dashboard_data_agreement_policy_purpose">Purpose</string>
+    <string name="privacy_dashboard_data_agreement_policy_purpose_description">Purpose description</string>
+    <string name="privacy_dashboard_data_agreement_policy_lawful_basis_of_processing">Lawful usage of processing</string>
+    <string name="privacy_dashboard_data_agreement_policy_policy_url">Policy URL</string>
+    <string name="privacy_dashboard_data_agreement_policy_jurisdiction">Jurisdiction</string>
+    <string name="privacy_dashboard_data_agreement_policy_third_party_disclosure">Third party disclosure</string>
+    <string name="privacy_dashboard_data_agreement_policy_industry_scope">Industry scope</string>
+    <string name="privacy_dashboard_data_agreement_policy_geographic_restriction">Geographic restriction</string>
+    <string name="privacy_dashboard_data_agreement_policy_retention_period">Retention period</string>
+    <string name="privacy_dashboard_data_agreement_policy_storage_location">Storage location</string>
+    <string name="privacy_dashboard_data_agreement_policy_dpia_date">DPIA Date</string>
+    <string name="privacy_dashboard_data_agreement_policy_dpia_summary">DPIA Summary</string>
+    <string name="privacy_dashboard_data_agreement_policy_version">Version</string>
+    <string name="privacy_dashboard_data_sharing_authorize">Authorize</string>
+    <string name="privacy_dashboard_data_sharing_cancel">Cancel</string>
+
+</resources>

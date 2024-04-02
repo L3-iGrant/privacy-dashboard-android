@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/ctvItemName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:text="---------- -------"
+                android:textColor="@color/privacyDashboardTextColor"
+                android:textSize="@dimen/text_size_medium" />
+
+            <TextView
+                android:id="@+id/ctvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-------"
+                android:textColor="@color/privacyDashboardTextColorLight"
+                android:textSize="@dimen/text_size_medium" />
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/ic_arrow_forward" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/privacy_dashboard_border_width"
+            android:background="@color/privacyDashboard_divider_color" />
+    </LinearLayout>
+</layout>
