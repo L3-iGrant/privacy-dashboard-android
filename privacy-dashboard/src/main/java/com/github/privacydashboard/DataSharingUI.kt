@@ -8,6 +8,7 @@ import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_ACCESS_TOKEN
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_BASE_URL
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_DATA_AGREEMENT_ID
+import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_ORGANISATIONID
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_USERID
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
@@ -22,12 +23,22 @@ object DataSharingUI {
     private var mLocale: String? = ""
 
     private var mDataSharingUIIntent: Intent? = null
+    private var mOrganisationId: String? = null
 
     fun showDataSharingUI(): DataSharingUI {
         mDataSharingUIIntent = Intent()
         return this
     }
 
+    /**
+     * Set user id for igrant sdk.
+     *
+     * @param organisationId
+     */
+    fun withOrganizationId(organisationId: String?): DataSharingUI {
+        mOrganisationId = if (organisationId == "") null else organisationId
+        return this
+    }
     /**
      * Set user id for igrant sdk.
      *
@@ -128,7 +139,7 @@ object DataSharingUI {
      * @param activity Activity to start activity
      */
     fun get(activity: Activity): Intent? {
-        if (mAccessToken != null || (mApiKey != null && mUserId != null))
+        if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId !=null))
             if (mDataAgreementId != null) {
                 return getIntent(activity)
             }
@@ -142,7 +153,7 @@ object DataSharingUI {
      * @param context Context to start activity
      */
     fun get(context: Context): Intent? {
-        if (mAccessToken != null || (mApiKey != null && mUserId != null))
+        if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId !=null))
             if (mDataAgreementId != null) {
                 return getIntent(context)
             }
@@ -164,6 +175,7 @@ object DataSharingUI {
             mDataAgreementId
         )
         PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_USERID, mUserId)
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
         PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, mApiKey)
         PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
         PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
