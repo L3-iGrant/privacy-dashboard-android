@@ -10,8 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
 }
-rootProject.name = "mobileSDK-android"
+rootProject.name = "privacy-dashboard-android"
 include ':app'
 include ':privacy-dashboard'

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -66,25 +67,19 @@ dependencies {
 
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 }
-//def getVersionName = { ->
-//    return "2024.4.1"  // Replace with version Name
-//}
 
-//def getArtifactId = { ->
-//    return "PrivacyDashboard" // Replace with library name ID
-//}
-//
-//publishing {
-//    publications {
-//        bar(MavenPublication) {
-//            groupId 'com.github.decentralised-dataexchange' // Replace with group ID
-//            artifactId getArtifactId()
-//            version getVersionName()
-//            artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
-//
-//            pom {
-//                name = "PrivacyDashboard"
-//            }
-//        }
-//    }
-//}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.L3-iGrant'
+            artifactId = 'privacy-dashboard-android'
+            version = '2024.4.1'
+
+            artifact("$buildDir/outputs/aar/privacy-dashboard-release.aar")
+
+            pom {
+                name = "privacy-dashboard-android"
+            }
+        }
+    }
+}
