@@ -27,8 +27,20 @@ Released. Refer to the [releases](https://github.com/L3-iGrant/privacy-dashboard
 
 ## Configuration
 
+Project level Gradle repository:
+```gradle
+repositories {
+    maven { url "https://jitpack.io" }
+}
+```
+
 Gradle:
 ```gradle
+android {
+    buildFeatures {
+        dataBinding true
+    }
+}
 dependencies {
   implementation 'com.github.L3-iGrant:privacy-dashboard-android:<latest release>'
 }
