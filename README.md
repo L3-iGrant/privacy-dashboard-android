@@ -42,7 +42,15 @@ android {
     }
 }
 dependencies {
-  implementation 'com.github.L3-iGrant:privacy-dashboard-android:<latest release>'
+    implementation "com.github.L3-iGrant:privacy-dashboard-android:2024.4.1"
+    implementation "org.greenrobot:eventbus:3.2.0"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.3.1"
+    implementation "com.squareup.retrofit2:retrofit:2.8.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.8.0"
+    implementation "com.github.bumptech.glide:glide:4.16.0"
+    implementation "com.github.markomilos:paginate:1.0.0"
+    implementation "com.github.marlonlom:timeago:4.0.3"
 }
 ```
 
