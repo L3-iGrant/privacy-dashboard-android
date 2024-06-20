@@ -43,7 +43,7 @@ object PrivacyDashboardStringUtils {
         paint.getTextBounds(valueString, 0, valueString.length, result)
         val valueWidth = result.width()
 
-        if ((titleWidth + valueWidth + 20) <= width) {
+        if ((titleWidth + valueWidth + 30) <= width) {
             topTextView.visibility = View.VISIBLE
             bottomTextView.visibility = View.GONE
             topTextView.text = valueString
