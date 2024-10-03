@@ -369,7 +369,42 @@ object PrivacyDashboard {
         }
 
     }
+    suspend fun updateDataAgreementStatus(
+        dataAgreementId: String,
+        baseUrl: String,
+        accessToken: String? = null,
+        apiKey: String? = null,
+        userId: String? = null,
+        status:Boolean? = true,
+    ): String? {
+        val body = ConsentStatusRequestV2()
+        body.optIn = status
 
+        val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+            apiKey = apiKey,
+            accessToken = accessToken,
+            baseUrl = (if (baseUrl.last().toString() == "/")
+                baseUrl
+            else
+                "$baseUrl/")
+        )?.service!!
+
+        val updateDataAgreementStatusApiRepository =
+            UpdateDataAgreementStatusApiRepository(apiService)
+
+        val result = updateDataAgreementStatusApiRepository.updateDataAgreementStatus(
+            userId = userId,
+            dataAgreementId = dataAgreementId,
+            body = body
+        )
+
+        return if (result.isSuccess) {
+            Gson().toJson(result.getOrNull()?.dataAgreementRecord)
+        } else {
+            null
+        }
+
+    }
     suspend fun getDataAgreement(
         dataAgreementId: String,
         baseUrl: String,
