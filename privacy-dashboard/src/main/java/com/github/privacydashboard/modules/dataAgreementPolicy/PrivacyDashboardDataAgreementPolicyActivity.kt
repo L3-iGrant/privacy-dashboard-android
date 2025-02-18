@@ -1,5 +1,6 @@
 package com.github.privacydashboard.modules.dataAgreementPolicy
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -8,9 +9,11 @@ import com.github.privacydashboard.databinding.PrivacyActivityDataAgreementPolic
 import com.github.privacydashboard.R
 import com.github.privacydashboard.models.DataAgreementPolicyList
 import com.github.privacydashboard.models.DataAgreementPolicyModel
+import com.github.privacydashboard.models.v2.dataAgreement.DataAgreementV2
 import com.github.privacydashboard.modules.PrivacyDashboardBaseActivity
 import com.github.privacydashboard.utils.PrivacyDashboardDisplayUtils
 import com.google.gson.Gson
+import kotlin.math.floor
 
 class PrivacyDashboardDataAgreementPolicyActivity : PrivacyDashboardBaseActivity() {
     private lateinit var binding: PrivacyActivityDataAgreementPolicyBinding
@@ -40,12 +43,114 @@ class PrivacyDashboardDataAgreementPolicyActivity : PrivacyDashboardBaseActivity
         binding.rvDataAgreementPolicy.adapter = adapter
     }
 
-    private fun getIntentData() {
-        if (intent.extras != null)
-            list = Gson().fromJson(
-                intent?.getStringExtra(TAG_EXTRA_ATTRIBUTE_LIST),
-                DataAgreementPolicyList::class.java
+    private fun buildListForDataAgreementPolicy(
+        context: Context,
+        dataAgreement: DataAgreementV2?
+    ): ArrayList<ArrayList<DataAgreementPolicyModel>> {
+        var list: ArrayList<ArrayList<DataAgreementPolicyModel>> = ArrayList()
+        var subList: ArrayList<DataAgreementPolicyModel> = ArrayList()
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_version),
+                dataAgreement?.version
             )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose),
+                dataAgreement?.purpose
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose_description),
+                dataAgreement?.purposeDescription
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_lawful_basis_of_processing),
+                dataAgreement?.lawfulBasis
+            )
+        )
+        list.add(subList)
+        subList = ArrayList()
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_policy_url),
+                dataAgreement?.policy?.url
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_jurisdiction),
+                dataAgreement?.policy?.jurisdiction
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_industry_scope),
+                dataAgreement?.policy?.industrySector
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_storage_location),
+                dataAgreement?.policy?.storageLocation
+            )
+        )
+        var retentionPeriod = "${dataAgreement?.policy?.dataRetentionPeriodDays.toString()} days"
+        try {
+            var years = floor(
+                (dataAgreement?.policy?.dataRetentionPeriodDays?.div(365)?.toDouble()
+                    ?: 0) as Double
+            )
+            retentionPeriod = "$years years"
+        } catch (e: Exception) {
+        }
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_retention_period),
+                retentionPeriod
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_geographic_restriction),
+                dataAgreement?.policy?.geographicRestriction
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_third_party_disclosure),
+                dataAgreement?.policy?.thirdPartyDataSharing.toString()
+            )
+        )
+        list.add(subList)
+        subList = ArrayList()
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_summary),
+                dataAgreement?.dpiaSummaryUrl
+            )
+        )
+        subList.add(
+            DataAgreementPolicyModel(
+                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_date),
+                dataAgreement?.dpiaDate
+            )
+        )
+        list.add(subList)
+
+        return list
+    }
+
+    private fun getIntentData() {
+        if (intent.extras != null) {
+            val data = intent?.getStringExtra(TAG_EXTRA_ATTRIBUTE_LIST)
+            val mDataAgreement= Gson().fromJson(data, DataAgreementV2::class.java)
+            list = buildListForDataAgreementPolicy(this,mDataAgreement)
+        }
     }
 
     private fun setUpToolBar() {

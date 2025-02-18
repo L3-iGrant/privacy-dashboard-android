@@ -67,108 +67,6 @@ object PrivacyDashboard {
         return this
     }
 
-    private fun buildListForDataAgreementPolicy(
-        context: Context,
-        dataAgreement: DataAgreementV2?
-    ): String {
-        var list: ArrayList<ArrayList<DataAgreementPolicyModel>> = ArrayList()
-        var subList: ArrayList<DataAgreementPolicyModel> = ArrayList()
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_version),
-                dataAgreement?.version
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose),
-                dataAgreement?.purpose
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose_description),
-                dataAgreement?.purposeDescription
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_lawful_basis_of_processing),
-                dataAgreement?.lawfulBasis
-            )
-        )
-        list.add(subList)
-        subList = ArrayList()
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_policy_url),
-                dataAgreement?.policy?.url
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_jurisdiction),
-                dataAgreement?.policy?.jurisdiction
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_industry_scope),
-                dataAgreement?.policy?.industrySector
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_storage_location),
-                dataAgreement?.policy?.storageLocation
-            )
-        )
-        var retentionPeriod = "${dataAgreement?.policy?.dataRetentionPeriodDays.toString()} days"
-        try {
-            var years = floor(
-                (dataAgreement?.policy?.dataRetentionPeriodDays?.div(365)?.toDouble()
-                    ?: 0) as Double
-            )
-            retentionPeriod = "$years years"
-        } catch (e: Exception) {
-        }
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_retention_period),
-                retentionPeriod
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_geographic_restriction),
-                dataAgreement?.policy?.geographicRestriction
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_third_party_disclosure),
-                dataAgreement?.policy?.thirdPartyDataSharing.toString()
-            )
-        )
-        list.add(subList)
-        subList = ArrayList()
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_summary),
-                dataAgreement?.dpiaSummaryUrl
-            )
-        )
-        subList.add(
-            DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_date),
-                dataAgreement?.dpiaDate
-            )
-        )
-        list.add(subList)
-
-        return Gson().toJson(list)
-    }
-
     /**
      * Set organisation id for igrant sdk.
      *
@@ -321,10 +219,7 @@ object PrivacyDashboard {
             PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
             mIntent?.putExtra(
                 PrivacyDashboardDataAgreementPolicyActivity.TAG_EXTRA_ATTRIBUTE_LIST,
-                buildListForDataAgreementPolicy(
-                    context,
-                    Gson().fromJson(mDataAgreement, DataAgreementV2::class.java)
-                )
+                mDataAgreement
             )
             return mIntent
         }
