@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.github.privacydashboard.ConsentChangeListener
 import com.github.privacydashboard.R
 import com.github.privacydashboard.databinding.PrivacyActivityDashboardBinding
 import com.github.privacydashboard.events.RefreshHome
@@ -35,6 +36,10 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
     private var adapter: UsagePurposeAdapter? = null
 
     private var viewModel: PrivacyDashboardDashboardViewModel? = null
+
+    companion object{
+        var consentChange: ConsentChangeListener? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -215,7 +220,8 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
                                 viewModel?.setOverallStatus(
                                     consent,
                                     isChecked,
-                                    this@PrivacyDashboardActivity
+                                    this@PrivacyDashboardActivity,
+                                    consentChange
                                 )
                             }
                         })
