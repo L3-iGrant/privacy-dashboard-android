@@ -3,6 +3,7 @@ package com.github.privacydashboard.modules.home
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
+import com.github.privacydashboard.ConsentChangeListener
 import com.github.privacydashboard.communication.PrivacyDashboardAPIManager
 import com.github.privacydashboard.communication.PrivacyDashboardAPIServices
 import com.github.privacydashboard.communication.repositories.GetConsentsByIdApiRepository
@@ -148,7 +149,12 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
         }
     }
 
-    fun setOverallStatus(consent: PurposeConsent?, isChecked: Boolean?, context: Context) {
+    fun setOverallStatus(
+        consent: PurposeConsent?,
+        isChecked: Boolean?,
+        context: Context,
+        consentChange: ConsentChangeListener?
+    ) {
         if (PrivacyDashboardNetWorkUtil.isConnectedToInternet(context)) {
             isLoading.value = true
             val body = ConsentStatusRequestV2()
@@ -190,6 +196,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                         isLoading.value = false
 //                        getDataAgreements(false, context)
                         updatePurposeConsent(result.getOrNull())
+                        consentChange?.onConsentChange(isChecked == true,consent?.purpose?.iD?:"")
                     }
                 } else {
                     withContext(Dispatchers.Main) {

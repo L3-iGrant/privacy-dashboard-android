@@ -43,6 +43,7 @@ object PrivacyDashboard {
     private var mDataAgreement: String? = null
     private var mIntent: Intent? = null
     private var mOrganisationId: String? = null
+    private var consentChangeListener: ConsentChangeListener? = null
 
     fun showPrivacyDashboard(): PrivacyDashboard {
         destination = 0
@@ -93,6 +94,16 @@ object PrivacyDashboard {
      */
     fun withApiKey(apiKey: String?): PrivacyDashboard {
         mApiKey = if (apiKey == "") null else apiKey
+        return this
+    }
+
+    /**
+     * Set consent change listener for the iGrant Sdk.
+     *
+     * @param consentChange
+     */
+    fun withConsentChangeListener(consentChange: ConsentChangeListener?): PrivacyDashboard {
+        consentChangeListener = consentChange
         return this
     }
 
@@ -212,6 +223,7 @@ object PrivacyDashboard {
                 EXTRA_TAG_ENABLE_ATTRIBUTE_LEVEL_CONSENT,
                 mEnableAttributeLevelConsent
             )
+            PrivacyDashboardActivity.consentChange = consentChangeListener
             return mIntent
         } else {
             if (mDataAgreement != null)
@@ -434,4 +446,8 @@ object PrivacyDashboard {
             )
         return Gson().toJson(result?.getOrNull())
     }
+}
+
+interface ConsentChangeListener {
+    fun onConsentChange(status: Boolean, dataAgreementId: String) {}
 }
