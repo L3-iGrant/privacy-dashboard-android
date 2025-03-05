@@ -449,5 +449,5 @@ object PrivacyDashboard {
 }
 
 interface ConsentChangeListener {
-    fun onConsentChange(status: Boolean, dataAgreementId: String) {}
+    fun onConsentChange(status: Boolean, dataAgreementId: String,consentRecordId: String) {}
 }
