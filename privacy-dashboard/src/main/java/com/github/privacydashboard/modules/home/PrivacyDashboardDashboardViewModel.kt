@@ -196,7 +196,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                         isLoading.value = false
 //                        getDataAgreements(false, context)
                         updatePurposeConsent(result.getOrNull())
-                        consentChange?.onConsentChange(isChecked == true,consent?.purpose?.iD?:"")
+                        consentChange?.onConsentChange(isChecked == true,consent?.purpose?.iD?:"", result.getOrNull()?.dataAgreementRecord?.id ?: "")
                     }
                 } else {
                     withContext(Dispatchers.Main) {

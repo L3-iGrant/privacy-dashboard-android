@@ -14,6 +14,7 @@ class PurposeV1 (
     var lawfulUsage: Boolean? = null,
     @SerializedName("PolicyURL")
     var policyURL: String? = null
+
 ): Purpose {
     override val mId: String?
         get() = iD
