@@ -35,11 +35,25 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
     val purposeConsents = MutableLiveData<ArrayList<PurposeConsent>>()
 
     var isListLoading = MutableLiveData<Boolean>()
+    var dataAgreementIds: MutableLiveData<List<String>?> = MutableLiveData(null)
 
     private fun updateUI(orgDetail: OrganizationDetailResponse?) {
         consentId = orgDetail?.consentID
-        purposeConsents.value = orgDetail?.purposeConsents ?: ArrayList()
+
+        val agreementIds = dataAgreementIds.value
+
+        // If dataAgreementIds is null, show all purposeConsents
+        val dataAgreements = if (agreementIds == null) {
+            orgDetail?.purposeConsents
+        } else {
+            // Filter only those whose purpose.id matches any id in dataAgreementIds
+            orgDetail?.purposeConsents?.filter { consent ->
+                agreementIds.contains(consent.purpose?.iD)
+            }
+        }
+        purposeConsents.value = dataAgreements?.let { ArrayList(it) } ?: ArrayList()
     }
+
 
     private fun updateOrganization(orgDetail: OrganizationDetailResponse?) {
         organization.value = orgDetail?.organization
