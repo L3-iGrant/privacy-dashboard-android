@@ -39,6 +39,7 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
 
     companion object{
         var consentChange: ConsentChangeListener? = null
+        var dataAgreementIds: ArrayList<String>? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +53,10 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
         initView()
         viewModel?.getOrganizationDetail(true, this)
         viewModel?.getDataAgreements(true, this)
+        dataAgreementIds?.let {
+            viewModel?.dataAgreementIds?.value = it
+        }
+
     }
 
     private fun setUpToolBar() {

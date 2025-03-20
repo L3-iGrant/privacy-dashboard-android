@@ -44,6 +44,7 @@ object PrivacyDashboard {
     private var mIntent: Intent? = null
     private var mOrganisationId: String? = null
     private var consentChangeListener: ConsentChangeListener? = null
+    private var dataAgreementIds: ArrayList<String>? = null
 
     fun showPrivacyDashboard(): PrivacyDashboard {
         destination = 0
@@ -104,6 +105,10 @@ object PrivacyDashboard {
      */
     fun withConsentChangeListener(consentChange: ConsentChangeListener?): PrivacyDashboard {
         consentChangeListener = consentChange
+        return this
+    }
+    fun withDataAgreementIDs(dataAgreementIdList:ArrayList<String>?=null):PrivacyDashboard{
+        dataAgreementIds = dataAgreementIdList
         return this
     }
 
@@ -224,6 +229,7 @@ object PrivacyDashboard {
                 mEnableAttributeLevelConsent
             )
             PrivacyDashboardActivity.consentChange = consentChangeListener
+            PrivacyDashboardActivity.dataAgreementIds = dataAgreementIds
             return mIntent
         } else {
             if (mDataAgreement != null)
