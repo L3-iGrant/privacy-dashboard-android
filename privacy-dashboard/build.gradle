@@ -73,7 +73,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.github.L3-iGrant'
             artifactId = 'privacy-dashboard-android'
-            version = '2025.3.2'
+            version = '2025.3.3'
 
             artifact("$buildDir/outputs/aar/privacy-dashboard-release.aar")
 
