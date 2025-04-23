@@ -47,12 +47,21 @@ class PrivacyDashboardAPIManager private constructor() {
         private var service: PrivacyDashboardAPIServices? = null
         private var httpClient: OkHttpClient.Builder? = null
         private var apiManager: PrivacyDashboardAPIManager? = null
+
+        // Store the last used config
+        private var previousAccessToken: String? = null
+        private var previousApiKey: String? = null
+        private var previousBaseUrl: String? = null
         fun getApi(
             accessToken: String? = null,
             apiKey: String? = null,
             baseUrl: String?
         ): PrivacyDashboardAPIManager? {
-            if (apiManager == null) {
+            val refreshApiManager = apiManager == null ||
+                    accessToken != previousAccessToken ||
+                    apiKey != previousApiKey ||
+                    baseUrl != previousBaseUrl
+            if (refreshApiManager) {
                 apiManager = PrivacyDashboardAPIManager()
                 httpClient = OkHttpClient.Builder()
                     .connectTimeout(60, TimeUnit.SECONDS)
@@ -73,6 +82,9 @@ class PrivacyDashboardAPIManager private constructor() {
 
         fun resetApi() {
             apiManager = null
+            previousAccessToken = null
+            previousApiKey = null
+            previousBaseUrl = null
         }
     }
 }
