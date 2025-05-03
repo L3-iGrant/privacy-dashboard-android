@@ -26,6 +26,11 @@ import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_USE
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
 import com.google.gson.Gson
 import kotlin.math.floor
+import androidx.appcompat.app.AppCompatActivity
+import com.github.privacydashboard.modules.fragments.PrivacyDashboardFragment
+import com.github.privacydashboard.modules.fragments.PrivacyDashboardDataAgreementPolicyFragment
+import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_UIMODE
+import com.github.privacydashboard.utils.ViewMode
 
 
 object PrivacyDashboard {
@@ -45,6 +50,7 @@ object PrivacyDashboard {
     private var mOrganisationId: String? = null
     private var consentChangeListener: ConsentChangeListener? = null
     private var dataAgreementIds: ArrayList<String>? = null
+    private var mViewMode: String? = null
 
     fun showPrivacyDashboard(): PrivacyDashboard {
         destination = 0
@@ -76,6 +82,10 @@ object PrivacyDashboard {
      */
     fun withOrganisationId(organisationId: String?): PrivacyDashboard {
         mOrganisationId = if (organisationId == "") null else organisationId
+        return this
+    }
+    fun withViewMode(viewMode: ViewMode): PrivacyDashboard {
+        mViewMode = viewMode.mode
         return this
     }
     /**
@@ -176,11 +186,55 @@ object PrivacyDashboard {
      */
     fun start(activity: Activity) {
         if (destination == 0) {
-            if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId !=null))
-                activity.startActivity(getIntent(activity))
+            if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId != null)) {
+                if (mViewMode == ViewMode.BottomSheet.mode) {
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_BASE_URL, mBaseUrl)
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_USERID, mUserId)
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_TOKEN, mApiKey)
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_UIMODE, mViewMode)
+                    PrivacyDashboardLocaleHelper.setLocale(activity, mLocale ?: "en")
+                    PrivacyDashboardDataUtils.saveBooleanValues(
+                        activity,
+                        EXTRA_TAG_ENABLE_USER_REQUEST,
+                        mEnableUserRequest
+                    )
+                    PrivacyDashboardDataUtils.saveBooleanValues(
+                        activity,
+                        EXTRA_TAG_ENABLE_ASK_ME,
+                        mEnableAskMe
+                    )
+                    PrivacyDashboardDataUtils.saveBooleanValues(
+                        activity,
+                        EXTRA_TAG_ENABLE_ATTRIBUTE_LEVEL_CONSENT,
+                        mEnableAttributeLevelConsent
+                    )
+                    // Show BottomSheetFragment if the UIMode is bottomSheet
+                    val bottomSheetFragment = PrivacyDashboardFragment.newInstance(
+                        dataAgreementIds = dataAgreementIds,
+                        consentChangeListener = consentChangeListener
+                    )
+                    bottomSheetFragment.show((activity as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
+                } else {
+                    // Start Activity as usual if UIMode is not bottomSheet
+                    activity.startActivity(getIntent(activity))
+                }
+            }
         } else if (destination == 1) {
-            if (mDataAgreement != null)
-                activity.startActivity(getIntent(activity))
+            if (mDataAgreement != null) {
+                if (mViewMode == ViewMode.BottomSheet.mode){
+                    PrivacyDashboardLocaleHelper.setLocale(activity, mLocale ?: "en")
+                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_UIMODE, mViewMode)
+                    val bottomSheetFragment = PrivacyDashboardDataAgreementPolicyFragment.newInstance(
+                        data = mDataAgreement,
+                    )
+                    bottomSheetFragment.show((activity as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
+
+                }else{
+                    activity.startActivity(getIntent(activity))
+                }
+            }
         }
     }
 
@@ -213,6 +267,7 @@ object PrivacyDashboard {
             PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, mApiKey)
             PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
             PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
+            PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_UIMODE, mViewMode)
             PrivacyDashboardDataUtils.saveBooleanValues(
                 context,
                 EXTRA_TAG_ENABLE_USER_REQUEST,
@@ -235,6 +290,7 @@ object PrivacyDashboard {
             if (mDataAgreement != null)
                 mIntent?.setClass(context, PrivacyDashboardDataAgreementPolicyActivity::class.java)
             PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
+            PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_UIMODE, mViewMode)
             mIntent?.putExtra(
                 PrivacyDashboardDataAgreementPolicyActivity.TAG_EXTRA_ATTRIBUTE_LIST,
                 mDataAgreement
