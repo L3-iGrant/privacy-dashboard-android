@@ -3,6 +3,7 @@ package com.github.privacydashboard.modules.fragments
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,12 +34,14 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance(
             dataAgreementIds: ArrayList<String>?,
-            consentChangeListener: ConsentChangeListener?
+            consentChangeListener: ConsentChangeListener?,
+            title:String?
         ): PrivacyDashboardFragment {
             val fragment = PrivacyDashboardFragment()
 
             val args = Bundle().apply {
                 putStringArrayList("DATA_AGREEMENT_IDS", dataAgreementIds)
+                putString("TITLE",title)
             }
             fragment.arguments = args
             fragment.setConsentChangeListener(consentChangeListener)
@@ -54,6 +57,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
     private lateinit var tvName: TextView
     private lateinit var ivClose: ImageView
     private lateinit var ivMenuMore: ImageView
+    private var isInProgress = false
     override fun getTheme(): Int = R.style.RoundedBottomSheetDialog
 
     override fun onCreateView(
@@ -106,6 +110,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
 
         // Get passed dataAgreementIds from arguments
         val dataAgreementIds = arguments?.getStringArrayList("DATA_AGREEMENT_IDS")
+        val title = arguments?.getString("TITLE")
         viewModel?.getOrganizationDetail(true, requireContext())
         viewModel?.getDataAgreements(true, requireContext())
 
@@ -128,13 +133,24 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                 }
             }
         })
-        tvName.text = resources.getString(R.string.privacy_dashboard_data_agreement_policy_data_agreement)
+        tvName.text = title ?: resources.getString(R.string.privacy_dashboard)
         binding.fragmentToolBar.ivClose.setOnClickListener{
             dismiss() // Dismiss the bottom sheet
         }
         ivMenuMore.setOnClickListener {
             showPopupMenu(ivMenuMore)
         }
+        // Observing the isLoading LiveData
+        viewModel?.isLoading?.observe(viewLifecycleOwner) { isLoading ->
+            Log.d("Fragment", "isLoading observed: $isLoading")
+            if (isLoading == true) {
+                binding.llProgressBar.visibility = View.VISIBLE
+            } else {
+                binding.llProgressBar.visibility = View.GONE
+            }
+        }
+
+
 
     }
 
@@ -239,7 +255,18 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                         viewModel?.purposeConsents?.value ?: ArrayList(),
                         object : UsagePurposeClickListener {
                             override fun onItemClick(consent: PurposeConsent?) {
+                                if (isInProgress) {
+                                    return // Skip if already in progress
+                                }
+                                // Mark the operation as in progress
+                                isInProgress = true
                                 viewModel?.getConsentList(consent, requireContext())
+                                viewModel?.isLoading?.observe(viewLifecycleOwner) { isLoading ->
+                                    if (isLoading != true) {
+                                        isInProgress = false
+                                    }
+                                }
+
                             }
 
                             override fun onSetStatus(

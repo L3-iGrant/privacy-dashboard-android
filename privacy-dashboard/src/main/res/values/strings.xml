@@ -8,9 +8,10 @@
     <string name="privacy_dashboard_usage_purpose">Usage Purposes</string>
     <string name="privacy_dashboard_data_agreements">DATA AGREEMENTS</string>
     <string name="privacy_dashboard_disallow">Disallow</string>
-    <string name="privacy_dashboard_allow">Allow : %1$d of %2$d</string>
+    <string name="privacy_dashboard_allow">Allow</string>
     <string name="privacy_dashboard_read_less">Read less</string>
     <string name="privacy_dashboard_read_more">Read more</string>
+    <string name="privacy_dashboard">Privacy Dashboard</string>
 
     <string name="privacy_dashboard_data_attribute_allow">Allow</string>
     <string name="privacy_dashboard_data_attribute_my_data_consents">My data consents</string>

@@ -8,9 +8,10 @@
     <string name="privacy_dashboard_usage_purpose">Användningssyfte</string>
     <string name="privacy_dashboard_data_agreements">DATAAVTAL</string>
     <string name="privacy_dashboard_disallow">Inte tillåta</string>
-    <string name="privacy_dashboard_allow">Tillåt : %1$d of %2$d</string>
+    <string name="privacy_dashboard_allow">Tillåt</string>
     <string name="privacy_dashboard_read_less">Läs mindre</string>
     <string name="privacy_dashboard_read_more">Läs mer</string>
+    <string name="privacy_dashboard">Privacy Dashboard</string>
 
     <string name="privacy_dashboard_data_attribute_allow">Tillåt</string>
     <string name="privacy_dashboard_data_attribute_my_data_consents">Mina data samtycke</string>

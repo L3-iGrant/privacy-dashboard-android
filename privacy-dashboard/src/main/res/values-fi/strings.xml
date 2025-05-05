@@ -8,9 +8,10 @@
     <string name="privacy_dashboard_usage_purpose">Käyttötarkoitukset</string>
     <string name="privacy_dashboard_data_agreements">TIETOSOPIMUKSET</string>
     <string name="privacy_dashboard_disallow">Disallow</string>
-    <string name="privacy_dashboard_allow">Sallia : %1$d of %2$d</string>
+    <string name="privacy_dashboard_allow">Sallia</string>
     <string name="privacy_dashboard_read_less">Lue vähemmän</string>
     <string name="privacy_dashboard_read_more">Lue lisää</string>
+    <string name="privacy_dashboard">Privacy Dashboard</string>
 
     <string name="privacy_dashboard_data_attribute_allow">Sallia</string>
     <string name="privacy_dashboard_data_attribute_my_data_consents">Tietojeni suostumukset</string>

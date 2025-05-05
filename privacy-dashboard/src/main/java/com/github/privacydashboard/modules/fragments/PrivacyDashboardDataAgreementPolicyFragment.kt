@@ -16,6 +16,7 @@ import com.github.privacydashboard.databinding.FragmentPrivacyDataAreementPolicy
 import com.github.privacydashboard.models.DataAgreementPolicyModel
 import com.github.privacydashboard.models.v2.dataAgreement.DataAgreementV2
 import com.github.privacydashboard.modules.dataAgreementPolicy.PrivacyDashboardDataAgreementPolicyAdapter
+import com.github.privacydashboard.utils.AdapterType
 import com.github.privacydashboard.utils.PrivacyDashboardDisplayUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -194,7 +195,7 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
             60f,
             binding.rvDataAgreementPolicy.context
         )
-        adapter = PrivacyDashboardDataAgreementPolicyAdapter(list,width)
+        adapter = PrivacyDashboardDataAgreementPolicyAdapter(list,width, AdapterType.FRAGMENT)
         binding.rvDataAgreementPolicy.adapter = adapter
     }
 }
