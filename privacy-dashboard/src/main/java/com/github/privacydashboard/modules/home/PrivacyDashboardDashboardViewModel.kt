@@ -23,6 +23,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.github.privacydashboard.models.PrivacyDashboardBottomSheetData
+import com.github.privacydashboard.utils.ViewMode
 
 class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
 
@@ -36,6 +38,8 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
 
     var isListLoading = MutableLiveData<Boolean>()
     var dataAgreementIds: MutableLiveData<List<String>?> = MutableLiveData(null)
+    val showBottomSheetEvent = MutableLiveData<Boolean>()
+    val bottomSheetData = MutableLiveData<PrivacyDashboardBottomSheetData?>()
 
     private fun updateUI(orgDetail: OrganizationDetailResponse?) {
         consentId = orgDetail?.consentID
@@ -268,8 +272,26 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                 )
 
                 if (result.isSuccess) {
+                    val mUIMode = PrivacyDashboardDataUtils.getStringValue(
+                        context,
+                        PrivacyDashboardDataUtils.EXTRA_TAG_UIMODE,
+                        null
+                    )
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+                        if (mUIMode == ViewMode.BottomSheet.mode)
+                        {
+                            val data = PrivacyDashboardBottomSheetData(
+                                name = consent?.purpose?.name,
+                                description = consent?.purpose?.description,
+                                dataAttributes = result.getOrNull()
+                            )
+
+                            bottomSheetData.value = data
+
+                            showBottomSheetEvent.value = true
+
+                        }else{
                         val intent = Intent(
                             context,
                             PrivacyDashboardDataAttributeListingActivity::class.java
@@ -285,6 +307,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                         context.startActivity(intent)
                         PrivacyDashboardDataAttributeListingActivity.dataAttributesResponse =
                             result.getOrNull()
+                    }
                     }
                 } else {
                     withContext(Dispatchers.Main) {

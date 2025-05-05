@@ -14,6 +14,7 @@ object PrivacyDashboardDataUtils {
     const val EXTRA_TAG_ENABLE_USER_REQUEST = "PrivacyDashboardDataUtils.enableUserRequest"
     const val EXTRA_TAG_ENABLE_ASK_ME = "PrivacyDashboardDataUtils.enableAskMe"
     const val EXTRA_TAG_ENABLE_ATTRIBUTE_LEVEL_CONSENT = "PrivacyDashboardDataUtils.enableAttributeLevelConsent"
+    const val EXTRA_TAG_UIMODE = "PrivacyDashboardDataUtils.uiMode"
 
     //todo update the deprecated preference manager
     fun saveStringValues(context: Context?, tag: String?, value: String?) {
