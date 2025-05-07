@@ -47,8 +47,8 @@ class UsagePurposeAdapter(
                     .getString(R.string.privacy_dashboard_disallow) else itemRowBinding.ctvStatus.context
                     .resources.getString(
                         R.string.privacy_dashboard_allow,
-                        purposeConsent?.count?.consented,
-                        purposeConsent?.count?.total
+//                        purposeConsent?.count?.consented,
+//                        purposeConsent?.count?.total
                     )
             itemRowBinding.llDisable.visibility =
                 if (purposeConsent?.purpose?.lawfulUsage == true) View.VISIBLE else View.GONE

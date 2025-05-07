@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:text="---------- -------"
                 android:textColor="@color/privacyDashboardTextColor"
-                android:textSize="@dimen/text_size_normal" />
+                android:textSize="@dimen/text_size_medium" />
 
             <ImageView
                 android:layout_width="36dp"
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:text="Allow"
                 android:textColor="@color/privacyDashboardTextColorLight"
-                android:textSize="@dimen/text_size_normal" />
+                android:textSize="@dimen/text_size_medium" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -57,18 +57,18 @@
 
                 <com.github.privacydashboard.customView.SwitchButton
                     android:id="@+id/switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
                     app:sb_show_indicator="false" />
 
                 <com.github.privacydashboard.customView.SwitchButton
                     android:id="@+id/switch_button_disabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:sb_show_indicator="false"
-                    app:sb_checked_color="#B1DFB9"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
                     android:visibility="gone"
-                    app:sb_uncheck_color="#E8E8E8"/>
+                    app:sb_checked_color="#B1DFB9"
+                    app:sb_show_indicator="false"
+                    app:sb_uncheck_color="#E8E8E8" />
 
                 <LinearLayout
                     android:id="@+id/llDisable"

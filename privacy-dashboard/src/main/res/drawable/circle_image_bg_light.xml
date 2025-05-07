@@ -3,7 +3,7 @@
     android:shape="ring"
     android:thicknessRatio="2"
     android:useLevel="false">
-    <solid android:color="#B9A5A5A5" />
+    <solid android:color="@color/privacyDashboardBGColor" />
     <padding
         android:bottom="0dp"
         android:left="0dp"

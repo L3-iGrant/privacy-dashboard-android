@@ -49,6 +49,8 @@
                     android:id="@+id/rvRequestHistory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingLeft="20dp"
+
                     android:nestedScrollingEnabled="false"
                     android:visibility="@{viewModel.listVisibility ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

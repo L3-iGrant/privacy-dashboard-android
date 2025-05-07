@@ -40,7 +40,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
     var dataAgreementIds: MutableLiveData<List<String>?> = MutableLiveData(null)
     val showBottomSheetEvent = MutableLiveData<Boolean>()
     val bottomSheetData = MutableLiveData<PrivacyDashboardBottomSheetData?>()
-
+    val isCompleted = MutableLiveData<Boolean>()
     private fun updateUI(orgDetail: OrganizationDetailResponse?) {
         consentId = orgDetail?.consentID
 
@@ -292,22 +292,22 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                             showBottomSheetEvent.value = true
 
                         }else{
-                        val intent = Intent(
-                            context,
-                            PrivacyDashboardDataAttributeListingActivity::class.java
-                        )
-                        intent.putExtra(
-                            PrivacyDashboardDataAttributeListingActivity.TAG_EXTRA_NAME,
-                            consent?.purpose?.name
-                        )
-                        intent.putExtra(
-                            PrivacyDashboardDataAttributeListingActivity.TAG_EXTRA_DESCRIPTION,
-                            consent?.purpose?.description
-                        )
-                        context.startActivity(intent)
-                        PrivacyDashboardDataAttributeListingActivity.dataAttributesResponse =
-                            result.getOrNull()
-                    }
+                            val intent = Intent(
+                                context,
+                                PrivacyDashboardDataAttributeListingActivity::class.java
+                            )
+                            intent.putExtra(
+                                PrivacyDashboardDataAttributeListingActivity.TAG_EXTRA_NAME,
+                                consent?.purpose?.name
+                            )
+                            intent.putExtra(
+                                PrivacyDashboardDataAttributeListingActivity.TAG_EXTRA_DESCRIPTION,
+                                consent?.purpose?.description
+                            )
+                            context.startActivity(intent)
+                            PrivacyDashboardDataAttributeListingActivity.dataAttributesResponse =
+                                result.getOrNull()
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {

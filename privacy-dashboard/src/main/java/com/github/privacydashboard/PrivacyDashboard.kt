@@ -51,6 +51,7 @@ object PrivacyDashboard {
     private var consentChangeListener: ConsentChangeListener? = null
     private var dataAgreementIds: ArrayList<String>? = null
     private var mViewMode: String? = null
+    private var mTitle: String? =null
 
     fun showPrivacyDashboard(): PrivacyDashboard {
         destination = 0
@@ -86,6 +87,10 @@ object PrivacyDashboard {
     }
     fun withViewMode(viewMode: ViewMode): PrivacyDashboard {
         mViewMode = viewMode.mode
+        return this
+    }
+    fun withTitle(title: String?): PrivacyDashboard {
+        mTitle = title
         return this
     }
     /**
@@ -213,7 +218,8 @@ object PrivacyDashboard {
                     // Show BottomSheetFragment if the UIMode is bottomSheet
                     val bottomSheetFragment = PrivacyDashboardFragment.newInstance(
                         dataAgreementIds = dataAgreementIds,
-                        consentChangeListener = consentChangeListener
+                        consentChangeListener = consentChangeListener,
+                        title = mTitle
                     )
                     bottomSheetFragment.show((activity as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
                 } else {
