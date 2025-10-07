@@ -11,4 +11,6 @@ data class Individual(
     @SerializedName("iamId") var iamId: String? = null,
     @SerializedName("email") var email: String? = null,
     @SerializedName("phone") var phone: String? = null,
+    @SerializedName("pushNotificationToken") var pushNotificationToken: String? = null,
+    @SerializedName("deviceType") var deviceType: String? = null,
 )

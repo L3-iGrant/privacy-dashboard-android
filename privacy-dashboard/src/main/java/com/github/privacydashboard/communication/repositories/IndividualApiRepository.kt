@@ -9,14 +9,18 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
     suspend fun createAnIndividual(
         name: String?,
         email: String?,
-        phone: String?
+        phone: String?,
+        pushNotificationToken: String?,
+        deviceType: String?
     ): Result<IndividualRequest?>? {
         return try {
             val individual = IndividualRequest(
                 individual = Individual(
                     name = name,
                     email = email,
-                    phone = phone
+                    phone = phone,
+                    pushNotificationToken = pushNotificationToken,
+                    deviceType = deviceType
                 )
             )
             val response = apiService.createAnIndividual(
@@ -63,14 +67,18 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
         individualId: String?,
         name: String,
         email: String,
-        phone: String
+        phone: String,
+        pushNotificationToken: String?,
+        deviceType: String?
     ): Result<IndividualRequest?>? {
         return try {
             val individual = IndividualRequest(
                 individual = Individual(
                     name = name,
                     email = email,
-                    phone = phone
+                    phone = phone,
+                    pushNotificationToken = pushNotificationToken,
+                    deviceType = deviceType
                 )
             )
             val response = apiService.updateAnIndividual(
