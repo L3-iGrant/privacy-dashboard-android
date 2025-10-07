@@ -419,7 +419,9 @@ object PrivacyDashboard {
         baseUrl: String? = null,
         name: String? = null,
         email: String? = null,
-        phone: String? = null
+        phone: String? = null,
+        pushNotificationToken: String? = null,
+        deviceType: String? = null
     ): String? {
         val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
             accessToken,
@@ -434,7 +436,7 @@ object PrivacyDashboard {
 
         val result =
             individualApiRepository.createAnIndividual(
-                name, email, phone
+                name, email, phone, pushNotificationToken, deviceType
             )
         return Gson().toJson(result?.getOrNull())
     }
@@ -470,7 +472,9 @@ object PrivacyDashboard {
         name: String,
         email: String,
         phone: String,
-        individualId: String
+        individualId: String,
+        pushNotificationToken: String? = null,
+        deviceType: String? = null
     ): String? {
         val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
             accessToken,
@@ -485,7 +489,7 @@ object PrivacyDashboard {
 
         val result =
             individualApiRepository.updateIndividual(
-                individualId, name, email, phone
+                individualId, name, email, phone, pushNotificationToken, deviceType
             )
         return Gson().toJson(result?.getOrNull())
     }
