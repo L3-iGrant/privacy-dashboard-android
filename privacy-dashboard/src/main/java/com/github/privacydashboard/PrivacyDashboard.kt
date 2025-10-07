@@ -26,7 +26,7 @@ import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_USE
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
 import com.google.gson.Gson
 import kotlin.math.floor
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.github.privacydashboard.modules.fragments.PrivacyDashboardFragment
 import com.github.privacydashboard.modules.fragments.PrivacyDashboardDataAgreementPolicyFragment
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_UIMODE
@@ -221,7 +221,7 @@ object PrivacyDashboard {
                         consentChangeListener = consentChangeListener,
                         title = mTitle
                     )
-                    bottomSheetFragment.show((activity as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
+                    bottomSheetFragment.show((activity as FragmentActivity).supportFragmentManager, bottomSheetFragment.tag)
                 } else {
                     // Start Activity as usual if UIMode is not bottomSheet
                     activity.startActivity(getIntent(activity))
@@ -235,7 +235,7 @@ object PrivacyDashboard {
                     val bottomSheetFragment = PrivacyDashboardDataAgreementPolicyFragment.newInstance(
                         data = mDataAgreement,
                     )
-                    bottomSheetFragment.show((activity as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
+                    bottomSheetFragment.show((activity as FragmentActivity).supportFragmentManager, bottomSheetFragment.tag)
 
                 }else{
                     activity.startActivity(getIntent(activity))
