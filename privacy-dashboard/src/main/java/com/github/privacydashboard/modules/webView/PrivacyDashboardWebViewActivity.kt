@@ -29,6 +29,7 @@ class PrivacyDashboardWebViewActivity : PrivacyDashboardBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_web_view)
+        binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
         setUpToolBar()
         setUpWebView()

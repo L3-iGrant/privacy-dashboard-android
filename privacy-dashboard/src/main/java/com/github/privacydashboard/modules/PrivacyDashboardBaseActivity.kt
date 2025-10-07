@@ -6,7 +6,11 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
 
 open class PrivacyDashboardBaseActivity : AppCompatActivity() {
@@ -49,4 +53,17 @@ open class PrivacyDashboardBaseActivity : AppCompatActivity() {
         }
     }
 
+    fun setupEdgeToEdge(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Apply padding to avoid overlap with system bars
+            view.updatePadding(
+                top = insets.top,
+                bottom = insets.bottom
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
+    }
 }

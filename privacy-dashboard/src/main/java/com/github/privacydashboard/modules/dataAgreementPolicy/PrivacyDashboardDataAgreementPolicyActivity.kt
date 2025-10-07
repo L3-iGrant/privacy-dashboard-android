@@ -29,6 +29,7 @@ class PrivacyDashboardDataAgreementPolicyActivity : PrivacyDashboardBaseActivity
         super.onCreate(savedInstanceState)
         binding =
             DataBindingUtil.setContentView(this, R.layout.privacy_activity_data_agreement_policy)
+        binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
         setUpToolBar()
         setUpList()

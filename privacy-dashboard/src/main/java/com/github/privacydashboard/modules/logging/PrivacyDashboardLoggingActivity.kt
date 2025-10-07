@@ -41,6 +41,7 @@ class PrivacyDashboardLoggingActivity : PrivacyDashboardBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_logging)
+        binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
         setUpToolBar()
         setupRecyclerView()
