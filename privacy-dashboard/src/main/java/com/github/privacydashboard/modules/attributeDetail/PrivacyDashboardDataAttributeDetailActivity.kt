@@ -40,6 +40,7 @@ class PrivacyDashboardDataAttributeDetailActivity : PrivacyDashboardBaseActivity
         viewModel = ViewModelProvider(this)[PrivacyDashboardDataAttributeDetailViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this;
+        binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
         setUpToolBar()
         initValues()

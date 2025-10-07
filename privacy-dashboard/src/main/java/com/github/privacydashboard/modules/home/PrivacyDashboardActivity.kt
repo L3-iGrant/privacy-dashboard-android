@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +29,7 @@ import com.github.privacydashboard.modules.webView.PrivacyDashboardWebViewActivi
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardImageUtils
 import com.github.privacydashboard.utils.PrivacyDashboardReadMoreOption
+import com.github.privacydashboard.utils.adjustImageViewHeightBasedOnWidth
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -44,6 +49,7 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_dashboard)
         viewModel = ViewModelProvider(this)[PrivacyDashboardDashboardViewModel::class.java]
         binding.viewModel = viewModel;
@@ -69,6 +75,13 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
                 R.drawable.ic_back_bg
             )
         )
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolBarCommon) { v, insets ->
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                setMargins(0, insets.systemWindowInsets.top, 0, 0)
+            }
+            insets
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -153,6 +166,7 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
     }
 
     private fun initView() {
+        binding.ivCoverUrl.let { adjustImageViewHeightBasedOnWidth(it) }
         viewModel?.organization?.observe(this, Observer { newData ->
             try {
                 PrivacyDashboardImageUtils.setImage(

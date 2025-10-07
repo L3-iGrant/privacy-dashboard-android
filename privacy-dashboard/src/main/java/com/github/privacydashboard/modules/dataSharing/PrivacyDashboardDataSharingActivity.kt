@@ -49,6 +49,7 @@ class PrivacyDashboardDataSharingActivity : PrivacyDashboardBaseActivity() {
         viewModel = ViewModelProvider(this)[PrivacyDashboardDataSharingViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
         viewModel?.fetchDataAgreementRecord(true, this)
         initListeners()
