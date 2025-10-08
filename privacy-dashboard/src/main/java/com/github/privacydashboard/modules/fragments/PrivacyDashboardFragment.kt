@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -158,54 +159,57 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
         this.consentChangeListener = listener
     }
     private fun showPopupMenu(view: View?) {
-        if (view!=null) {
-            val popupMenu = PopupMenu(requireContext(), view)
-            val isUserRequestAvailable = PrivacyDashboardDataUtils.getBooleanValue(
-                requireContext(),
-                PrivacyDashboardDataUtils.EXTRA_TAG_ENABLE_USER_REQUEST
-            )
-            popupMenu.menuInflater.inflate(
-                if (isUserRequestAvailable == true) R.menu.menu_more_items else R.menu.menu_more_items_no_user_request,
-                popupMenu.getMenu()
-            )
+        view ?: return
 
-            // Handle item clicks in the popup menu
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item?.itemId) {
-                    R.id.action_webpage -> {
-                        val fragment = PrivacyDashboardWebViewFragment.newInstance(
-                            viewModel?.organization?.value?.policyURL ?: "",
-                            resources.getString(R.string.privacy_dashboard_web_view_privacy_policy)
-                        )
-                        fragment.show(childFragmentManager, fragment.tag)
-                        true
-                    }
+        // Wrap the Flutter activity context with an AppCompat theme
+        val themedContext = ContextThemeWrapper(requireContext(), androidx.appcompat.R.style.Theme_AppCompat)
 
-                    R.id.action_consent_history -> {
-                        val fragment = PrivacyDashboardLoggingFragment.newInstance(
-                            viewModel?.organization?.value?.iD ?: ""
-                        )
-                        fragment.show(childFragmentManager, fragment.tag)
+        val popupMenu = PopupMenu(themedContext, view)
+        val isUserRequestAvailable = PrivacyDashboardDataUtils.getBooleanValue(
+            requireContext(),
+            PrivacyDashboardDataUtils.EXTRA_TAG_ENABLE_USER_REQUEST
+        )
 
-                        true
-                    }
+        popupMenu.menuInflater.inflate(
+            if (isUserRequestAvailable == true)
+                R.menu.menu_more_items
+            else
+                R.menu.menu_more_items_no_user_request,
+            popupMenu.menu
+        )
 
-                    R.id.action_request -> {
-
-                        val orgId = viewModel?.organization?.value?.iD
-                        val orgName = viewModel?.organization?.value?.name
-
-                        val fragment =
-                            PrivacyDashboardUserRequestFragment.newInstance(orgId, orgName)
-                        fragment.show(childFragmentManager, fragment.tag)
-                        true
-                    }
-
-                    else -> false
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.action_webpage -> {
+                    val fragment = PrivacyDashboardWebViewFragment.newInstance(
+                        viewModel?.organization?.value?.policyURL ?: "",
+                        resources.getString(R.string.privacy_dashboard_web_view_privacy_policy)
+                    )
+                    fragment.show(childFragmentManager, fragment.tag)
+                    true
                 }
+
+                R.id.action_consent_history -> {
+                    val fragment = PrivacyDashboardLoggingFragment.newInstance(
+                        viewModel?.organization?.value?.iD ?: ""
+                    )
+                    fragment.show(childFragmentManager, fragment.tag)
+                    true
+                }
+
+                R.id.action_request -> {
+                    val orgId = viewModel?.organization?.value?.iD
+                    val orgName = viewModel?.organization?.value?.name
+                    val fragment = PrivacyDashboardUserRequestFragment.newInstance(orgId, orgName)
+                    fragment.show(childFragmentManager, fragment.tag)
+                    true
+                }
+
+                else -> false
             }
-            popupMenu.show()
         }
+
+        popupMenu.show()
     }
     private fun initView() {
         viewModel?.organization?.observe(viewLifecycleOwner) { newData ->
