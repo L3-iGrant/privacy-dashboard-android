@@ -4,12 +4,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rounded_bottom_sheet">
+        android:background="@drawable/privacy_dashboard_rounded_bottom_sheet">
 
         <!-- Include the Fragment Toolbar here -->
         <include
             android:id="@+id/fragmentToolBar"
-            layout="@layout/fragment_tool_bar"
+            layout="@layout/fragment_privacy_dashboard_tool_bar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
