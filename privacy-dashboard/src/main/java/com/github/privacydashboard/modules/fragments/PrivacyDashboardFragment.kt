@@ -54,9 +54,9 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
     private var viewModel: PrivacyDashboardDashboardViewModel? = null
     private lateinit var binding: FragmentPrivacyDashboardBinding
     private var adapter: UsagePurposeAdapter? = null
-    private lateinit var tvName: TextView
-    private lateinit var ivClose: ImageView
-    private lateinit var ivMenuMore: ImageView
+    private var tvName: TextView? = null
+    private var ivClose: ImageView? = null
+    private var ivMenuMore: ImageView? = null
     private var isInProgress = false
     override fun getTheme(): Int = R.style.RoundedBottomSheetDialog
 
@@ -86,7 +86,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
         tvName = binding.root.findViewById(R.id.tvName)
         ivClose =  binding.root.findViewById(R.id.ivClose)
         ivMenuMore = binding.root.findViewById(R.id.ivMenuMore)
-        ivMenuMore.visibility = View.VISIBLE
+        ivMenuMore?.visibility = View.VISIBLE
 
 //        EventBus.getDefault().register(this)
         viewModel?.showBottomSheetEvent?.value = false
@@ -133,11 +133,11 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                 }
             }
         })
-        tvName.text = title ?: resources.getString(R.string.privacy_dashboard)
+        tvName?.text = title ?: resources.getString(R.string.privacy_dashboard)
         binding.fragmentToolBar.ivClose.setOnClickListener{
             dismiss() // Dismiss the bottom sheet
         }
-        ivMenuMore.setOnClickListener {
+        ivMenuMore?.setOnClickListener {
             showPopupMenu(ivMenuMore)
         }
         // Observing the isLoading LiveData
@@ -157,49 +157,55 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
     fun setConsentChangeListener(listener: ConsentChangeListener?) {
         this.consentChangeListener = listener
     }
-    private fun showPopupMenu(view: View) {
-        val popupMenu = PopupMenu(requireContext(), view)
-        val isUserRequestAvailable = PrivacyDashboardDataUtils.getBooleanValue(
-            requireContext(),
-            PrivacyDashboardDataUtils.EXTRA_TAG_ENABLE_USER_REQUEST
-        )
-        popupMenu.menuInflater.inflate(
-            if (isUserRequestAvailable == true) R.menu.menu_more_items else R.menu.menu_more_items_no_user_request,
-            popupMenu.getMenu()
-        )
+    private fun showPopupMenu(view: View?) {
+        if (view!=null) {
+            val popupMenu = PopupMenu(requireContext(), view)
+            val isUserRequestAvailable = PrivacyDashboardDataUtils.getBooleanValue(
+                requireContext(),
+                PrivacyDashboardDataUtils.EXTRA_TAG_ENABLE_USER_REQUEST
+            )
+            popupMenu.menuInflater.inflate(
+                if (isUserRequestAvailable == true) R.menu.menu_more_items else R.menu.menu_more_items_no_user_request,
+                popupMenu.getMenu()
+            )
 
-        // Handle item clicks in the popup menu
-        popupMenu.setOnMenuItemClickListener { item ->
-            when (item?.itemId) {
-                R.id.action_webpage -> {
-                    val fragment = PrivacyDashboardWebViewFragment.newInstance(
-                        viewModel?.organization?.value?.policyURL ?: "",
-                        resources.getString(R.string.privacy_dashboard_web_view_privacy_policy)
-                    )
-                    fragment.show(childFragmentManager, fragment.tag)
-                    true
+            // Handle item clicks in the popup menu
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item?.itemId) {
+                    R.id.action_webpage -> {
+                        val fragment = PrivacyDashboardWebViewFragment.newInstance(
+                            viewModel?.organization?.value?.policyURL ?: "",
+                            resources.getString(R.string.privacy_dashboard_web_view_privacy_policy)
+                        )
+                        fragment.show(childFragmentManager, fragment.tag)
+                        true
+                    }
+
+                    R.id.action_consent_history -> {
+                        val fragment = PrivacyDashboardLoggingFragment.newInstance(
+                            viewModel?.organization?.value?.iD ?: ""
+                        )
+                        fragment.show(childFragmentManager, fragment.tag)
+
+                        true
+                    }
+
+                    R.id.action_request -> {
+
+                        val orgId = viewModel?.organization?.value?.iD
+                        val orgName = viewModel?.organization?.value?.name
+
+                        val fragment =
+                            PrivacyDashboardUserRequestFragment.newInstance(orgId, orgName)
+                        fragment.show(childFragmentManager, fragment.tag)
+                        true
+                    }
+
+                    else -> false
                 }
-                R.id.action_consent_history -> {
-                    val fragment = PrivacyDashboardLoggingFragment.newInstance(
-                        viewModel?.organization?.value?.iD ?: ""
-                    )
-                    fragment.show(childFragmentManager, fragment.tag)
-
-                    true
-                }
-                R.id.action_request -> {
-
-                    val orgId = viewModel?.organization?.value?.iD
-                    val orgName = viewModel?.organization?.value?.name
-
-                    val fragment = PrivacyDashboardUserRequestFragment.newInstance(orgId, orgName)
-                    fragment.show(childFragmentManager, fragment.tag)
-                    true
-                }
-                else -> false
             }
+            popupMenu.show()
         }
-        popupMenu.show()
     }
     private fun initView() {
         viewModel?.organization?.observe(viewLifecycleOwner) { newData ->

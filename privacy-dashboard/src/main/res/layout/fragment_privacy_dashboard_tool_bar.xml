@@ -33,7 +33,7 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_nav_more_black"
             android:contentDescription="@string/privacy_dashboard_general_more"
-            android:visibility="gone"
+            android:visibility="visible"
             android:clickable="true"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toEndOf="@id/tvName"
