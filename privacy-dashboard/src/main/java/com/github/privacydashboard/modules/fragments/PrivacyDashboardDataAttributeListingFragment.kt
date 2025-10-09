@@ -77,7 +77,7 @@ class PrivacyDashboardDataAttributeListingFragment : BottomSheetDialogFragment()
         val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.post {
             val screenHeight = resources.displayMetrics.heightPixels
-            val desiredHeight = (screenHeight * 0.75).toInt()
+            val desiredHeight = (screenHeight * 0.86).toInt()
 
             bottomSheet.layoutParams.height = desiredHeight
             bottomSheet.requestLayout()

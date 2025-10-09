@@ -29,10 +29,10 @@
                 android:textSize="@dimen/text_size_medium" />
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/forward_arrow_width"
+                android:layout_height="@dimen/forward_arrow_height"
                 android:src="@drawable/ic_arrow_forward"
-                android:padding="5dp"
+                android:padding="3dp"
                 app:tint="@color/privacyDashboardTextColorLight" />
         </LinearLayout>
 

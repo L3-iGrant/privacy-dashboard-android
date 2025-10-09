@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="Title"
             android:textColor="@color/privacyDashboardPrimaryTitleTextColor"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="@dimen/text_size_page_title"
             android:textStyle="bold"
             android:visibility="visible"
             android:maxLines="2"
