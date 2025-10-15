@@ -83,3 +83,8 @@ publishing {
         }
     }
 }
+afterEvaluate {
+    tasks.matching { it.name == "publishMavenPublicationToMavenLocal" }.configureEach {
+        dependsOn tasks.named("bundleReleaseAar")
+    }
+}
