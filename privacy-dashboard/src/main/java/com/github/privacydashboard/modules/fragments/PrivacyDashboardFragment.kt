@@ -20,7 +20,6 @@ import com.github.privacydashboard.ConsentChangeListener
 import com.github.privacydashboard.R
 import com.github.privacydashboard.databinding.FragmentPrivacyDashboardBinding
 import com.github.privacydashboard.models.PurposeConsent
-import com.github.privacydashboard.modules.home.PrivacyDashboardActivity
 import com.github.privacydashboard.modules.home.PrivacyDashboardDashboardViewModel
 import com.github.privacydashboard.modules.home.UsagePurposeAdapter
 import com.github.privacydashboard.modules.home.UsagePurposeClickListener
@@ -287,7 +286,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                                     consent,
                                     isChecked,
                                     requireContext(),
-                                    PrivacyDashboardActivity.consentChange
+                                    consentChangeListener
                                 )
                             }
                         })
