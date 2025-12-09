@@ -180,4 +180,9 @@ interface PrivacyDashboardAPIServices {
         @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
     ): Response<IndividualRequest?>?
+
+    @DELETE("service/individual/{individualId}")
+    suspend fun deleteAnIndividual(
+        @Path("individualId") individualId: String?,
+    ): Response<IndividualRequest?>?
 }

@@ -123,4 +123,26 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
             Result.failure(e)
         }
     }
+
+    suspend fun deleteTheIndividual(
+        individualId: String?
+    ): Result<IndividualRequest?>? {
+        return try {
+            val response = apiService.deleteAnIndividual(
+                individualId = individualId
+            )
+            if (response?.isSuccessful == true) {
+                val data = response.body()
+                if (data != null) {
+                    Result.success(data)
+                } else {
+                    Result.failure(Exception("Response body is null"))
+                }
+            } else {
+                Result.failure(Exception("Request failed with code: ${response?.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

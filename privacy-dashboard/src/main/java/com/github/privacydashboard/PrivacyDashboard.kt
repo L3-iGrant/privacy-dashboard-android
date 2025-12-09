@@ -518,6 +518,26 @@ object PrivacyDashboard {
             )
         return Gson().toJson(result?.getOrNull())
     }
+    suspend fun deleteTheIndividual(
+        accessToken: String? = null,
+        apiKey: String? = null,
+        baseUrl: String? = null,
+        individualId: String
+    ): String? {
+        val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+            accessToken,
+            apiKey,
+            if (baseUrl?.last().toString() == "/") baseUrl else "$baseUrl/"
+        )?.service!!
+
+        val individualApiRepository = IndividualApiRepository(apiService)
+
+        val result = individualApiRepository.deleteTheIndividual(
+            individualId
+        )
+
+        return Gson().toJson(result?.getOrNull())
+    }
 }
 
 interface ConsentChangeListener {
