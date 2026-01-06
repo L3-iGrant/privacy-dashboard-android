@@ -421,7 +421,8 @@ object PrivacyDashboard {
         email: String? = null,
         phone: String? = null,
         pushNotificationToken: String? = null,
-        deviceType: String? = null
+        deviceType: String? = null,
+        externalId: String? = null
     ): String? {
         val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
             accessToken,
@@ -436,7 +437,7 @@ object PrivacyDashboard {
 
         val result =
             individualApiRepository.createAnIndividual(
-                name, email, phone, pushNotificationToken, deviceType
+                name, email, phone, pushNotificationToken, deviceType, externalId
             )
         return Gson().toJson(result?.getOrNull())
     }
@@ -474,7 +475,8 @@ object PrivacyDashboard {
         phone: String,
         individualId: String,
         pushNotificationToken: String? = null,
-        deviceType: String? = null
+        deviceType: String? = null,
+        externalId: String? = null
     ): String? {
         val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
             accessToken,
@@ -489,7 +491,7 @@ object PrivacyDashboard {
 
         val result =
             individualApiRepository.updateIndividual(
-                individualId, name, email, phone, pushNotificationToken, deviceType
+                individualId, name, email, phone, pushNotificationToken, deviceType,externalId
             )
         return Gson().toJson(result?.getOrNull())
     }
@@ -499,7 +501,8 @@ object PrivacyDashboard {
         apiKey: String? = null,
         baseUrl: String? = null,
         offset: Int?,
-        limit: Int?
+        limit: Int?,
+        externalIndividualId: String? = null
     ): String? {
         val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
             accessToken,
@@ -514,7 +517,7 @@ object PrivacyDashboard {
 
         val result =
             individualApiRepository.getAllIndividuals(
-                offset, limit
+                offset, limit, externalIndividualId
             )
         return Gson().toJson(result?.getOrNull())
     }

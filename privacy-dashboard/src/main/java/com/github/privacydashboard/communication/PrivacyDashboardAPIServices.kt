@@ -179,6 +179,7 @@ interface PrivacyDashboardAPIServices {
     suspend fun getAllIndividual(
         @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
+        @Query("externalIndividualId") externalIndividualId: String?,
     ): Response<IndividualRequest?>?
 
     @DELETE("service/individual/{individualId}")

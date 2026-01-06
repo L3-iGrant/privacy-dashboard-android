@@ -11,7 +11,8 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
         email: String?,
         phone: String?,
         pushNotificationToken: String?,
-        deviceType: String?
+        deviceType: String?,
+        externalId: String?
     ): Result<IndividualRequest?>? {
         return try {
             val individual = IndividualRequest(
@@ -20,7 +21,8 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
                     email = email,
                     phone = phone,
                     pushNotificationToken = pushNotificationToken,
-                    deviceType = deviceType
+                    deviceType = deviceType,
+                    externalId = externalId
                 )
             )
             val response = apiService.createAnIndividual(
@@ -69,7 +71,8 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
         email: String,
         phone: String,
         pushNotificationToken: String?,
-        deviceType: String?
+        deviceType: String?,
+        externalId: String?
     ): Result<IndividualRequest?>? {
         return try {
             val individual = IndividualRequest(
@@ -78,7 +81,8 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
                     email = email,
                     phone = phone,
                     pushNotificationToken = pushNotificationToken,
-                    deviceType = deviceType
+                    deviceType = deviceType,
+                    externalId = externalId
                 )
             )
             val response = apiService.updateAnIndividual(
@@ -102,12 +106,14 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
 
     suspend fun getAllIndividuals(
         offset:Int?,
-        limit:Int?
+        limit:Int?,
+        externalIndividualId: String?
     ): Result<IndividualRequest?>? {
         return try {
             val response = apiService.getAllIndividual(
                 offset = offset,
-                limit = limit
+                limit = limit,
+                externalIndividualId = externalIndividualId
             )
             if (response?.isSuccessful == true) {
                 val data = response.body()
