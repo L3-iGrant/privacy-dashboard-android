@@ -3,6 +3,7 @@ package com.github.privacydashboard.communication.repositories
 import com.github.privacydashboard.communication.PrivacyDashboardAPIServices
 import com.github.privacydashboard.models.v2.individual.Individual
 import com.github.privacydashboard.models.v2.individual.IndividualRequest
+import com.github.privacydashboard.models.v2.individual.IndividualsListResponse
 
 class IndividualApiRepository(private val apiService: PrivacyDashboardAPIServices) {
 
@@ -108,7 +109,7 @@ class IndividualApiRepository(private val apiService: PrivacyDashboardAPIService
         offset:Int?,
         limit:Int?,
         externalIndividualId: String?
-    ): Result<IndividualRequest?>? {
+    ): Result<IndividualsListResponse?>? {
         return try {
             val response = apiService.getAllIndividual(
                 offset = offset,
