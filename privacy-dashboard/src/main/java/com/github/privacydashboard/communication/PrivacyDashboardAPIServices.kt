@@ -18,6 +18,7 @@ import com.github.privacydashboard.models.v2.dataAgreement.dataAgreementRecords.
 import com.github.privacydashboard.models.v2.dataAgreement.dataAttributes.DataAttributesListResponseV2
 import com.github.privacydashboard.models.v2.dataAgreement.organization.OrganizationResponseV2
 import com.github.privacydashboard.models.v2.individual.IndividualRequest
+import com.github.privacydashboard.models.v2.individual.IndividualsListResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -179,7 +180,8 @@ interface PrivacyDashboardAPIServices {
     suspend fun getAllIndividual(
         @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
-    ): Response<IndividualRequest?>?
+        @Query("externalIndividualId") externalIndividualId: String?,
+    ): Response<IndividualsListResponse?>?
 
     @DELETE("service/individual/{individualId}")
     suspend fun deleteAnIndividual(
