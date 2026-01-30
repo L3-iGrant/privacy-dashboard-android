@@ -36,8 +36,8 @@
     <string name="privacy_dashboard_user_request_download_data">Lataa tiedot</string>
     <string name="privacy_dashboard_user_request_delete_data">Poista tiedot</string>
 
-    <string name="privacy_dashboard_user_request_download_data_status">Download Data Request Status</string>
-    <string name="privacy_dashboard_user_request_delete_data_status">Delete Data Request Status</string>
+    <string name="privacy_dashboard_user_request_download_data_status">Tietojen latauspyynnön tila</string>
+    <string name="privacy_dashboard_user_request_delete_data_status">Tietojen poistopyynnön tila</string>
 
     <string name="privacy_dashboard_user_request_forget_me">Unohda minut</string>
     <string name="privacy_dashboard_user_request_cancel_request">Peruuta pyyntö</string>
