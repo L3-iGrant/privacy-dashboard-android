@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="privacy_dashboard_general_cancel">Avbryt</string>
+    <string name="privacy_dashboard_general_more">Mer</string>
+
+    <string name="privacy_dashboard_overview">Oversikt</string>
+    <string name="privacy_dashboard_usage_purpose">Bruksformål</string>
+    <string name="privacy_dashboard_data_agreements">DATAAVTALER</string>
+    <string name="privacy_dashboard_disallow">Ikke tillat</string>
+    <string name="privacy_dashboard_allow">Tillat</string>
+    <string name="privacy_dashboard_read_less">Vis mindre</string>
+    <string name="privacy_dashboard_read_more">Les mer</string>
+    <string name="privacy_dashboard">Personverndashbord</string>
+
+    <string name="privacy_dashboard_data_attribute_allow">Tillat</string>
+    <string name="privacy_dashboard_data_attribute_my_data_consents">Mine datasamtykker</string>
+    <string name="privacy_dashboard_data_attribute_data_attributes">DATAATRIBUTTER</string>
+    <string name="privacy_dashboard_data_attribute_read_policy">Les personvernerklæring</string>
+
+    <string name="privacy_dashboard_web_view_privacy_policy">Personvernerklæring</string>
+    <string name="privacy_dashboard_web_view_policy">Vilkår</string>
+
+    <string name="privacy_dashboard_history_consent_history">Samtykkehistorikk</string>
+    <string name="privacy_dashboard_history_empty_consent_history">Ingen historikk tilgjengelig</string>
+
+    <string name="privacy_dashboard_data_attribute_detail_ask_me">Spør meg</string>
+    <string name="privacy_dashboard_data_attribute_detail_allow_consent_rule">Hvis du velger \"Tillat\", samtykker du til permanent bruk av dine personopplysninger for enhver analyse- eller tredjepartsbruk utover formålene du har meldt deg på.</string>
+    <string name="privacy_dashboard_data_attribute_detail_disallow_consent_rule">Hvis du velger \"Ikke tillat\", deaktiverer du bruken av dine personopplysninger for enhver analyse- eller tredjepartsbruk utover formålene du har meldt deg på.</string>
+    <string name="privacy_dashboard_data_attribute_detail_askme_consent_rule">Hvis du velger \"Spør meg\", samtykker du til bruk av dine data for den valgte perioden. Når tidsperioden utløper, vil du bli varslet i sanntid med forespørsel om samtykke når dataleverandøren bruker dine data.</string>
+    <string name="privacy_dashboard_data_attribute_detail_consent">Samtykke</string>
+    <string name="privacy_dashboard_data_attribute_detail_days_with_count">%1$d dager</string>
+
+    <string name="privacy_dashboard_user_request_new_request">Ny forespørsel</string>
+    <string name="privacy_dashboard_user_request_user_request">Brukerforespørsler</string>
+    <string name="privacy_dashboard_user_request_download_data">Last ned data</string>
+    <string name="privacy_dashboard_user_request_delete_data">Slett data</string>
+    <string name="privacy_dashboard_user_request_download_data_status">Status for forespørsel om datanedlasting</string>
+    <string name="privacy_dashboard_user_request_delete_data_status">Status for forespørsel om datasletting</string>
+    <string name="privacy_dashboard_user_request_forget_me">Glem meg</string>
+    <string name="privacy_dashboard_user_request_cancel_request">Avbryt forespørsel</string>
+    <string name="privacy_dashboard_user_request_request_initiated">Forespørsel startet</string>
+    <string name="privacy_dashboard_user_request_request_acknowledged">Forespørsel mottatt</string>
+    <string name="privacy_dashboard_user_request_request_processed">Forespørsel behandlet</string>
+    <string name="privacy_dashboard_user_request_confirmation">Bekreftelse</string>
+    <string name="privacy_dashboard_user_request_confirmation_message">En ny forespørsel om %1$s vil bli sendt til %2$s</string>
+    <string name="privacy_dashboard_user_request_data_delete">datasletting</string>
+    <string name="privacy_dashboard_user_request_confirm">Bekreft</string>
+    <string name="privacy_dashboard_user_request_request_cancelled">Forespørselen ble avbrutt.</string>
+
+    <string name="privacy_dashboard_error_internet">Nettverk ikke tilgjengelig.</string>
+    <string name="privacy_dashboard_error_unexpected">Uventet feil. Vennligst prøv igjen.</string>
+    <string name="privacy_dashboard_data_attribute_disallow_all">Ikke tillat noen</string>
+    <string name="privacy_dashboard_empty_message">Ingen aktive dataavtaler tilgjengelig.</string>
+    <string name="privacy_dashboard_data_sharing_main_desc"><![CDATA[<b>%1$s</b> ønsker tilgang til følgende data fra <b>%2$s</b> for %3$s]]></string>
+    <string name="privacy_dashboard_data_sharing_sensitive_info_see_data_agreement_details_and_terms_of_services">Du deler kanskje sensitiv informasjon med dette nettstedet eller appen. Se detaljer om dataavtalen og tjenestevilkårene</string>
+    <string-array name="privacy_dashboard_data_sharing_links">
+        <item>Detaljer om dataavtalen</item>
+        <item>Tjenestevilkår</item>
+    </string-array>
+    <string name="privacy_dashboard_data_sharing_make_sure_that_you_trust">Forsikre deg om at du stoler på %1$s</string>
+    <string name="privacy_dashboard_data_sharing_by_authrizing_text">Ved å klikke på godkjenn, vil appen %1$s kunne lese følgende dataattributter</string>
+
+    <string name="privacy_dashboard_data_agreement_policy_data_agreement">Dataavtale</string>
+    <string name="privacy_dashboard_data_agreement_policy_purpose">Formål</string>
+    <string name="privacy_dashboard_data_agreement_policy_purpose_description">Beskrivelse av formål</string>
+    <string name="privacy_dashboard_data_agreement_policy_lawful_basis_of_processing">Rettslig grunnlag for behandling</string>
+    <string name="privacy_dashboard_data_agreement_policy_policy_url">URL til personvernerklæring</string>
+    <string name="privacy_dashboard_data_agreement_policy_jurisdiction">Jurisdiksjon</string>
+    <string name="privacy_dashboard_data_agreement_policy_third_party_disclosure">Utlevering til tredjepart</string>
+    <string name="privacy_dashboard_data_agreement_policy_industry_scope">Bransjeomfang</string>
+    <string name="privacy_dashboard_data_agreement_policy_geographic_restriction">Geografisk begrensning</string>
+    <string name="privacy_dashboard_data_agreement_policy_retention_period">Lagringstid</string>
+    <string name="privacy_dashboard_data_agreement_policy_storage_location">Lagringssted</string>
+    <string name="privacy_dashboard_data_agreement_policy_dpia_date">DPIA-dato</string>
+    <string name="privacy_dashboard_data_agreement_policy_dpia_summary">DPIA-sammendrag</string>
+    <string name="privacy_dashboard_data_agreement_policy_version">Versjon</string>
+    <string name="privacy_dashboard_data_sharing_authorize">Godkjenn</string>
+    <string name="privacy_dashboard_data_sharing_cancel">Avbryt</string>
+
+</resources>

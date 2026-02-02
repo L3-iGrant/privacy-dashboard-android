@@ -36,8 +36,8 @@
     <string name="privacy_dashboard_user_request_download_data">Ladda ner data</string>
     <string name="privacy_dashboard_user_request_delete_data">Radera data</string>
 
-    <string name="privacy_dashboard_user_request_download_data_status">Download Data Request Status</string>
-    <string name="privacy_dashboard_user_request_delete_data_status">Delete Data Request Status</string>
+    <string name="privacy_dashboard_user_request_download_data_status">Status för begäran om datanedladdning</string>
+    <string name="privacy_dashboard_user_request_delete_data_status">Status för begäran om dataradering</string>
 
     <string name="privacy_dashboard_user_request_forget_me">Glöm bort mig</string>
     <string name="privacy_dashboard_user_request_cancel_request">Cancel request</string>
