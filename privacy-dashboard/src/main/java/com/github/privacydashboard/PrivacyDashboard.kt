@@ -193,13 +193,13 @@ object PrivacyDashboard {
         if (destination == 0) {
             if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId != null)) {
                 if (mViewMode == ViewMode.BottomSheet.mode) {
+                    PrivacyDashboardLocaleHelper.setLocale(activity, mLocale ?: "en")
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_BASE_URL, mBaseUrl)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_USERID, mUserId)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_TOKEN, mApiKey)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_UIMODE, mViewMode)
-                    PrivacyDashboardLocaleHelper.setLocale(activity, mLocale ?: "en")
                     PrivacyDashboardDataUtils.saveBooleanValues(
                         activity,
                         EXTRA_TAG_ENABLE_USER_REQUEST,

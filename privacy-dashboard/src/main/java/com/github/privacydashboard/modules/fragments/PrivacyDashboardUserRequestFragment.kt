@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.paginate.Paginate
 
-class PrivacyDashboardUserRequestFragment: BottomSheetDialogFragment() {
+class PrivacyDashboardUserRequestFragment: BasePrivacyDashboardFragment() {
     private var adapter: PrivacyDashboardUserRequestHistoryAdapter? = null
 
     private lateinit var binding: FragmentPrivacyUserRequestBinding

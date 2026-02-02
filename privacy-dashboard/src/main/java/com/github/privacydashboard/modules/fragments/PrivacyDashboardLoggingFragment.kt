@@ -28,7 +28,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PrivacyDashboardLoggingFragment : BottomSheetDialogFragment() {
+class PrivacyDashboardLoggingFragment : BasePrivacyDashboardFragment() {
     private lateinit var binding: FragmentPrivacyDashboardLoggingBinding
     private var adapter: PrivacyDashboardHistoryAdapter? = null
     private var mOrgId = ""
@@ -89,7 +89,7 @@ class PrivacyDashboardLoggingFragment : BottomSheetDialogFragment() {
         tvName = binding.root.findViewById(R.id.tvName)
         ivClose =  binding.root.findViewById(R.id.ivClose)
         getIntentData()
-        tvName.text = resources.getString(R.string.privacy_dashboard_history_consent_history)
+        tvName.text = getLocalizedString(R.string.privacy_dashboard_history_consent_history)
         setupRecyclerView()
         fetchConsentHistory(true)
         initListener()

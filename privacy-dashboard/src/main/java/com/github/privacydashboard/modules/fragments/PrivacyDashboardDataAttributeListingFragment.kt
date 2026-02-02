@@ -29,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 
-class PrivacyDashboardDataAttributeListingFragment : BottomSheetDialogFragment() {
+class PrivacyDashboardDataAttributeListingFragment : BasePrivacyDashboardFragment() {
     companion object {
         private const val ARG_NAME = "ARG_NAME"
         private const val ARG_DESCRIPTION = "ARG_DESCRIPTION"
@@ -112,8 +112,8 @@ class PrivacyDashboardDataAttributeListingFragment : BottomSheetDialogFragment()
             val readMoreOption: PrivacyDashboardReadMoreOption = PrivacyDashboardReadMoreOption.Builder(requireContext())
                 .textLength(3) // OR
                 .textLengthType(PrivacyDashboardReadMoreOption.TYPE_LINE) //.textLength(300, ReadMoreOption.TYPE_CHARACTER)
-                .moreLabel(resources.getString(R.string.privacy_dashboard_read_more))
-                .lessLabel(resources.getString(R.string.privacy_dashboard_read_less))
+                .moreLabel(getLocalizedString(R.string.privacy_dashboard_read_more))
+                .lessLabel(getLocalizedString(R.string.privacy_dashboard_read_less))
                 .moreLabelColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -185,7 +185,7 @@ class PrivacyDashboardDataAttributeListingFragment : BottomSheetDialogFragment()
         }
         binding.btnPrivacyPolicy.setOnClickListener {
             val policyUrl = dataAttributesResponse?.consents?.purpose?.policyURL
-            val title = resources.getString(R.string.privacy_dashboard_web_view_policy)
+            val title = getLocalizedString(R.string.privacy_dashboard_web_view_policy)
 
             val webViewFragment = PrivacyDashboardWebViewFragment.newInstance(policyUrl, title)
             webViewFragment.show(childFragmentManager, webViewFragment.tag)
