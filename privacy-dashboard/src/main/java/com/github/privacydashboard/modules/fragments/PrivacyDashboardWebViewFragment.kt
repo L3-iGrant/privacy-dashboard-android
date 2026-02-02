@@ -29,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 
-class PrivacyDashboardWebViewFragment : BottomSheetDialogFragment() {
+class PrivacyDashboardWebViewFragment : BasePrivacyDashboardFragment() {
     companion object {
         private const val TAG_EXTRA_WEB_URL = "TAG_EXTRA_WEB_URL"
         private const val TAG_EXTRA_WEB_TITLE = "TAG_EXTRA_WEB_TITLE"

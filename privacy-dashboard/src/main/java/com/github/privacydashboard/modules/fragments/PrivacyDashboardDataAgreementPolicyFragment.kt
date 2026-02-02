@@ -23,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import kotlin.math.floor
 
-class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
+class PrivacyDashboardDataAgreementPolicyFragment: BasePrivacyDashboardFragment() {
     var adapter: PrivacyDashboardDataAgreementPolicyAdapter? = null
     var list: ArrayList<ArrayList<DataAgreementPolicyModel>> = ArrayList()
 
@@ -62,7 +62,7 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         tvName = binding.root.findViewById(R.id.tvName)
         ivClose =  binding.root.findViewById(R.id.ivClose)
-        tvName.text = resources.getString(R.string.privacy_dashboard_data_agreement_policy_data_agreement)
+        tvName.text = getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_data_agreement)
 
         val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.post {
@@ -97,25 +97,25 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
         var subList: ArrayList<DataAgreementPolicyModel> = ArrayList()
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_version),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_version),
                 dataAgreement?.version
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_purpose),
                 dataAgreement?.purpose
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_purpose_description),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_purpose_description),
                 dataAgreement?.purposeDescription
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_lawful_basis_of_processing),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_lawful_basis_of_processing),
                 dataAgreement?.lawfulBasis
             )
         )
@@ -123,25 +123,25 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
         subList = ArrayList()
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_policy_url),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_policy_url),
                 dataAgreement?.policy?.url
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_jurisdiction),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_jurisdiction),
                 dataAgreement?.policy?.jurisdiction
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_industry_scope),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_industry_scope),
                 dataAgreement?.policy?.industrySector
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_storage_location),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_storage_location),
                 dataAgreement?.policy?.storageLocation
             )
         )
@@ -156,19 +156,19 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
         }
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_retention_period),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_retention_period),
                 retentionPeriod
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_geographic_restriction),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_geographic_restriction),
                 dataAgreement?.policy?.geographicRestriction
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_third_party_disclosure),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_third_party_disclosure),
                 dataAgreement?.policy?.thirdPartyDataSharing.toString()
             )
         )
@@ -176,13 +176,13 @@ class PrivacyDashboardDataAgreementPolicyFragment: BottomSheetDialogFragment() {
         subList = ArrayList()
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_summary),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_dpia_summary),
                 dataAgreement?.dpiaSummaryUrl
             )
         )
         subList.add(
             DataAgreementPolicyModel(
-                context.resources.getString(R.string.privacy_dashboard_data_agreement_policy_dpia_date),
+                getLocalizedString(R.string.privacy_dashboard_data_agreement_policy_dpia_date),
                 dataAgreement?.dpiaDate
             )
         )

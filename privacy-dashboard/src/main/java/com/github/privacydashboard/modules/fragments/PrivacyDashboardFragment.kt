@@ -29,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 
-class PrivacyDashboardFragment : BottomSheetDialogFragment() {
+class PrivacyDashboardFragment : BasePrivacyDashboardFragment() {
 
     companion object {
         fun newInstance(
@@ -133,7 +133,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                 }
             }
         })
-        tvName?.text = title ?: resources.getString(R.string.privacy_dashboard)
+        tvName?.text = title ?: getLocalizedString(R.string.privacy_dashboard)
         binding.fragmentToolBar.ivClose.setOnClickListener{
             dismiss() // Dismiss the bottom sheet
         }
@@ -161,7 +161,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
         view ?: return
 
         // Wrap the Flutter activity context with an AppCompat theme
-        val themedContext = ContextThemeWrapper(requireContext(), androidx.appcompat.R.style.Theme_AppCompat)
+        val themedContext = ContextThemeWrapper(view.context, androidx.appcompat.R.style.Theme_AppCompat)
 
         val popupMenu = PopupMenu(themedContext, view)
         val isUserRequestAvailable = PrivacyDashboardDataUtils.getBooleanValue(
@@ -182,7 +182,7 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                 R.id.action_webpage -> {
                     val fragment = PrivacyDashboardWebViewFragment.newInstance(
                         viewModel?.organization?.value?.policyURL ?: "",
-                        resources.getString(R.string.privacy_dashboard_web_view_privacy_policy)
+                        getLocalizedString(R.string.privacy_dashboard_web_view_privacy_policy)
                     )
                     fragment.show(childFragmentManager, fragment.tag)
                     true
@@ -223,8 +223,8 @@ class PrivacyDashboardFragment : BottomSheetDialogFragment() {
                             PrivacyDashboardReadMoreOption.Builder(requireContext())
                                 .textLength(3) // OR
                                 .textLengthType(PrivacyDashboardReadMoreOption.TYPE_LINE) //.textLength(300, ReadMoreOption.TYPE_CHARACTER)
-                                .moreLabel(resources.getString(R.string.privacy_dashboard_read_more))
-                                .lessLabel(resources.getString(R.string.privacy_dashboard_read_less))
+                                .moreLabel(getLocalizedString(R.string.privacy_dashboard_read_more))
+                                .lessLabel(getLocalizedString(R.string.privacy_dashboard_read_less))
                                 .moreLabelColor(
                                     ContextCompat.getColor(
                                         requireContext(),
