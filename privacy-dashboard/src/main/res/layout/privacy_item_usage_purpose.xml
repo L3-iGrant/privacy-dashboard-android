@@ -32,8 +32,7 @@
                 android:layout_width="@dimen/forward_arrow_width"
                 android:layout_height="@dimen/forward_arrow_height"
                 android:src="@drawable/ic_arrow_forward"
-                android:padding="3dp"
-                app:tint="@color/privacyDashboardTextColorLight" />
+                android:padding="3dp" />
         </LinearLayout>
 
         <LinearLayout
