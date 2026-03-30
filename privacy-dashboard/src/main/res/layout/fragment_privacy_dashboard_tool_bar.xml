@@ -29,13 +29,14 @@
             app:layout_goneMarginEnd="8dp" />
         <ImageView
             android:id="@+id/ivMenuMore"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_more_black"
             android:contentDescription="@string/privacy_dashboard_general_more"
             android:visibility="gone"
             android:clickable="true"
-            android:padding="2dp"
+            android:scaleType="centerInside"
+            android:padding="4dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/circle_close_button_bg"
             app:layout_constraintStart_toEndOf="@id/tvName"
@@ -48,11 +49,12 @@
 
         <ImageView
             android:id="@+id/ivClose"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_close_black"
-            android:padding="2dp"
+            android:padding="4dp"
             android:contentDescription="Close"
+            android:scaleType="centerInside"
             android:background="@drawable/circle_close_button_bg"
             android:clickable="true"
             android:focusable="true"

@@ -21,4 +21,5 @@
 
     <color name="privacyDashboard_faded_white">#ecf8ff</color>
     <color name="privacyDashboardBlack">#000000</color>
+    <color name="icon_circle_bg">#14000000</color>
 </resources>
