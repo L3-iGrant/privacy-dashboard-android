@@ -3,6 +3,7 @@ package com.github.privacydashboard.modules.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import com.github.privacydashboard.R
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -14,7 +15,9 @@ open class BasePrivacyDashboardFragment : BottomSheetDialogFragment() {
     override fun onAttach(context: Context) {
         // 1. Create the localized context wrapper
         val language = PrivacyDashboardLocaleHelper.getLanguage(context)
-        localizedContext = PrivacyDashboardLocaleHelper.setLocale(context, language)
+        val baseLocalizedContext = PrivacyDashboardLocaleHelper.setLocale(context, language)
+        // Use 'AppTheme' from  styles.xml to lock in  SDK's colors
+        localizedContext = android.view.ContextThemeWrapper(baseLocalizedContext, R.style.AppTheme)
 
         // 2. Pass the ORIGINAL context to super to keep the Window Token valid
         super.onAttach(context)
