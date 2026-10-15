@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.github.privacydashboard.modules.dataSharing.PrivacyDashboardDataSharingActivity
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_ACCESS_TOKEN
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_BASE_URL
@@ -18,6 +19,7 @@ object DataSharingUI {
     private var mUserId: String? = null
     private var mApiKey: String? = null
     private var mAccessToken: String? = null
+    private var mTokenProvider: PrivacyDashboardTokenProvider? = null
     private var mDataAgreementId: String? = null
     private var mBaseUrl: String? = ""
     private var mLocale: String? = ""
@@ -42,22 +44,52 @@ object DataSharingUI {
     /**
      * Set user id for igrant sdk.
      *
+     * Deprecated: use [withTokenProvider]. With a token, the server takes the
+     * individual from the token.
+     *
      * @param userId
      */
     fun withUserId(userId: String?): DataSharingUI {
         mUserId = if (userId == "") null else userId
+        if (mUserId != null) PrivacyDashboardCredentials.warnApiKeyDeprecated()
         return this
     }
 
     /**
      * Set Api key for the iGrant Sdk.
      *
+     * Deprecated: do not put an API key into an app. Use [withTokenProvider].
+     * This path keeps working until a later major version of the SDK.
+     *
      * @param apiKey
      */
     fun withApiKey(apiKey: String?): DataSharingUI {
         mApiKey = if (apiKey == "") null else apiKey
+        if (mApiKey != null) PrivacyDashboardCredentials.warnApiKeyDeprecated()
         return this
     }
+
+    /**
+     * Set the token provider for the iGrant Sdk. See
+     * [PrivacyDashboard.withTokenProvider].
+     *
+     * @param tokenProvider
+     */
+    fun withTokenProvider(tokenProvider: PrivacyDashboardTokenProvider?): DataSharingUI {
+        mTokenProvider = tokenProvider
+        return this
+    }
+
+    internal fun resetCredentials() {
+        mUserId = null
+        mApiKey = null
+        mAccessToken = null
+        mTokenProvider = null
+    }
+
+    private fun hasCredentials(): Boolean =
+        mTokenProvider != null || mAccessToken != null ||
+                (mApiKey != null && mUserId != null && mOrganisationId != null)
 
     /**
      * Set Access token for the iGrant Sdk.
@@ -139,7 +171,7 @@ object DataSharingUI {
      * @param activity Activity to start activity
      */
     fun get(activity: Activity): Intent? {
-        if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId !=null))
+        if (hasCredentials())
             if (mDataAgreementId != null) {
                 return getIntent(activity)
             }
@@ -153,7 +185,7 @@ object DataSharingUI {
      * @param context Context to start activity
      */
     fun get(context: Context): Intent? {
-        if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId !=null))
+        if (hasCredentials())
             if (mDataAgreementId != null) {
                 return getIntent(context)
             }
@@ -174,10 +206,13 @@ object DataSharingUI {
             EXTRA_TAG_DATA_AGREEMENT_ID,
             mDataAgreementId
         )
-        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_USERID, mUserId)
         PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
-        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, mApiKey)
-        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
+        PrivacyDashboardCredentials.deleteLegacyValues(context)
+        val withProvider = mTokenProvider != null
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_USERID, if (withProvider) null else mUserId)
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, if (withProvider) null else mApiKey)
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, if (withProvider) null else mAccessToken)
+        PrivacyDashboardCredentials.startTokenProvider(mTokenProvider)
         PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
         return mDataSharingUIIntent
     }

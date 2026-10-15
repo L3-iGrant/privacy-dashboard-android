@@ -17,6 +17,7 @@ import com.github.privacydashboard.communication.repositories.*
 import com.github.privacydashboard.models.interfaces.userRequests.UserRequest
 import com.github.privacydashboard.modules.base.PrivacyDashboardBaseViewModel
 import com.github.privacydashboard.modules.userRequestStatus.PrivacyDashboardUserRequestStatusActivity
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -103,6 +105,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
             if (showProgress) isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -206,6 +209,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
         if (PrivacyDashboardNetWorkUtil.isConnectedToInternet(context, true)) {
             isLoading.value = true
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -250,6 +254,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
         if (PrivacyDashboardNetWorkUtil.isConnectedToInternet(context, true)) {
             isLoading.value = true
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -295,6 +300,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -344,6 +350,7 @@ class PrivacyDashboardUserRequestViewModel() : PrivacyDashboardBaseViewModel() {
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

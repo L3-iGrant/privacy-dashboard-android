@@ -12,6 +12,7 @@ import com.github.privacydashboard.modules.base.PrivacyDashboardBaseViewModel
 import com.github.privacydashboard.models.base.attribute.DataAttribute
 import com.github.privacydashboard.models.base.attribute.Status
 import com.github.privacydashboard.models.consent.ConsentStatusRequest
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ class PrivacyDashboardDataAttributeDetailViewModel() : PrivacyDashboardBaseViewM
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

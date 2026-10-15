@@ -12,6 +12,7 @@ import com.github.privacydashboard.communication.repositories.GetConsentHistoryA
 import com.github.privacydashboard.databinding.PrivacyActivityLoggingBinding
 import com.github.privacydashboard.models.interfaces.consentHistory.ConsentHistory
 import com.github.privacydashboard.modules.PrivacyDashboardBaseActivity
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import com.paginate.Paginate
@@ -40,6 +41,7 @@ class PrivacyDashboardLoggingActivity : PrivacyDashboardBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isClosingWithoutCredentials) return
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_logging)
         binding.clContent.let { setupEdgeToEdge(it) }
         getIntentData()
@@ -54,6 +56,7 @@ class PrivacyDashboardLoggingActivity : PrivacyDashboardBaseActivity() {
             if (showProgress) binding.llProgressBar.visibility = View.VISIBLE
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     this,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

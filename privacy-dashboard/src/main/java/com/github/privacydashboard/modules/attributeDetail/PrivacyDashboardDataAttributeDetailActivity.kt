@@ -35,6 +35,7 @@ class PrivacyDashboardDataAttributeDetailActivity : PrivacyDashboardBaseActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isClosingWithoutCredentials) return
         binding =
             DataBindingUtil.setContentView(this, R.layout.privacy_activity_data_attribute_detail)
         viewModel = ViewModelProvider(this)[PrivacyDashboardDataAttributeDetailViewModel::class.java]

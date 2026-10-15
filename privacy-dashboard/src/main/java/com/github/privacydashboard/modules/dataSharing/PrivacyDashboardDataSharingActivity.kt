@@ -44,6 +44,7 @@ class PrivacyDashboardDataSharingActivity : PrivacyDashboardBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isClosingWithoutCredentials) return
         binding =
             DataBindingUtil.setContentView(this, R.layout.privacy_activity_data_sharing)
         viewModel = ViewModelProvider(this)[PrivacyDashboardDataSharingViewModel::class.java]

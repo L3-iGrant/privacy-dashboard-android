@@ -1,16 +1,20 @@
 package com.github.privacydashboard.modules.webView
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.github.privacydashboard.R
 import com.github.privacydashboard.databinding.PrivacyActivityWebViewBinding
 import com.github.privacydashboard.modules.PrivacyDashboardBaseActivity
+import com.github.privacydashboard.utils.PrivacyDashboardWebViewPolicy
 
 class PrivacyDashboardWebViewActivity : PrivacyDashboardBaseActivity() {
 
@@ -26,6 +30,9 @@ class PrivacyDashboardWebViewActivity : PrivacyDashboardBaseActivity() {
     private var mTitle = ""
     private var mWebUrl = ""
 
+    // This screen shows only data from the intent.
+    override val needsCredentials = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_web_view)
@@ -37,7 +44,15 @@ class PrivacyDashboardWebViewActivity : PrivacyDashboardBaseActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setUpWebView() {
-        binding.webView.settings.javaScriptEnabled = true
+        PrivacyDashboardWebViewPolicy.configure(binding.webView)
+        binding.webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                val isRedirect = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && request?.isRedirect == true
+                return PrivacyDashboardWebViewPolicy.shouldOverrideUrlLoading(
+                    this@PrivacyDashboardWebViewActivity, mWebUrl, request?.url?.toString(), isRedirect
+                )
+            }
+        }
         binding.webView.loadUrl(mWebUrl)
         binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {

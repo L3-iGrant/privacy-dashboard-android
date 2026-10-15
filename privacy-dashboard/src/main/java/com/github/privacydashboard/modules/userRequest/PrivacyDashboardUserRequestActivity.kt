@@ -31,6 +31,7 @@ class PrivacyDashboardUserRequestActivity : PrivacyDashboardBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isClosingWithoutCredentials) return
         binding =
             DataBindingUtil.setContentView(this, R.layout.privacy_activity_user_request)
         viewModel = ViewModelProvider(this)[PrivacyDashboardUserRequestViewModel::class.java]

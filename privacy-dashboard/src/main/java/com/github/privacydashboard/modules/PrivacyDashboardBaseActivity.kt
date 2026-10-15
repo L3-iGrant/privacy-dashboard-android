@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardLocaleHelper
 
 open class PrivacyDashboardBaseActivity : AppCompatActivity() {
@@ -21,8 +22,24 @@ open class PrivacyDashboardBaseActivity : AppCompatActivity() {
         super.attachBaseContext(newBase)
     }
 
+    /** False for screens that show only data from the intent (no API call). */
+    protected open val needsCredentials: Boolean = true
+
+    /**
+     * True when this screen closes at once because there are no credentials,
+     * for example after Android stopped the process. A subclass must return
+     * from onCreate when this is true, so that it makes no API request.
+     */
+    protected var isClosingWithoutCredentials = false
+        private set
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (PrivacyDashboardCredentials.shouldCloseScreen(needsCredentials)) {
+            isClosingWithoutCredentials = true
+            finish()
+            return
+        }
         checkIfAnimationsSetOrNot(this)
     }
 

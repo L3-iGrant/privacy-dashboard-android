@@ -13,6 +13,7 @@ import com.github.privacydashboard.models.v2.consent.ConsentStatusRequestV2
 import com.github.privacydashboard.models.v2.dataAgreement.DataAgreementV2
 import com.github.privacydashboard.models.v2.dataAgreement.dataAgreementRecords.DataAgreementRecordsV2
 import com.github.privacydashboard.modules.base.PrivacyDashboardBaseViewModel
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ class PrivacyDashboardDataSharingViewModel : PrivacyDashboardBaseViewModel() {
             isLoading.value = showProgress
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -93,6 +95,7 @@ class PrivacyDashboardDataSharingViewModel : PrivacyDashboardBaseViewModel() {
             isLoading.value = showProgress
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -139,6 +142,7 @@ class PrivacyDashboardDataSharingViewModel : PrivacyDashboardBaseViewModel() {
             isLoading.value = showProgress
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -193,6 +197,7 @@ class PrivacyDashboardDataSharingViewModel : PrivacyDashboardBaseViewModel() {
             body.optIn = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
