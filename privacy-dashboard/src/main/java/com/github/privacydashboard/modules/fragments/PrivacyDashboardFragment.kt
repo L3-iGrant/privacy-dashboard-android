@@ -79,6 +79,7 @@ class PrivacyDashboardFragment : BasePrivacyDashboardFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (isClosingWithoutCredentials) return
         viewModel = ViewModelProvider(requireActivity())[PrivacyDashboardDashboardViewModel::class.java]
 
         binding.viewModel = viewModel

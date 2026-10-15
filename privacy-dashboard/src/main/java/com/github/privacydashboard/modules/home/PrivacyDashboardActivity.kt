@@ -49,6 +49,7 @@ class PrivacyDashboardActivity : PrivacyDashboardBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isClosingWithoutCredentials) return
         WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = DataBindingUtil.setContentView(this, R.layout.privacy_activity_dashboard)
         viewModel = ViewModelProvider(this)[PrivacyDashboardDashboardViewModel::class.java]

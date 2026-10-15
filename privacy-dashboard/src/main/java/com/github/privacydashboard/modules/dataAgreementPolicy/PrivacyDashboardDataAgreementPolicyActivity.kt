@@ -25,6 +25,9 @@ class PrivacyDashboardDataAgreementPolicyActivity : PrivacyDashboardBaseActivity
 
     var adapter: PrivacyDashboardDataAgreementPolicyAdapter? = null
     var list: ArrayList<ArrayList<DataAgreementPolicyModel>> = ArrayList()
+    // This screen shows only data from the intent.
+    override val needsCredentials = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =

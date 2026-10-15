@@ -14,6 +14,7 @@ import com.github.privacydashboard.models.v2.consent.ConsentStatusRequestV2
 import com.github.privacydashboard.models.v2.dataAgreement.DataAgreementV2
 import com.github.privacydashboard.modules.dataAgreementPolicy.PrivacyDashboardDataAgreementPolicyActivity
 import com.github.privacydashboard.modules.home.PrivacyDashboardActivity
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_ACCESS_TOKEN
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils.EXTRA_TAG_BASE_URL
@@ -40,6 +41,7 @@ object PrivacyDashboard {
     private var mUserId: String? = null
     private var mApiKey: String? = null
     private var mAccessToken: String? = null
+    private var mTokenProvider: PrivacyDashboardTokenProvider? = null
     private var mBaseUrl: String? = ""
     private var mLocale: String? = ""
     private var mEnableUserRequest: Boolean? = false
@@ -96,22 +98,76 @@ object PrivacyDashboard {
     /**
      * Set user id for igrant sdk.
      *
+     * Deprecated: use [withTokenProvider]. With a token, the server takes the
+     * individual from the token.
+     *
      * @param userId
      */
     fun withUserId(userId: String?): PrivacyDashboard {
         mUserId = if (userId == "") null else userId
+        if (mUserId != null) PrivacyDashboardCredentials.warnApiKeyDeprecated()
         return this
     }
 
     /**
      * Set Api key for the iGrant Sdk.
      *
+     * Deprecated: do not put an API key into an app. Use [withTokenProvider].
+     * This path keeps working until a later major version of the SDK.
+     *
      * @param apiKey
      */
     fun withApiKey(apiKey: String?): PrivacyDashboard {
         mApiKey = if (apiKey == "") null else apiKey
+        if (mApiKey != null) PrivacyDashboardCredentials.warnApiKeyDeprecated()
         return this
     }
+
+    /**
+     * Set the token provider for the iGrant Sdk. The provider gives a
+     * short-lived individual access token from the backend of the host app.
+     * The SDK keeps the token in memory only and sends it as
+     * `Authorization: Bearer <token>`. A token provider has precedence over
+     * [withAccessToken] and [withApiKey].
+     *
+     * @param tokenProvider
+     */
+    fun withTokenProvider(tokenProvider: PrivacyDashboardTokenProvider?): PrivacyDashboard {
+        mTokenProvider = tokenProvider
+        return this
+    }
+
+    /**
+     * Delete the credentials and the token of the SDK. Call this when the
+     * user of the host app logs out. Give a [context] to delete also the
+     * credentials that older SDK versions stored on the device.
+     */
+    @JvmOverloads
+    fun reset(context: Context? = null) {
+        mUserId = null
+        mApiKey = null
+        mAccessToken = null
+        mTokenProvider = null
+        DataSharingUI.resetCredentials()
+        PrivacyDashboardCredentials.clear(context)
+        PrivacyDashboardAPIManager.resetApi()
+    }
+
+    /**
+     * Keep the credentials of this start in memory, and start the token
+     * provider. Delete the credentials that older SDK versions stored.
+     */
+    private fun saveCredentials(context: Context) {
+        PrivacyDashboardCredentials.deleteLegacyValues(context)
+        val withProvider = mTokenProvider != null
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_USERID, if (withProvider) null else mUserId)
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, if (withProvider) null else mApiKey)
+        PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, if (withProvider) null else mAccessToken)
+        PrivacyDashboardCredentials.startTokenProvider(mTokenProvider)
+    }
+
+    private fun hasCredentials(): Boolean =
+        mTokenProvider != null || mAccessToken != null || (mApiKey != null && mUserId != null)
 
     /**
      * Set consent change listener for the iGrant Sdk.
@@ -191,14 +247,12 @@ object PrivacyDashboard {
      */
     fun start(activity: Activity) {
         if (destination == 0) {
-            if (mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId != null)) {
+            if (mTokenProvider != null || mAccessToken != null || (mApiKey != null && mUserId != null && mOrganisationId != null)) {
                 if (mViewMode == ViewMode.BottomSheet.mode) {
                     PrivacyDashboardLocaleHelper.setLocale(activity, mLocale ?: "en")
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_BASE_URL, mBaseUrl)
-                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_USERID, mUserId)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
-                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_TOKEN, mApiKey)
-                    PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
+                    saveCredentials(activity)
                     PrivacyDashboardDataUtils.saveStringValues(activity, EXTRA_TAG_UIMODE, mViewMode)
                     PrivacyDashboardDataUtils.saveBooleanValues(
                         activity,
@@ -251,7 +305,7 @@ object PrivacyDashboard {
      */
     fun start(context: Context) {
         if (destination == 0) {
-            if (mAccessToken != null || (mApiKey != null && mUserId != null))
+            if (hasCredentials())
                 context.startActivity(getIntent(context))
         } else if (destination == 1) {
             if (mDataAgreement != null)
@@ -268,10 +322,8 @@ object PrivacyDashboard {
         if (destination == 0) {
             mIntent?.setClass(context, PrivacyDashboardActivity::class.java)
             PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_BASE_URL, mBaseUrl)
-            PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_USERID, mUserId)
             PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ORGANISATIONID, mOrganisationId)
-            PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_TOKEN, mApiKey)
-            PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_ACCESS_TOKEN, mAccessToken)
+            saveCredentials(context)
             PrivacyDashboardLocaleHelper.setLocale(context, mLocale ?: "en")
             PrivacyDashboardDataUtils.saveStringValues(context, EXTRA_TAG_UIMODE, mViewMode)
             PrivacyDashboardDataUtils.saveBooleanValues(
@@ -309,24 +361,44 @@ object PrivacyDashboard {
         PrivacyDashboardLocaleHelper.setLocale(context, languageCode)
     }
 
+    /**
+     * Returns the API service for a function that is not part of the UI.
+     * A token provider has precedence over the access token and the API key.
+     */
+    private fun functionApiService(
+        baseUrl: String,
+        accessToken: String?,
+        apiKey: String?,
+        tokenProvider: PrivacyDashboardTokenProvider?
+    ): PrivacyDashboardAPIServices {
+        val tokenManager = tokenProvider?.let { PrivacyDashboardCredentials.tokenManagerFor(it) }
+        if (tokenManager == null && accessToken.isNullOrEmpty() && !apiKey.isNullOrEmpty()) {
+            PrivacyDashboardCredentials.warnApiKeyDeprecated()
+        }
+        return PrivacyDashboardAPIManager.getApi(
+            apiKey = if (tokenManager != null) null else apiKey,
+            accessToken = if (tokenManager != null) null else accessToken,
+            baseUrl = (if (baseUrl.last().toString() == "/")
+                baseUrl
+            else
+                "$baseUrl/"),
+            tokenManager = tokenManager
+        )?.service!!
+    }
+
     suspend fun optInToDataAgreement(
         dataAgreementId: String,
         baseUrl: String,
         accessToken: String? = null,
         apiKey: String? = null,
         userId: String? = null,
+        tokenProvider: PrivacyDashboardTokenProvider? = null,
     ): String? {
         val body = ConsentStatusRequestV2()
         body.optIn = true
 
-        val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
-            apiKey = apiKey,
-            accessToken = accessToken,
-            baseUrl = (if (baseUrl.last().toString() == "/")
-                baseUrl
-            else
-                "$baseUrl/")
-        )?.service!!
+        val apiService: PrivacyDashboardAPIServices =
+            functionApiService(baseUrl, accessToken, apiKey, tokenProvider)
 
         val updateDataAgreementStatusApiRepository =
             UpdateDataAgreementStatusApiRepository(apiService)
@@ -351,18 +423,13 @@ object PrivacyDashboard {
         apiKey: String? = null,
         userId: String? = null,
         status:Boolean? = true,
+        tokenProvider: PrivacyDashboardTokenProvider? = null,
     ): String? {
         val body = ConsentStatusRequestV2()
         body.optIn = status
 
-        val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
-            apiKey = apiKey,
-            accessToken = accessToken,
-            baseUrl = (if (baseUrl.last().toString() == "/")
-                baseUrl
-            else
-                "$baseUrl/")
-        )?.service!!
+        val apiService: PrivacyDashboardAPIServices =
+            functionApiService(baseUrl, accessToken, apiKey, tokenProvider)
 
         val updateDataAgreementStatusApiRepository =
             UpdateDataAgreementStatusApiRepository(apiService)
@@ -386,16 +453,11 @@ object PrivacyDashboard {
         accessToken: String? = null,
         apiKey: String? = null,
         userId: String? = null,
+        tokenProvider: PrivacyDashboardTokenProvider? = null,
     ): String? {
 
-        val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
-            apiKey = apiKey,
-            accessToken = accessToken,
-            baseUrl = (if (baseUrl.last().toString() == "/")
-                baseUrl
-            else
-                "$baseUrl/")
-        )?.service!!
+        val apiService: PrivacyDashboardAPIServices =
+            functionApiService(baseUrl, accessToken, apiKey, tokenProvider)
 
         val dataAgreementApiRepository =
             GetDataAgreementApiRepository(apiService)
@@ -413,6 +475,7 @@ object PrivacyDashboard {
 
     }
 
+    @Deprecated("use your backend")
     suspend fun createAnIndividual(
         accessToken: String? = null,
         apiKey: String? = null,
@@ -442,6 +505,7 @@ object PrivacyDashboard {
         return Gson().toJson(result?.getOrNull())
     }
 
+    @Deprecated("use your backend")
     suspend fun fetchTheIndividual(
         accessToken: String? = null,
         apiKey: String? = null,
@@ -466,6 +530,7 @@ object PrivacyDashboard {
         return Gson().toJson(result?.getOrNull())
     }
 
+    @Deprecated("use your backend")
     suspend fun updateTheIndividual(
         accessToken: String? = null,
         apiKey: String? = null,
@@ -496,6 +561,7 @@ object PrivacyDashboard {
         return Gson().toJson(result?.getOrNull())
     }
 
+    @Deprecated("use your backend")
     suspend fun getAllIndividuals(
         accessToken: String? = null,
         apiKey: String? = null,
@@ -521,6 +587,7 @@ object PrivacyDashboard {
             )
         return Gson().toJson(result?.getOrNull())
     }
+    @Deprecated("use your backend")
     suspend fun deleteTheIndividual(
         accessToken: String? = null,
         apiKey: String? = null,
