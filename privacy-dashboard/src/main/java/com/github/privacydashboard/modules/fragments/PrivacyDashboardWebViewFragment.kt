@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -24,6 +24,7 @@ import com.github.privacydashboard.R
 import com.github.privacydashboard.databinding.FragmentPrivacyWebViewBinding
 import com.github.privacydashboard.models.base.attribute.DataAttributesResponse
 import com.github.privacydashboard.utils.PrivacyDashboardStringUtils
+import com.github.privacydashboard.utils.PrivacyDashboardWebViewPolicy
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -64,6 +65,9 @@ class PrivacyDashboardWebViewFragment : BasePrivacyDashboardFragment() {
             setDimAmount(0.8f)
         }
     }
+    // This sheet shows only data from the arguments.
+    override val needsCredentials = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvName = binding.root.findViewById(R.id.tvName)
@@ -105,21 +109,20 @@ class PrivacyDashboardWebViewFragment : BasePrivacyDashboardFragment() {
 
         val webView = binding.webView
 
+        PrivacyDashboardWebViewPolicy.configure(webView)
         webView.settings.apply {
-            javaScriptEnabled = true
             domStorageEnabled = true
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             loadWithOverviewMode = true
             useWideViewPort = true
         }
 
-        WebView.setWebContentsDebuggingEnabled(true)
-
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                val url = request?.url.toString()
-                view?.loadUrl(url)
-                return true // Important to prevent default handling (i.e., opening in browser)
+                val context = view?.context ?: return true
+                val isRedirect = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && request?.isRedirect == true
+                return PrivacyDashboardWebViewPolicy.shouldOverrideUrlLoading(
+                    context, mWebUrl, request?.url?.toString(), isRedirect
+                )
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {

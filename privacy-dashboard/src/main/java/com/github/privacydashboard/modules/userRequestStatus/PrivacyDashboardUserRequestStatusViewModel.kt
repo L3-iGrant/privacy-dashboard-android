@@ -10,6 +10,7 @@ import com.github.privacydashboard.communication.repositories.CancelDataRequestA
 import com.github.privacydashboard.communication.repositories.UserRequestStatusApiRepository
 import com.github.privacydashboard.models.interfaces.userRequests.UserRequestStatus
 import com.github.privacydashboard.modules.base.PrivacyDashboardBaseViewModel
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ class PrivacyDashboardUserRequestStatusViewModel() : PrivacyDashboardBaseViewMod
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -92,6 +94,7 @@ class PrivacyDashboardUserRequestStatusViewModel() : PrivacyDashboardBaseViewMod
             isLoading.value = true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

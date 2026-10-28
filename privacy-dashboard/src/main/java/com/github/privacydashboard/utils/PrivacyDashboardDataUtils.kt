@@ -16,8 +16,15 @@ object PrivacyDashboardDataUtils {
     const val EXTRA_TAG_ENABLE_ATTRIBUTE_LEVEL_CONSENT = "PrivacyDashboardDataUtils.enableAttributeLevelConsent"
     const val EXTRA_TAG_UIMODE = "PrivacyDashboardDataUtils.uiMode"
 
+    // The credential tags (API key, access token, user id) are kept in memory
+    // only, by PrivacyDashboardCredentials. The other values are settings and
+    // stay in the SharedPreferences.
     //todo update the deprecated preference manager
     fun saveStringValues(context: Context?, tag: String?, value: String?) {
+        if (PrivacyDashboardCredentials.isCredential(tag)) {
+            PrivacyDashboardCredentials.put(tag!!, value)
+            return
+        }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
         editor.putString(tag, value)
@@ -25,6 +32,9 @@ object PrivacyDashboardDataUtils {
     }
 
     fun getStringValue(context: Context?, tag: String?, defaultValue:String? = ""): String? {
+        if (PrivacyDashboardCredentials.isCredential(tag)) {
+            return PrivacyDashboardCredentials.get(tag!!) ?: defaultValue
+        }
         return try {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             sharedPreferences.getString(tag, defaultValue)

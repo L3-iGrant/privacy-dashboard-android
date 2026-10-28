@@ -17,6 +17,7 @@ import com.github.privacydashboard.communication.repositories.GetConsentHistoryA
 import com.github.privacydashboard.databinding.FragmentPrivacyDashboardLoggingBinding
 import com.github.privacydashboard.models.interfaces.consentHistory.ConsentHistory
 import com.github.privacydashboard.modules.logging.PrivacyDashboardHistoryAdapter
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import com.github.privacydashboard.utils.PrivacyDashboardStringUtils
@@ -86,6 +87,7 @@ class PrivacyDashboardLoggingFragment : BasePrivacyDashboardFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (isClosingWithoutCredentials) return
         tvName = binding.root.findViewById(R.id.tvName)
         ivClose =  binding.root.findViewById(R.id.ivClose)
         getIntentData()
@@ -123,6 +125,7 @@ class PrivacyDashboardLoggingFragment : BasePrivacyDashboardFragment() {
             if (showProgress) binding.llProgressBar.visibility = View.VISIBLE
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     safeContext,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

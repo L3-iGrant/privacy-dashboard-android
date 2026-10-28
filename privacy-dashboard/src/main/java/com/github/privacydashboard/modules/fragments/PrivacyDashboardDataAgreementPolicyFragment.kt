@@ -58,6 +58,9 @@ class PrivacyDashboardDataAgreementPolicyFragment: BasePrivacyDashboardFragment(
             setDimAmount(0.8f)
         }
     }
+    // This sheet shows only data from the arguments.
+    override val needsCredentials = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvName = binding.root.findViewById(R.id.tvName)

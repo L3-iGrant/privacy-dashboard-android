@@ -70,6 +70,7 @@ class PrivacyDashboardDataAttributeListingFragment : BasePrivacyDashboardFragmen
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (isClosingWithoutCredentials) return
         tvName = binding.root.findViewById(R.id.tvName)
         ivClose =  binding.root.findViewById(R.id.ivClose)
         getIntentData()

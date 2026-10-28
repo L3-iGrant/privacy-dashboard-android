@@ -1,46 +1,19 @@
 package com.github.privacydashboard.communication
 
+import com.github.privacydashboard.BuildConfig
+import com.github.privacydashboard.communication.PrivacyDashboardAuthInterceptor.Companion.HEADER_AUTHORIZATION
+import com.github.privacydashboard.communication.PrivacyDashboardAuthInterceptor.Companion.HEADER_INDIVIDUAL_ID
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class PrivacyDashboardAPIManager private constructor() {
+// Each instance keeps its own service, so that a later getApi call with other
+// credentials does not change the client of an earlier caller.
+class PrivacyDashboardAPIManager private constructor(
     val service: PrivacyDashboardAPIServices?
-        get() = Companion.service
-
-    private class HttpInterceptor(val accessToken: String? = null, val apiKey: String? = null) :
-        Interceptor {
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            var request: Request = chain.request()
-
-            //Build new request
-            val builder: Request.Builder = request.newBuilder()
-            builder.header("Accept", "application/json")
-            if (accessToken != null && !accessToken.equals("", ignoreCase = true)) {
-                setAccessTokenAuthHeader(builder, accessToken)
-            } else if (apiKey != null && apiKey != "") {
-                setAuthHeader(builder, apiKey)
-            }
-            request = builder.build()
-            var response: Response =
-                chain.proceed(request)
-            return response
-        }
-
-        private fun setAuthHeader(builder: Request.Builder, token: String?) {
-            if (token != null) //Add Auth token to each request if authorized
-                builder.header("Authorization", "ApiKey $token")
-        }
-
-        private fun setAccessTokenAuthHeader(builder: Request.Builder, token: String?) {
-            if (token != null) //Add Auth token to each request if authorized
-                builder.header("Authorization", "Bearer $token")
-        }
-    }
+) {
 
     companion object {
         private var okClient: OkHttpClient? = null
@@ -52,23 +25,34 @@ class PrivacyDashboardAPIManager private constructor() {
         private var previousAccessToken: String? = null
         private var previousApiKey: String? = null
         private var previousBaseUrl: String? = null
+        private var previousTokenManager: PrivacyDashboardTokenManager? = null
+
         fun getApi(
             accessToken: String? = null,
             apiKey: String? = null,
             baseUrl: String?
+        ): PrivacyDashboardAPIManager? = getApi(accessToken, apiKey, baseUrl, null)
+
+        @Synchronized
+        internal fun getApi(
+            accessToken: String? = null,
+            apiKey: String? = null,
+            baseUrl: String?,
+            tokenManager: PrivacyDashboardTokenManager?
         ): PrivacyDashboardAPIManager? {
             val refreshApiManager = apiManager == null ||
                     accessToken != previousAccessToken ||
                     apiKey != previousApiKey ||
-                    baseUrl != previousBaseUrl
+                    baseUrl != previousBaseUrl ||
+                    tokenManager !== previousTokenManager
             if (refreshApiManager) {
-                apiManager = PrivacyDashboardAPIManager()
                 httpClient = OkHttpClient.Builder()
                     .connectTimeout(60, TimeUnit.SECONDS)
-                val httpLoggingInterceptor = HttpLoggingInterceptor()
-                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                httpClient?.addInterceptor(httpLoggingInterceptor)
-                httpClient?.interceptors()?.add(HttpInterceptor(accessToken, apiKey))
+                httpClient?.addInterceptor(
+                    PrivacyDashboardAuthInterceptor(tokenManager, accessToken, apiKey)
+                )
+                // After the auth interceptor, so that the redaction applies to the auth headers.
+                createLoggingInterceptor(BuildConfig.DEBUG)?.let { httpClient?.addInterceptor(it) }
                 okClient = httpClient?.build()
                 val retrofit = Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -76,15 +60,42 @@ class PrivacyDashboardAPIManager private constructor() {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 service = retrofit.create(PrivacyDashboardAPIServices::class.java)
+                apiManager = PrivacyDashboardAPIManager(service)
+                previousAccessToken = accessToken
+                previousApiKey = apiKey
+                previousBaseUrl = baseUrl
+                previousTokenManager = tokenManager
             }
             return apiManager
         }
 
+        /**
+         * Returns the HTTP logging interceptor, or null when [debug] is false.
+         * The level is BASIC (no headers, no bodies), and the credential
+         * headers are redacted if a later change sets a higher level.
+         */
+        internal fun createLoggingInterceptor(
+            debug: Boolean,
+            logger: HttpLoggingInterceptor.Logger = HttpLoggingInterceptor.Logger.DEFAULT
+        ): HttpLoggingInterceptor? {
+            if (!debug) return null
+            val httpLoggingInterceptor = HttpLoggingInterceptor(logger)
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
+            httpLoggingInterceptor.redactHeader(HEADER_AUTHORIZATION)
+            httpLoggingInterceptor.redactHeader(HEADER_INDIVIDUAL_ID)
+            return httpLoggingInterceptor
+        }
+
+        @Synchronized
         fun resetApi() {
             apiManager = null
+            service = null
+            okClient = null
+            httpClient = null
             previousAccessToken = null
             previousApiKey = null
             previousBaseUrl = null
+            previousTokenManager = null
         }
     }
 }

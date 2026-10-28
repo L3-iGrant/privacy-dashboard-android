@@ -17,6 +17,7 @@ import com.github.privacydashboard.models.v2.consent.ConsentStatusRequestV2
 import com.github.privacydashboard.models.v2.dataAgreement.dataAgreementRecords.DataAgreementLatestRecordResponseV2
 import com.github.privacydashboard.modules.base.PrivacyDashboardBaseViewModel
 import com.github.privacydashboard.modules.dataAttribute.PrivacyDashboardDataAttributeListingActivity
+import com.github.privacydashboard.utils.PrivacyDashboardCredentials
 import com.github.privacydashboard.utils.PrivacyDashboardDataUtils
 import com.github.privacydashboard.utils.PrivacyDashboardNetWorkUtil
 import kotlinx.coroutines.Dispatchers
@@ -78,6 +79,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
             isLoading.value = showProgress
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -126,6 +128,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
 //            isLoading.value = showProgress
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -179,6 +182,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
             body.optIn = isChecked == true
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,
@@ -242,6 +246,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
         if (PrivacyDashboardNetWorkUtil.isConnectedToInternet(context)) {
 
             val apiService: PrivacyDashboardAPIServices = PrivacyDashboardAPIManager.getApi(
+                tokenManager = PrivacyDashboardCredentials.tokenManager,
                 apiKey = PrivacyDashboardDataUtils.getStringValue(
                     context,
                     PrivacyDashboardDataUtils.EXTRA_TAG_TOKEN,

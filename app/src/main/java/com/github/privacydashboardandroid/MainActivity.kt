@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
             else{
                 binding.container.tvErrorMessage.text = ""
                 GlobalScope.launch {
+                    // Deprecated: a real app creates individuals in its backend.
+                    @Suppress("DEPRECATION")
                     val userId = PrivacyDashboard.createAnIndividual(
                         apiKey = apiKey,
                         baseUrl = baseUrl
@@ -73,6 +75,28 @@ class MainActivity : AppCompatActivity() {
                     .withUserId(userId)
                     .withBaseUrl(baseUrl)
                     .withOrganisationId(organizationId)
+                    .start(this)
+            }
+        }
+
+        // Recommended: the app has no API key. The host backend gives a
+        // short-lived individual token, and the SDK asks for it when necessary.
+        binding.container.btPrivacyDashboardToken.setOnClickListener {
+            val baseUrl = binding.container.etBaseUrl.text.toString().trim()
+            val organizationId = binding.container.etOrganizationId.text.toString().trim()
+            val tokenUrl = binding.container.etTokenUrl.text.toString().trim()
+
+            if (baseUrl.isEmpty() || organizationId.isEmpty() || tokenUrl.isEmpty()) {
+                binding.container.tvErrorMessage.text = "Please fill in BaseUrl, OrganizationId and the token URL"
+            } else {
+                binding.container.tvErrorMessage.text = ""
+                val hostBackend = SampleHostBackend(tokenUrl)
+                PrivacyDashboard.showPrivacyDashboard()
+                    .withBaseUrl(baseUrl)
+                    .withOrganisationId(organizationId)
+                    .withTokenProvider { callback ->
+                        hostBackend.privacyDashboardToken { token, error -> callback(token, error) }
+                    }
                     .start(this)
             }
         }
