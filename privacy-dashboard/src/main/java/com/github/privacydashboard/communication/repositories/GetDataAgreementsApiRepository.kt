@@ -106,7 +106,8 @@ class GetDataAgreementsApiRepository(private val apiService: PrivacyDashboardAPI
                 count = Count(
                     total = it.dataAttributes?.size,
                     consented = if (dataAgreementRecordsV2?.optIn == true) it.dataAttributes?.size else 0
-                )
+                ),
+                optIn = dataAgreementRecordsV2?.optIn
             )
         }
         return ArrayList(purposeConsents)

@@ -41,8 +41,11 @@ class UsagePurposeAdapter(
         var itemRowBinding: PrivacyItemUsagePurposeBinding
         fun bind(purposeConsent: PurposeConsent?, mListener: UsagePurposeClickListener) {
             itemRowBinding.ctvItemName.text = purposeConsent?.purpose?.name ?: ""
+            // The consent record decides the status, not the number of data attributes:
+            // an agreement can have no data attributes.
+            val isAllowed = purposeConsent?.optIn == true
             itemRowBinding.ctvStatus.text =
-                if (purposeConsent?.count?.consented == 0) itemRowBinding.ctvStatus.context
+                if (!isAllowed) itemRowBinding.ctvStatus.context
                     .resources
                     .getString(R.string.privacy_dashboard_disallow) else itemRowBinding.ctvStatus.context
                     .resources.getString(
@@ -56,8 +59,8 @@ class UsagePurposeAdapter(
             itemRowBinding.switchButtonDisabled.visibility =
                 if (purposeConsent?.purpose?.lawfulUsage == true) View.VISIBLE else View.GONE
             itemRowBinding.switchButton.setOnCheckedChangeListener(null)
-            itemRowBinding.switchButton.isChecked = purposeConsent?.count?.consented != 0
-            itemRowBinding.switchButtonDisabled.isChecked = purposeConsent?.count?.consented != 0
+            itemRowBinding.switchButton.isChecked = isAllowed
+            itemRowBinding.switchButtonDisabled.isChecked = isAllowed
             itemRowBinding.switchButton.setOnCheckedChangeListener(object :
                 SwitchButton.OnCheckedChangeListener {
                 override fun onCheckedChanged(view: SwitchButton?, isChecked: Boolean) {

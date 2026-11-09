@@ -232,11 +232,13 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
     }
 
     private fun updatePurposeConsent(record: DataAgreementLatestRecordResponseV2?) {
-        val count =
-            purposeConsents.value?.find { it.purpose?.iD == record?.dataAgreementRecord?.dataAgreementId }?.count?.total
+        val purposeConsent =
+            purposeConsents.value?.find { it.purpose?.iD == record?.dataAgreementRecord?.dataAgreementId }
+        val count = purposeConsent?.count?.total
 
-        purposeConsents.value?.find { it.purpose?.iD == record?.dataAgreementRecord?.dataAgreementId }?.count?.consented =
+        purposeConsent?.count?.consented =
             if (record?.dataAgreementRecord?.optIn == true) count else 0
+        purposeConsent?.optIn = record?.dataAgreementRecord?.optIn
 
         purposeConsents.value = purposeConsents.value
     }
@@ -273,7 +275,7 @@ class PrivacyDashboardDashboardViewModel() : PrivacyDashboardBaseViewModel() {
                         null
                     ),
                     dataAgreementId = consent?.purpose?.iD,
-                    isAllAllowed = consent?.count?.consented == consent?.count?.total
+                    isAllAllowed = consent?.optIn == true
                 )
 
                 if (result.isSuccess) {
